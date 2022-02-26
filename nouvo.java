@@ -3,4 +3,8 @@ public class nouvo {
     System.out.println("Bebe");
     //o
     }
+
+    public void nouvelleMethodeTest() {
+        System.out.println("Bsonoir");
+    }
 }
