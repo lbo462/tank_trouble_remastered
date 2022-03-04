@@ -9,6 +9,11 @@ public class Main {
       window.setResizable(false);
       window.setTitle("Tank trouble");
 
+      // add GamePanel
+      GamePanel gamePanel = new GamePanel();
+      window.add(gamePanel);
+      window.pack(); // sets the window to its preferred size
+
       // display game window
       window.setLocationRelativeTo(null);
       window.setVisible(true);

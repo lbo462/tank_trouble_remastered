@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
 
-  final int width = 360;
+  final int width = 480;
   final int height = 240;
 
   public GamePanel() {
