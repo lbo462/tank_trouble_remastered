@@ -13,6 +13,8 @@ public class GamePanel extends JPanel implements Runnable {
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
 
+  int FPS = 60;
+
   int x = 10;
   int y = 10;
   int speed = 1;
@@ -34,21 +36,34 @@ public class GamePanel extends JPanel implements Runnable {
 
   @Override
   public void run(){
+
+    // FPS managing
+    double drawInterval = 1000000000 / FPS; //time interval between two frame
+    double nextDrawTime = System.nanoTime() + drawInterval; //system time to draw the next frame
+
     // Game loop
     while(gameThread != null) {
 
-      // UPDATE
+      long currentTime = System.nanoTime(); // in nanoseconds
       update();
-
-      // DRAW
       repaint();
+
+      // Wait correct amount of time to achieve correct FPS
+      // Here, we take into account the time needed to update and paint the current frame so that we respect the correct FPS
+      try {
+        double remainingTime = nextDrawTime - System.nanoTime(); //time left until the next frame should be drawn
+        if(remainingTime < 0) remainingTime = 0; // sanity check
+        Thread.sleep((long) (remainingTime/1000000)); // convert nanoseconds to ms
+        nextDrawTime += drawInterval;
+      } catch(InterruptedException e) {
+        e.printStackTrace(); //if there was a problem during the Thread.sleep)(), print it
+      }
+
 
     }
   }
 
   public void update() {
-
-    System.out.println(keyH.rightPressed);
 
     if(keyH.upPressed)
       y -= speed;
