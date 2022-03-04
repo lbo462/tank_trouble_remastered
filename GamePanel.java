@@ -10,14 +10,12 @@ public class GamePanel extends JPanel implements Runnable {
   final int width = 1080;
   final int height = 480;
 
-  KeyHandler keyH = new KeyHandler();
-  Thread gameThread;
-
   int FPS = 60;
 
-  int x = 10;
-  int y = 10;
-  int speed = 1;
+  KeyHandler keyH = new KeyHandler();
+  Thread gameThread;
+  Tank player1 = new Tank(this, keyH);
+  TileManager tileM = new TileManager(this);
 
   public GamePanel() {
     this.setPreferredSize(new Dimension(width, height));
@@ -64,24 +62,17 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   public void update() {
-
-    if(keyH.upPressed)
-      y -= speed;
-    if(keyH.leftPressed)
-      x -= speed;
-    if(keyH.downPressed)
-      y += speed;
-    if(keyH.rightPressed)
-      x += speed;
-
+    player1.update();
   }
 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    Graphics2D g2 = (Graphics2D)g;
-    g2.setColor(Color.white);
-    g2.fillRect(x, y, 30, 30);
+    Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
+
+    tileM.draw(g2); // draw the tiles
+    player1.draw(g2); // draw player1, ce bg
+
     g2.dispose();
 
   }
