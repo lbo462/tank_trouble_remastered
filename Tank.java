@@ -19,7 +19,7 @@ public class Tank extends Entity {
     this.speed = 1;
 
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("/assets/entities/tank/paintTank.png")); // load the sprite sa mère
+      sprite = ImageIO.read(getClass().getResourceAsStream("/assets/entities/tank/painTank.png")); // load the sprite sa mère
     } catch (IOException e) {
       e.printStackTrace();
     }
