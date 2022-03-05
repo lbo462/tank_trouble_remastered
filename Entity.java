@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 // Press F to pay respects
 public class Entity {
   public int x, y; // pos
-  public int speed;
+  public double speed;
 
   public BufferedImage sprite;
 }

@@ -71,6 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
   }
 
   // draw at each frame
+  @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
@@ -82,5 +83,4 @@ public class GamePanel extends JPanel implements Runnable {
     g2.dispose();
 
   }
-
 }
