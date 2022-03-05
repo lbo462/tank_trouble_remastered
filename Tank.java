@@ -38,7 +38,7 @@ public class Tank extends Entity {
 
   public void draw(Graphics2D g2) {
 
-    g2.drawImage(sprite, x, y, 100, 100, null);
+    g2.drawImage(sprite, x, y, 2*gp.tileSize, 2*gp.tileSize, null);
 
   }
 

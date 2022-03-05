@@ -2,20 +2,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 
-  final int width = 1080;
-  final int height = 480;
+  public final int width = 960; // changeable
+  public final int height = (width * 9)/16; // keep a 16/9 format
+
+  public final int nbXtiles = 32; // number of tiles on the x-axis, changeable
+  public final int nbYtiles = 18; // CAREFUL THE FORMAT SHOULD BE 16/9 TO RESPECT WIDTH AND HEIGHT
+
+  public final int tileSize = width / nbXtiles; // size a single tile
 
   int FPS = 60;
 
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
+  Map map1 = new Map(this, "1");
   Tank player1 = new Tank(this, keyH);
-  TileManager tileM = new TileManager(this);
 
   public GamePanel() {
     this.setPreferredSize(new Dimension(width, height));
@@ -26,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     this.addKeyListener(keyH);
   }
 
+  // start Thread, start the game
   public void startGameThread(){
     gameThread = new Thread(this);
     gameThread.start();
@@ -57,20 +62,21 @@ public class GamePanel extends JPanel implements Runnable {
         e.printStackTrace(); //if there was a problem during the Thread.sleep)(), print it
       }
 
-
     }
   }
 
+  // update for each frame
   public void update() {
     player1.update();
   }
 
+  // draw at each frame
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
 
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
-    tileM.draw(g2); // draw the tiles
+    map1.draw(g2); // draw the map
     player1.draw(g2); // draw player1, ce bg
 
     g2.dispose();
