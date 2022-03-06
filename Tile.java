@@ -15,12 +15,8 @@ public class Tile {
     this.tileNum = tileNum;
 
     // set-up which are the ones with collision depending on the tileNum
-    switch(tileNum) {
-      case "1": // should be wall
-        collision = true;
-      default: // no collision by default. LOGIQUE
-        collision = false;
-    }
+    if(tileNum.equals("1")) collision = true; // wall
+    // maybe add new if needed ...
 
     if(!tileNum.equals("0")) { // the "0" tile is the nil tile, it won't be drawn and has no image
       try {
@@ -35,6 +31,10 @@ public class Tile {
   public void draw(Graphics2D g2, int x, int y, int width, int height) {
     if(!tileNum.equals("0"))
       g2.drawImage(image, x, y, width, height, null); // null is the observer. Useless for BufferedImage, don't worry about it
+  }
+
+  public String toString() {
+    return "Tile " + tileNum + " / collision " + collision;
   }
 
 }

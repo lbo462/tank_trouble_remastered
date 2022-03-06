@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
 
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
-  Map map1 = new Map(this, "1");
+  public Map currentMap = new Map(this, "1"); // public because entities need it for collisions
   Tank player1 = new Tank(this, keyH);
 
   public GamePanel() {
@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
-    map1.draw(g2); // draw the map
+    currentMap.draw(g2); // draw the map
     player1.draw(g2); // draw player1, ce bg
 
     g2.dispose();
