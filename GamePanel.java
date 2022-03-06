@@ -6,11 +6,11 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
 
-  public final int width = 960; // changeable
-  public final int height = (width * 9)/16; // keep a 16/9 format
+  public final int width = 1050;
+  public final int height = 750;
 
-  public final int nbXtiles = 32; // number of tiles on the x-axis, changeable
-  public final int nbYtiles = 18; // CAREFUL THE FORMAT SHOULD BE 16/9 TO RESPECT WIDTH AND HEIGHT
+  public final int nbXtiles = 35; // number of tiles on the x-axis
+  public final int nbYtiles = 25;
 
   public final int tileSize = width / nbXtiles; // size a single tile
 
@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
 
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
-  public Map currentMap = new Map(this, "2"); // public because entities need it for collisions
+  public Map currentMap = new Map(this); // public because entities need it for collisions
   Tank player1 = new Tank(this, keyH);
 
   public GamePanel() {

@@ -12,6 +12,7 @@ public class Tank extends Entity {
 
   AffineTransform at = new AffineTransform();
   double angle; // actual angle, whatevers that means. I don't even know how this works but it works
+  double scale;
 
   public Tank(GamePanel gp, KeyHandler keyH) {
 
@@ -21,7 +22,8 @@ public class Tank extends Entity {
     this.x = 100;
     this.y = 100;
     this.speed = 2;
-    this.angle = 0; // initial angle = 0
+    this.angle = 0; // keep
+    this.scale = 0.5; // scale only the hit box for collisions
 
     try {
       sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/painTank.png")); // load the sprite sa mère
@@ -42,7 +44,7 @@ public class Tank extends Entity {
         if(keyH.rightPressed)
           angle += speed;
         double angleToRotate = prevAngle - angle; // angle difference to adjust between then and now
-        at.rotate(Math.toRadians(angleToRotate), x+gp.tileSize/2, y+gp.tileSize/2); // do the rotation at the right spot
+        at.rotate(Math.toRadians(angleToRotate), x+(int)(gp.tileSize/2), y+(int)(gp.tileSize/2)); // do the rotation at the right spot
       }
       // TRANSLATION
       if(keyH.upPressed || keyH.downPressed) {
@@ -59,8 +61,8 @@ public class Tank extends Entity {
         // got this sh*t out of the docs to find the positions in the reference frame
         double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
         double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-        for(int i = nextY - gp.tileSize/2; i <= nextY + gp.tileSize/2; i++) {
-          for(int j = x - gp.tileSize/2; j <= x + gp.tileSize/2; j++) {
+        for(int i = nextY - (int)(scale*gp.tileSize)/2; i <= nextY + (int)(scale*gp.tileSize)/2; i++) {
+          for(int j = x - (int)(scale*gp.tileSize)/2; j <= x + (int)(scale*gp.tileSize)/2; j++) {
             int xc = j + gp.tileSize/2, yc = i + gp.tileSize/2; // position of the center of the tank
             int nextX0 = (int)(m00 * xc + m01 * yc + m02);
             // The next line is hell. I hate this line. I wish it was never born and hope it'll die soon
@@ -83,7 +85,7 @@ public class Tank extends Entity {
   public void draw(Graphics2D g2) {
 
     g2.setTransform(at); // askip this function is not supposed to be used this way but it works
-    g2.drawImage(sprite, x, y, gp.tileSize, gp.tileSize, null);
+    g2.drawImage(sprite, x, y, (int)(gp.tileSize), (int)(gp.tileSize), null);
 
   }
 }
