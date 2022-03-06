@@ -20,7 +20,7 @@ public class Tile {
 
     if(!tileNum.equals("0")) { // the "0" tile is the nil tile, it won't be drawn and has no image
       try {
-        image = ImageIO.read(getClass().getResourceAsStream("/assets/tiles/"+tileNum+".png")); // load the image
+        image = ImageIO.read(getClass().getResourceAsStream("assets/tiles/"+tileNum+".png")); // load the image
 
       } catch(IOException e) {
         e.printStackTrace();

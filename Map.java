@@ -21,7 +21,7 @@ public class Map {
 
     // load the background image
     try {
-      background = ImageIO.read(getClass().getResourceAsStream("/assets/maps/"+this.mapNumber+"/background.png"));
+      background = ImageIO.read(getClass().getResourceAsStream("assets/maps/"+this.mapNumber+"/background.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -33,7 +33,7 @@ public class Map {
   public void loadMap() {
     try {
       // read map file
-      InputStream is = getClass().getResourceAsStream("/assets/maps/"+this.mapNumber+"/map");
+      InputStream is = getClass().getResourceAsStream("assets/maps/"+this.mapNumber+"/map");
       BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
       // extract data from file

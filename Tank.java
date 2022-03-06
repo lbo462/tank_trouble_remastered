@@ -24,7 +24,7 @@ public class Tank extends Entity {
     this.angle = 0; // initial angle = 0
 
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("/assets/entities/tank/painTank.png")); // load the sprite sa mère
+      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/painTank.png")); // load the sprite sa mère
     } catch (IOException e) {
       e.printStackTrace();
     }
