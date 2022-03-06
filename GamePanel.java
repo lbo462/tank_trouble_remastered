@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
 
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
-  public Map currentMap = new Map(this, "1"); // public because entities need it for collisions
+  public Map currentMap = new Map(this, "2"); // public because entities need it for collisions
   Tank player1 = new Tank(this, keyH);
 
   public GamePanel() {
