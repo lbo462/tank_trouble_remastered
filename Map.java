@@ -20,7 +20,7 @@ public class Map {
 
     // load the background image
     try {
-      background = ImageIO.read(getClass().getResourceAsStream("assets/map/defaultBackground.png"));
+      background = ImageIO.read(getClass().getResourceAsStream("assets/defaultMapBackground.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -117,7 +117,7 @@ public class Map {
     }
 
     // randomly remove a certain amount of walls
-    for(int i = 0; i < 100; i++) {
+    for(int i = 0; i < 120; i++) {
       int xToKill = 1, yToKill = 1;
       while(tilesInt[yToKill][xToKill] != 1) {
         xToKill = (int)(Math.random() * (gp.nbXtiles-2)) + 1; // random x that can't be a wall
@@ -152,6 +152,12 @@ public class Map {
       }
     }
 
+    // empty spaw points
+    tiles[2]              [2]               = new Tile(gp, "0");
+    tiles[2]              [gp.nbXtiles - 2] = new Tile(gp, "0");
+    tiles[gp.nbYtiles - 2][2]               = new Tile(gp, "0");
+    tiles[gp.nbYtiles - 2][gp.nbXtiles - 2] = new Tile(gp, "0");
+
   }
 
   public void draw(Graphics2D g2) {
@@ -165,17 +171,5 @@ public class Map {
 
       }
     }
-  }
-
-
-  public void printMap(int[][] tilesInt) {
-    // print map: debugging purpose
-    for(int i = 0; i < tilesInt.length; i++) {
-      for(int j = 0; j < tilesInt[i].length; j++) {
-        System.out.print(tilesInt[i][j] + " ");
-      }
-      System.out.println();
-    }
-    System.out.println();
   }
 }

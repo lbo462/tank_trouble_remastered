@@ -18,8 +18,8 @@ public class GamePanel extends JPanel implements Runnable {
 
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
-  public Map currentMap = new Map(this); // public because entities need it for collisions
-  Tank player1 = new Tank(this, keyH);
+  public Map currentMap; // public because entities need it for collisions
+  Tank player1, player2;
 
   public GamePanel() {
     this.setPreferredSize(new Dimension(width, height));
@@ -28,6 +28,12 @@ public class GamePanel extends JPanel implements Runnable {
     this.setFocusable(true); // so the window can be focused : needed to receive input from user
 
     this.addKeyListener(keyH);
+
+    System.out.println("Generating map ...");
+    currentMap = new Map(this);
+
+    player1 = new Tank(1, 2*tileSize, 2*tileSize, this, keyH);
+    player2 = new Tank(2, tileSize*(nbXtiles-2), tileSize*(nbYtiles-2), this, keyH);
   }
 
   // start Thread, start the game
@@ -68,6 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
   // update for each frame
   public void update() {
     player1.update();
+    player2.update();
   }
 
   // draw at each frame
@@ -79,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     currentMap.draw(g2); // draw the map
     player1.draw(g2); // draw player1, ce bg
+    player2.draw(g2);
 
     g2.dispose();
 
