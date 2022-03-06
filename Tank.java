@@ -68,7 +68,10 @@ public class Tank extends Entity {
             int xGrid, yGrid; // pos inside the map grid
             xGrid = (int)(nextX0 / gp.tileSize);
             yGrid = (int)(nextY0 / gp.tileSize);
-            if(gp.currentMap.tiles[yGrid][xGrid].collision) collision = true;
+            // collision with window bounds
+            if(nextY0 < 0 || yGrid >= gp.currentMap.tiles.length || nextX0 < 0 || xGrid >= gp.currentMap.tiles[yGrid].length)
+              collision = true;
+            else if(gp.currentMap.tiles[yGrid][xGrid].collision) collision = true; // collision with tiles
           }
         }
 
