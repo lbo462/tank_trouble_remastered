@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Tank extends Entity {
 
   int number;
+  double lastShot;
 
   AffineTransform at = new AffineTransform();
   double angle; // actual angle, whatevers that means. I don't even know how this works but it works
@@ -105,13 +106,15 @@ public class Tank extends Entity {
       }
     }
 
-    if(shotPressed) {
+    if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
       double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
       double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
       int xc = x + gp.tileSize/2, yc = y + gp.tileSize/2;
       int xPos = (int)(m00 * xc + m01 * yc + m02);
       int yPos = (int)(m10 * yc + m11 * xc + m12);
       bullets.add(new Bullet(xPos, yPos, this.angle, gp));
+
+      lastShot = System.currentTimeMillis();
     }
 
     for(int i = 0; i < bullets.size(); i++) {
