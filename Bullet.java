@@ -36,6 +36,7 @@ public class Bullet extends Entity {
     // next pos on the grid
     int xGrid = (int)(nextX / gp.tileSize);
     int yGrid = (int)(nextY / gp.tileSize);
+
     boolean LoRCollision = false, UoDcollision = false; // Left or Right / Up or Down collisions
 
     if(nextY < 0 || yGrid >= gp.currentMap.tiles.length || nextX < 0 || xGrid >= gp.currentMap.tiles[yGrid].length) {
@@ -68,15 +69,27 @@ public class Bullet extends Entity {
       y = nextY;
     }
 
-
-
-
-
-
-
-    // check it is time to die
     double currentTime = System.currentTimeMillis();
+
+    // wait few ms and check if a player was hit
+    if(currentTime - bornAt > 500) { // don't auto kill the shooter
+      for(Tank t: gp.players) {
+
+        for(int i = x - gp.tileSize/2; i < x + gp.tileSize/2; i++) {
+          for(int j = y - gp.tileSize/2; j < y + gp.tileSize/2; j++) {
+            if(i == t.getX() && j == t.getY()) {
+              System.out.println(t.number);
+              t.dead = true; // kill player
+              this.dead = true; // kill this bullet
+              break;
+            }
+          }
+        }
+      }
+    }
+    // check it is time to die
     if(currentTime - bornAt > lifeTime) dead = true;
+
   }
 
   public void draw(Graphics2D g2) {

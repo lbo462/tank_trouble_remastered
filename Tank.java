@@ -14,6 +14,7 @@ public class Tank extends Entity {
   AffineTransform at = new AffineTransform();
   double angle; // actual angle, whatevers that means. I don't even know how this works but it works
   double scale;
+  boolean dead = false;
 
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
@@ -25,9 +26,9 @@ public class Tank extends Entity {
     this.x = x;
     this.y = y;
     this.number = number;
-    this.speed = 2;
+    this.speed = 3;
     this.angle = 0; // keep
-    this.scale = 0.5; // scale only the hit box for collisions
+    this.scale = 0.75; // scale only the hit box for collisions
 
     try {
       sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/painTank.png")); // load the sprite sa mère
@@ -107,12 +108,7 @@ public class Tank extends Entity {
     }
 
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
-      double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
-      double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-      int xc = x + gp.tileSize/2, yc = y + gp.tileSize/2;
-      int xPos = (int)(m00 * xc + m01 * yc + m02);
-      int yPos = (int)(m10 * yc + m11 * xc + m12);
-      bullets.add(new Bullet(xPos, yPos, this.angle, gp));
+      bullets.add(new Bullet(getX(), getY(), this.angle, gp));
 
       lastShot = System.currentTimeMillis();
     }
@@ -132,5 +128,16 @@ public class Tank extends Entity {
 
     for(int i = 0; i < bullets.size(); i++) bullets.get(i).draw(g2);
 
+  }
+
+  // get X and Y in the reference frame, reverting the rotating matrix at(Affine Transform)
+  public int getX() {
+    double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
+    return (int)(m00 * (x+gp.tileSize/2) + m01 * (y+gp.tileSize/2) + m02);
+  }
+
+  public int getY() {
+    double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
+    return (int)(m10 * (y+gp.tileSize/2) + m11 * (x+gp.tileSize/2) + m12);
   }
 }

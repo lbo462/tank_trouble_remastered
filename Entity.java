@@ -6,7 +6,7 @@ public class Entity {
 
   GamePanel gp;
   KeyHandler keyH;
-  
+
   public int x, y; // pos
   public double speed;
 
