@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.awt.BasicStroke;
 
 public class Map {
 
@@ -130,6 +131,12 @@ public class Map {
       tilesInt[yToKill][xToKill] = 0;
     }
 
+    // empty spaw points
+    tilesInt[2]              [2]               = 0;
+    tilesInt[2]              [gp.nbXtiles - 2] = 0;
+    tilesInt[gp.nbYtiles - 2][2]               = 0;
+    tilesInt[gp.nbYtiles - 2][gp.nbXtiles - 2] = 0;
+
     // remove alone cells
     for(int i = 1; i < tilesInt.length - 1; i++) {
       for(int j = 1; j < tilesInt[i].length - 1; j++) {
@@ -148,27 +155,46 @@ public class Map {
     // finally transform the tilesInt[][] into actual Tiles
     for(int i = 0; i < tilesInt.length; i++) {
       for(int j = 0; j < tilesInt[i].length; j++) {
-        tiles[i][j] = new Tile(gp, Integer.toString(tilesInt[i][j]));
+        if(tilesInt[i][j] == 1 && i > 0 && i < tilesInt.length-1 && j > 0 && j < tilesInt[i].length-1) {
+          // r = right, l = left, u = up, d = down st
+          /* Represent the presence of tiles around this one
+              x | u | x
+              r | x | l
+              x | d | x
+          */
+
+          boolean u = false, r = false, l = false, d = false;
+          if(tilesInt[i-1][j] == 1) u = true;
+          if(tilesInt[i][j+1] == 1) r = true;
+          if(tilesInt[i][j-1] == 1) l = true;
+          if(tilesInt[i+1][j] == 1) d = true;
+
+          tiles[i][j] = new Tile(gp, "1", u, d, r, l);
+
+        }
+        else {
+          tiles[i][j] = new Tile(gp, Integer.toString(tilesInt[i][j]));
+        }
       }
     }
-
-    // empty spaw points
-    tiles[2]              [2]               = new Tile(gp, "0");
-    tiles[2]              [gp.nbXtiles - 2] = new Tile(gp, "0");
-    tiles[gp.nbYtiles - 2][2]               = new Tile(gp, "0");
-    tiles[gp.nbYtiles - 2][gp.nbXtiles - 2] = new Tile(gp, "0");
-
   }
 
   public void draw(Graphics2D g2) {
     // draw the background
     g2.drawImage(background, 0, 0, gp.width, gp.height, null);
 
+    // draw bounds
+    g2.setStroke(new BasicStroke(40.0f));
+    g2.drawLine(0       , 0        , gp.width, 0        );
+    g2.drawLine(0       , 0        , 0       , gp.height);
+    g2.drawLine(gp.width, 0        , gp.width, gp.height);
+    g2.drawLine(0       , gp.height, gp.width, gp.height);
+
     // draw the tiles
+    g2.setStroke(new BasicStroke(10.0f));
     for(int i = 0; i < gp.nbYtiles; i++) {
       for(int j = 0; j < gp.nbXtiles; j++) {
         tiles[i][j].draw(g2, j * gp.tileSize, i * gp.tileSize, gp.tileSize, gp.tileSize);
-
       }
     }
   }

@@ -6,31 +6,41 @@ import javax.imageio.ImageIO;
 public class Tile {
 
   GamePanel gp;
-  public BufferedImage image;
   public boolean collision; // Can we get though and can we eat the wall ?
   public String tileNum;
+
+  public boolean up = false, down = false, right = false, left = false;
+
+  public Tile(GamePanel gp, String tileNum, boolean up, boolean down, boolean right, boolean left) {
+    this.gp = gp;
+    this.tileNum = tileNum;
+
+    this.up = up;
+    this.down = down;
+    this.right = right;
+    this.left = left;
+
+    collision = true;
+  }
 
   public Tile(GamePanel gp, String tileNum) {
     this.gp = gp;
     this.tileNum = tileNum;
-
-    // set-up which are the ones with collision depending on the tileNum
-    if(tileNum.equals("1")) collision = true; // wall
-    // maybe add new if needed ...
-
-    if(!tileNum.equals("0")) { // the "0" tile is the nil tile, it won't be drawn and has no image
-      try {
-        image = ImageIO.read(getClass().getResourceAsStream("assets/tiles/"+tileNum+".png")); // load the image
-
-      } catch(IOException e) {
-        e.printStackTrace();
-      }
-    }
   }
 
+
+
   public void draw(Graphics2D g2, int x, int y, int width, int height) {
-    if(!tileNum.equals("0"))
-      g2.drawImage(image, x, y, width, height, null); // null is the observer. Useless for BufferedImage, don't worry about it
+    if(!tileNum.equals("0")) {
+      if(up)
+        g2.drawLine(x, y, x, y-height/2);
+      if(down)
+        g2.drawLine(x, y, x, y+height/2);
+      if(right)
+        g2.drawLine(x, y, x+width/2, y);
+      if(left)
+        g2.drawLine(x, y, x-width/2, y);
+    }
   }
 
   public String toString() {
