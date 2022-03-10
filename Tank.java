@@ -13,7 +13,6 @@ public class Tank extends Entity {
 
   AffineTransform at = new AffineTransform();
   double angle; // actual angle, whatevers that means. I don't even know how this works but it works
-  double scale;
   boolean dead = false;
 
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -28,7 +27,6 @@ public class Tank extends Entity {
     this.number = number;
     this.speed = 3;
     this.angle = 0; // keep
-    this.scale = 0.75; // scale only the hit box for collisions
 
     try {
       sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/painTank.png")); // load the sprite sa mère
@@ -78,17 +76,17 @@ public class Tank extends Entity {
         int nextY = y; // keep new y in a var before updating the real y: care for collisions
         // keyboard inputs
         if(upPressed)
-          nextY += speed;
+          nextY += speed*2;
         if(downPressed)
-          nextY -= speed;
+          nextY -= speed*2;
 
         // check collisions
         boolean collision = false;
         // got this sh*t out of the docs to find the positions in the reference frame
         double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
         double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-        for(int i = nextY - (int)(scale*gp.tileSize)/2; i <= nextY + (int)(scale*gp.tileSize)/2; i++) {
-          for(int j = x - (int)(scale*gp.tileSize)/2; j <= x + (int)(scale*gp.tileSize)/2; j++) {
+        for(int i = nextY - (int)(gp.tileSize)/2; i <= nextY + (int)(gp.tileSize)/2; i++) {
+          for(int j = x - (int)(gp.tileSize)/2; j <= x + (int)(gp.tileSize)/2; j++) {
             int xc = j + gp.tileSize/2, yc = i + gp.tileSize/2; // position of the center of the tank
             int nextX0 = (int)(m00 * xc + m01 * yc + m02);
             // The next line is hell. I hate this line. I wish it was never born and hope it'll die soon
@@ -97,13 +95,32 @@ public class Tank extends Entity {
             xGrid = (int)(nextX0 / gp.tileSize);
             yGrid = (int)(nextY0 / gp.tileSize);
             // collision with window bounds
-            if(nextY0 < 0 || yGrid >= gp.currentMap.tiles.length || nextX0 < 0 || xGrid >= gp.currentMap.tiles[yGrid].length)
+            if(nextY0 < gp.tileSize/2 || nextY0 >= gp.height - gp.tileSize/2 || nextX0 < gp.tileSize/2 || nextX0 >= gp.width - gp.tileSize/2)
               collision = true;
-            else if(gp.currentMap.tiles[yGrid][xGrid].collision) collision = true; // collision with tiles
+            else if(gp.currentMap.tiles[yGrid][xGrid].collision) { // collision with tile
+              Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
+              int xTile = (int)(xGrid * gp.tileSize);
+              int yTile = (int)(yGrid * gp.tileSize);
+              int deltaX = nextX0 - xTile;
+              int deltaY = nextY0 - yTile;
+              if(currentTile.up && Math.abs(deltaX) < gp.tileSize/4 && deltaY < 0)
+                collision = true;
+              else if(currentTile.down && Math.abs(deltaX) < gp.tileSize/4 && deltaY > 0)
+                collision = true;
+              else if(currentTile.right && Math.abs(deltaY) < gp.tileSize/4 && deltaX > 0)
+                collision = true;
+              else if(currentTile.left && Math.abs(deltaY) < gp.tileSize/4 && deltaX < 0)
+                collision = true;
+            }
           }
         }
 
-        if(!collision) y = nextY; // update only if there's no collision
+        if(!collision) { // update only if there's no collision
+          if(upPressed)
+            y += speed;
+          if(downPressed)
+            y -= speed;
+        }
       }
     }
 

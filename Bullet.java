@@ -33,23 +33,55 @@ public class Bullet extends Entity {
     int nextX = x + (int)(speed * Math.sin(Math.toRadians(direction)));
     int nextY = y + (int)(speed * Math.cos(Math.toRadians(direction)));
 
-    // next pos on the grid
-    int xGrid = (int)(nextX / gp.tileSize);
-    int yGrid = (int)(nextY / gp.tileSize);
-
     boolean LoRCollision = false, UoDcollision = false; // Left or Right / Up or Down collisions
 
+    // collision with window bounds
+    if(nextY < gp.tileSize/2 || nextY >= gp.height - gp.tileSize/2) UoDcollision = true;
+    else if(nextX < gp.tileSize/2 || nextX >= gp.width - gp.tileSize/2) LoRCollision = true;
+    else { // collision with tiles
+      // next pos on the grid
+      int xGrid = (int)(nextX / gp.tileSize);
+      int yGrid = (int)(nextY / gp.tileSize);
+
+      if(gp.currentMap.tiles[yGrid][xGrid].collision) {
+        Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
+        int xTile = (int)(xGrid * gp.tileSize);
+        int yTile = (int)(yGrid * gp.tileSize);
+        int deltaX = nextX - xTile;
+        int deltaY = nextY - yTile;
+        if(currentTile.up && Math.abs(deltaX) < 5 && deltaY < 0)
+          LoRCollision = true;
+        else if(currentTile.down && Math.abs(deltaX) < 5 && deltaY > 0)
+          LoRCollision = true;
+        else if(currentTile.right && Math.abs(deltaY) < 5 && deltaX > 0)
+          UoDcollision = true;
+        else if(currentTile.left && Math.abs(deltaY) < 5 && deltaX < 0)
+          UoDcollision = true;
+      }
+
+    }
+
+/*
     if(nextY < 0 || yGrid >= gp.currentMap.tiles.length || nextX < 0 || xGrid >= gp.currentMap.tiles[yGrid].length) {
       if(nextY < 0 || yGrid >= gp.currentMap.tiles.length) UoDcollision = true;
       else if(nextX < 0 || xGrid >= gp.currentMap.tiles[yGrid].length) LoRCollision = true;
     }
     else if(gp.currentMap.tiles[yGrid][xGrid].collision) {
-      // actual pos
-      int axGrid = (int)(x / gp.tileSize);
-      int ayGrid = (int)(y / gp.tileSize);
-      if(axGrid != xGrid) LoRCollision = true;
-      else if(ayGrid != yGrid) UoDcollision = true;
+      Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
+      int xTile = (int)(xGrid * gp.tileSize + gp.tileSize/2);
+      int yTile = (int)(yGrid * gp.tileSize + gp.tileSize/2);
+      int deltaX = x+5 - xTile;
+      int deltaY = y+5 - yTile;
+      if(currentTile.up && Math.abs(deltaX) < gp.tileSize/2 && deltaY < 0)
+        LoRCollision = true;
+      else if(currentTile.down && Math.abs(deltaX) < gp.tileSize/2 && deltaY > 0)
+        LoRCollision = true;
+      else if(currentTile.right && Math.abs(deltaY) < gp.tileSize/2 && deltaX > 0)
+        UoDcollision = true;
+      else if(currentTile.left && Math.abs(deltaY) < gp.tileSize/2 && deltaX < 0)
+        UoDcollision = true;
     }
+*/
 
     if(LoRCollision || UoDcollision) {
       if(UoDcollision) {
@@ -61,13 +93,9 @@ public class Bullet extends Entity {
         // find the angle with same sin and oppsite cos
         direction *= -1;
       }
-
-      x += speed * Math.sin(Math.toRadians(direction));
-      y += speed * Math.cos(Math.toRadians(direction));
-    } else {
-      x = nextX;
-      y = nextY;
     }
+    x += speed * Math.sin(Math.toRadians(direction));
+    y += speed * Math.cos(Math.toRadians(direction));
 
     double currentTime = System.currentTimeMillis();
 
