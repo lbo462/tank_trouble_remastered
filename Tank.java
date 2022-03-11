@@ -64,9 +64,9 @@ public class Tank extends Entity {
         double prevAngle = angle; // angle before the transformation
         // keyboard inputs
         if(leftPressed)
-          this.angle -= speed;
-        if(rightPressed)
           this.angle += speed;
+        if(rightPressed)
+          this.angle -= speed;
         double angleToRotate = prevAngle - this.angle; // angle difference to adjust between then and now
         at.rotate(Math.toRadians(angleToRotate), x+(int)(gp.tileSize/2), y+(int)(gp.tileSize/2)); // do the rotation at the right spot
       }
