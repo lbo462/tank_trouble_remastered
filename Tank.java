@@ -85,8 +85,8 @@ public class Tank extends Entity {
         // got this sh*t out of the docs to find the positions in the reference frame
         double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
         double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-        for(int i = nextY - (int)(gp.tileSize)/2; i <= nextY + (int)(gp.tileSize)/2; i++) {
-          for(int j = x - (int)(gp.tileSize)/2; j <= x + (int)(gp.tileSize)/2; j++) {
+        for(int i = nextY - (int)(gp.tileSize)/2; i <= nextY + (int)(gp.tileSize)/2; i += (int)(gp.tileSize/4)) {
+          for(int j = x - (int)(gp.tileSize)/2; j <= x + (int)(gp.tileSize)/2; j += (int)(gp.tileSize/4)) {
             int xc = j + gp.tileSize/2, yc = i + gp.tileSize/2; // position of the center of the tank
             int nextX0 = (int)(m00 * xc + m01 * yc + m02);
             // The next line is hell. I hate this line. I wish it was never born and hope it'll die soon

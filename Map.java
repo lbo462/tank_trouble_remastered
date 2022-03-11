@@ -184,14 +184,13 @@ public class Map {
     g2.drawImage(background, 0, 0, gp.width, gp.height, null);
 
     // draw bounds
-    g2.setStroke(new BasicStroke(40.0f));
+    g2.setStroke(new BasicStroke(gp.tileSize));
     g2.drawLine(0       , 0        , gp.width, 0        );
     g2.drawLine(0       , 0        , 0       , gp.height);
     g2.drawLine(gp.width, 0        , gp.width, gp.height);
     g2.drawLine(0       , gp.height, gp.width, gp.height);
 
     // draw the tiles
-    g2.setStroke(new BasicStroke(10.0f));
     for(int i = 0; i < gp.nbYtiles; i++) {
       for(int j = 0; j < gp.nbXtiles; j++) {
         tiles[i][j].draw(g2, j * gp.tileSize, i * gp.tileSize, gp.tileSize, gp.tileSize);

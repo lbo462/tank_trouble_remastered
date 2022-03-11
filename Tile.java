@@ -2,6 +2,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.BasicStroke;
 
 public class Tile {
 
@@ -31,7 +32,11 @@ public class Tile {
 
 
   public void draw(Graphics2D g2, int x, int y, int width, int height) {
+    // draw cell bounds
+    g2.setStroke(new BasicStroke(1.0f));
+    g2.drawRect(x-width/2, y-height/2, width, height);
     if(!tileNum.equals("0")) {
+      g2.setStroke(new BasicStroke(10.0f));
       if(up)
         g2.drawLine(x, y, x, y-height/2);
       if(down)
