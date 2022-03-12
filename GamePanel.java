@@ -52,11 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Game loop
     while(gameThread != null) {
-
-      long currentTime = System.nanoTime(); // in nanoseconds
       update();
       repaint();
-
       // Wait correct amount of time to achieve correct FPS
       // Here, we take into account the time needed to update and paint the current frame so that we respect the correct FPS
       try {
