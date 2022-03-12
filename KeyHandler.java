@@ -6,7 +6,7 @@ public class KeyHandler implements KeyListener {
 
   public boolean upPressed, leftPressed, downPressed, rightPressed, zPressed, qPressed, sPressed, dPressed;
   public boolean enterPressed, spacePressed;
-  public boolean aPressed;
+  public boolean aPressed,mPressed;
 
   @Override
   public void keyTyped(KeyEvent e) {
@@ -48,6 +48,8 @@ public class KeyHandler implements KeyListener {
         break;
       case KeyEvent.VK_A:
         aPressed = true;
+      case KeyEvent.VK_M:
+        mPressed=true;
     }
   }
 
