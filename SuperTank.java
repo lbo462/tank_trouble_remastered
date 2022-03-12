@@ -28,7 +28,7 @@ public class SuperTank extends Tank{
         if(this.number == 1){
             this.capacityButtonPressed = keyH.aPressed;
         }else if(this.number == 2){
-            this.capacityButtonPressed = keyH.aPressed;
+            this.capacityButtonPressed = keyH.mPressed;
         }
     }
 
