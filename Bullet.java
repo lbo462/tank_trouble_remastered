@@ -31,11 +31,16 @@ public class Bullet extends MovingEntity {
 
   public void update() {
 
+<<<<<<< HEAD
     this.updateNextPosition();
     this.collision();
     this.didItTouch();
     this.deadOrAlive();
     this.updatePosition();
+=======
+    int nextX = x+5 + (int)(speed * Math.sin(Math.toRadians(direction)));
+    int nextY = y+5 + (int)(speed * Math.cos(Math.toRadians(direction)));
+>>>>>>> 8bae648ae2b154316a56b464011779f4a167245c
 
   }
 
@@ -91,6 +96,7 @@ public class Bullet extends MovingEntity {
       }
 
     }
+<<<<<<< HEAD
     if(UoDcollision) {
       // left or right
       // find the angle with same cos and opposite sin
@@ -103,6 +109,23 @@ public class Bullet extends MovingEntity {
   }
   // wait few ms and check if a player was hit
   public void didItTouch(){
+=======
+
+    if(LoRCollision || UoDcollision) {
+      if(UoDcollision) {
+        // left or right
+        // find the angle with same cos and opposite sin
+        direction = 180 - direction;
+      } else if(LoRCollision) {
+        // up or down
+        // find the angle with same sin and oppsite cos
+        direction *= -1;
+      }
+    }
+    x += speed * Math.sin(Math.toRadians(direction));
+    y += speed * Math.cos(Math.toRadians(direction));
+
+>>>>>>> 8bae648ae2b154316a56b464011779f4a167245c
     double currentTime = System.currentTimeMillis();
     if(currentTime - bornAt > 500) { // don't auto kill the shooter
       for(Tank t: gp.players) {
@@ -127,9 +150,14 @@ public class Bullet extends MovingEntity {
     if(currentTime - bornAt > lifeTime) dead = true;
   }
 
+<<<<<<< HEAD
   public void updatePosition(){
     x += speed * Math.sin(Math.toRadians(angle));
     y += speed * Math.cos(Math.toRadians(angle));
+=======
+  public void draw(Graphics2D g2) {
+    g2.drawImage(sprite, x-5, y-5, null);
+>>>>>>> 8bae648ae2b154316a56b464011779f4a167245c
   }
 
 }
