@@ -30,8 +30,8 @@ public class Bullet extends Entity {
 
   public void update() {
 
-    int nextX = x + (int)(speed * Math.sin(Math.toRadians(direction)));
-    int nextY = y + (int)(speed * Math.cos(Math.toRadians(direction)));
+    int nextX = x+5 + (int)(speed * Math.sin(Math.toRadians(direction)));
+    int nextY = y+5 + (int)(speed * Math.cos(Math.toRadians(direction)));
 
     boolean LoRCollision = false, UoDcollision = false; // Left or Right / Up or Down collisions
 
@@ -45,43 +45,38 @@ public class Bullet extends Entity {
 
       if(gp.currentMap.tiles[yGrid][xGrid].collision) {
         Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
-        int xTile = (int)(xGrid * gp.tileSize);
-        int yTile = (int)(yGrid * gp.tileSize);
+        int xTile = (int)(xGrid * gp.tileSize) + gp.tileSize/2;
+        int yTile = (int)(yGrid * gp.tileSize) + gp.tileSize/2;
         int deltaX = nextX - xTile;
         int deltaY = nextY - yTile;
-        if(currentTile.up && Math.abs(deltaX) < 5 && deltaY < 0)
-          LoRCollision = true;
-        else if(currentTile.down && Math.abs(deltaX) < 5 && deltaY > 0)
-          LoRCollision = true;
-        else if(currentTile.right && Math.abs(deltaY) < 5 && deltaX > 0)
-          UoDcollision = true;
-        else if(currentTile.left && Math.abs(deltaY) < 5 && deltaX < 0)
-          UoDcollision = true;
+
+        // Magic piece of code, do not touch
+        if(deltaX > 0)
+          deltaX -= 5;
+        if(deltaY > 0)
+          deltaY -= 5;
+
+        if(Math.abs(deltaX) < 5 && deltaY < 0) { // coming from top
+          if(currentTile.up) LoRCollision = true;
+          else if(currentTile.down) UoDcollision = true;
+        }
+        if(Math.abs(deltaX) < 5 && deltaY > 0) { // coming from bottom
+          if(currentTile.down) LoRCollision = true;
+          else if(currentTile.up) UoDcollision = true;
+        }
+        if(Math.abs(deltaY) < 5 && deltaX > 0) { //coming from right
+          if(currentTile.right) UoDcollision = true;
+          else if(currentTile.left) LoRCollision = true;
+        }
+        if(Math.abs(deltaY) < 5 && deltaX < 0) { //coming from left
+          if(currentTile.left) UoDcollision = true;
+          else if(currentTile.right) LoRCollision = true;
+        }
+
+
       }
 
     }
-
-/*
-    if(nextY < 0 || yGrid >= gp.currentMap.tiles.length || nextX < 0 || xGrid >= gp.currentMap.tiles[yGrid].length) {
-      if(nextY < 0 || yGrid >= gp.currentMap.tiles.length) UoDcollision = true;
-      else if(nextX < 0 || xGrid >= gp.currentMap.tiles[yGrid].length) LoRCollision = true;
-    }
-    else if(gp.currentMap.tiles[yGrid][xGrid].collision) {
-      Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
-      int xTile = (int)(xGrid * gp.tileSize + gp.tileSize/2);
-      int yTile = (int)(yGrid * gp.tileSize + gp.tileSize/2);
-      int deltaX = x+5 - xTile;
-      int deltaY = y+5 - yTile;
-      if(currentTile.up && Math.abs(deltaX) < gp.tileSize/2 && deltaY < 0)
-        LoRCollision = true;
-      else if(currentTile.down && Math.abs(deltaX) < gp.tileSize/2 && deltaY > 0)
-        LoRCollision = true;
-      else if(currentTile.right && Math.abs(deltaY) < gp.tileSize/2 && deltaX > 0)
-        UoDcollision = true;
-      else if(currentTile.left && Math.abs(deltaY) < gp.tileSize/2 && deltaX < 0)
-        UoDcollision = true;
-    }
-*/
 
     if(LoRCollision || UoDcollision) {
       if(UoDcollision) {
@@ -121,6 +116,6 @@ public class Bullet extends Entity {
   }
 
   public void draw(Graphics2D g2) {
-    g2.drawImage(sprite, x, y, null);
+    g2.drawImage(sprite, x-5, y-5, null);
   }
 }
