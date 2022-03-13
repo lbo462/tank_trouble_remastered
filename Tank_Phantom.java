@@ -1,6 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
 
+// Super funny tank that has a "super" capacity : go through walls for a little time (when A is pressed)
 public class Tank_Phantom extends Tank_Super{
     public Tank_Phantom(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH){
         super(number, x, y, image, gp, keyH,3000,20000);
