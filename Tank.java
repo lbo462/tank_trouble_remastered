@@ -14,13 +14,14 @@ public class Tank extends MovingEntity {
   AffineTransform at = new AffineTransform();
   boolean dead = false;
 
-
   boolean collision;
   boolean upPressed,downPressed,leftPressed,rightPressed,shotPressed;
 
+  boolean collisionWithTiles = true; // used to phantom
+
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
-  public Tank(int number, int x, int y, GamePanel gp, KeyHandler keyH) {
+  public Tank(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH) {
 
     this.gp = gp;
     this.keyH = keyH;
@@ -32,7 +33,7 @@ public class Tank extends MovingEntity {
     this.angle = 0; // keep
 
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/painTank.png")); // load the sprite sa mère
+      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/"+image)); // load the sprite sa mère
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -47,7 +48,7 @@ public class Tank extends MovingEntity {
     this.shoot();
     this.deadBulletRemoval();
   }
-  
+
 
   public void draw(Graphics2D g2) {
 
@@ -113,7 +114,7 @@ public class Tank extends MovingEntity {
       }
     }
   }
-  
+
   public void keyPressed() {
     upPressed = false;
     downPressed = false;
@@ -134,10 +135,9 @@ public class Tank extends MovingEntity {
       rightPressed = keyH.rightPressed;
       shotPressed = keyH.enterPressed;
     }
-    
+
   }
 
-  @Override
   public void collision() {
     collision = false;
     double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
@@ -154,7 +154,7 @@ public class Tank extends MovingEntity {
         // collision with window bounds
         if(nextY0 < gp.tileSize/2 || nextY0 >= gp.height - gp.tileSize/2 || nextX0 < gp.tileSize/2 || nextX0 >= gp.width - gp.tileSize/2)
           collision = true;
-        else if(gp.currentMap.tiles[yGrid][xGrid].collision) { // collision with tile
+        else if(gp.currentMap.tiles[yGrid][xGrid].collision && collisionWithTiles) { // collision with tile
           Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
           int xTile = (int)(xGrid * gp.tileSize);
           int yTile = (int)(yGrid * gp.tileSize);

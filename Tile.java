@@ -45,6 +45,7 @@ public class Tile {
         g2.drawLine(x, y, x+width/2, y);
       if(left)
         g2.drawLine(x, y, x-width/2, y);
+      g2.setStroke(new BasicStroke(1.0f));
     }
   }
 
