@@ -27,5 +27,7 @@ public class PhantomTank extends SuperTank{
       g2.setComposite(alcom);
 
       super.draw(g2);
+      alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+      g2.setComposite(alcom);
     }
 }
