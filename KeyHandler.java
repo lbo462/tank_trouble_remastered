@@ -48,8 +48,10 @@ public class KeyHandler implements KeyListener {
         break;
       case KeyEvent.VK_A:
         aPressed = true;
+        break;
       case KeyEvent.VK_M:
         mPressed=true;
+        break;
     }
   }
 
@@ -85,6 +87,12 @@ public class KeyHandler implements KeyListener {
         break;
       case KeyEvent.VK_SPACE:
         spacePressed = false;
+        break;
+      case KeyEvent.VK_A:
+        aPressed = false;
+        break;
+      case KeyEvent.VK_M:
+        mPressed=false;
         break;
     }
   }
