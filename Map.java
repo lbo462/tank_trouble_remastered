@@ -60,7 +60,6 @@ public class Map {
 
     // while every cell has not the same number, continue
     boolean finallyFinished = false;
-    int count = 0;
     while(!finallyFinished) {
 
       // randomly choose a wall to destroy
