@@ -7,7 +7,7 @@ import java.awt.BasicStroke;
 public class Tile {
 
   GamePanel gp;
-  public boolean collision; // Can we get though and can we eat the wall ?
+  public boolean collision; // Can we get through and can we eat the wall ?
   public String tileNum;
 
   public boolean up = false, down = false, right = false, left = false;

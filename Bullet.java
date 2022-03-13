@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 public class Bullet extends MovingEntity {
 
   double bornAt;
-  double lifeTime = 5000; // time to live in ms
+  double lifeTime = 5000; // LifeTime of a bullet in ms
   public boolean dead = false;
 
   AffineTransform at = new AffineTransform();
@@ -14,7 +14,6 @@ public class Bullet extends MovingEntity {
   private boolean LoRCollision;// Left or Right collisions
 
   public Bullet(int x, int y, double direction,GamePanel gp) {
-
     this.x = x;
     this.y = y;
     this.gp = gp;
@@ -23,14 +22,13 @@ public class Bullet extends MovingEntity {
     bornAt = System.currentTimeMillis();
 
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/bullet.png")); // load the sprite sa mère
+      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/bullet.png")); // load the sprite
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   public void update() {
-
     this.updateNextPosition();
     this.collision();
     this.didItTouch();

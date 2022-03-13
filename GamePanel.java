@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     System.out.println("Generating map ...");
     currentMap = new Map(this);
 
-    players[0] = new PhantomTank(1, 2*tileSize, 2*tileSize, "phantom.png", this, keyH);
+    players[0] = new Tank_Phantom(1, 2*tileSize, 2*tileSize, "phantom.png", this, keyH);
     players[1] = new Tank(2, tileSize*(nbXtiles-2), tileSize*(nbYtiles-2), "painTank.png", this, keyH);
   }
 

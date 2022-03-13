@@ -32,8 +32,10 @@ public class Tank extends MovingEntity {
     this.speed = 3;
     this.angle = 0; // keep
 
+
+    // Loading the image of the tank
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/"+image)); // load the sprite sa mère
+      this.sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/"+image));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -49,7 +51,7 @@ public class Tank extends MovingEntity {
     this.deadBulletRemoval();
   }
 
-
+  // Drawing the current picture
   public void draw(Graphics2D g2) {
 
     AffineTransform saveAt = g2.getTransform();
@@ -61,7 +63,7 @@ public class Tank extends MovingEntity {
 
   }
 
-  // get X and Y in the reference frame, reverting the rotating matrix at(Affine Transform)
+  // get the position (X, Y) in the reference frame, reverting the rotating matrix at(Affine Transform)
   public int getX() {
     double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
     return (int)(m00 * (x+gp.tileSize/2) + m01 * (y+gp.tileSize/2) + m02);
@@ -75,12 +77,12 @@ public class Tank extends MovingEntity {
   // ROTATION
   public void rotation(){
     if(leftPressed || rightPressed) {
-      double prevAngle = angle; // angle before the transformation
+      double prevAngle = this.angle; // angle before the transformation
       // keyboard inputs
       if(leftPressed)
-        this.angle += speed;
+        this.angle += this.speed;
       if(rightPressed)
-        this.angle -= speed;
+        this.angle -= this.speed;
       double angleToRotate = prevAngle - this.angle; // angle difference to adjust between then and now
       at.rotate(Math.toRadians(angleToRotate), x+(int)(gp.tileSize/2), y+(int)(gp.tileSize/2)); // do the rotation at the right spot
     }
@@ -106,6 +108,7 @@ public class Tank extends MovingEntity {
     }
   }
 
+  // Removing bullets when they stayed
   public void deadBulletRemoval(){
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();

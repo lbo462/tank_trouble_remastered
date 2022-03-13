@@ -2,6 +2,8 @@
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
+// This class implements all the key bindings needed to play
+
 public class KeyHandler implements KeyListener {
 
   public boolean upPressed, leftPressed, downPressed, rightPressed, zPressed, qPressed, sPressed, dPressed;

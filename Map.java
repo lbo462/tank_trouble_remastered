@@ -4,13 +4,14 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.BasicStroke;
 
+// Everything that the map concerns is implemented in this class
 public class Map {
 
   public GamePanel gp;
   public BufferedImage background;
   public Tile[][] tiles;
 
-  // generate a random map
+  // Create a matrix of tiles, then fills it with a "labyrinth" randomly generated
   public Map(GamePanel gp) {
     this.gp = gp;
     this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
@@ -25,11 +26,14 @@ public class Map {
     generateMap();
   }
 
+
+  // This method will generate a random labyrinth
+  // Then it will randomly erase some of the walls (such that the map is playable enough, otherwise it's too hard to play)
   public void generateMap() {
     // generate everything with int and finally translate to Tiles to save RAM
     int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];
 
-    /* fill the map with wall st it forms a shape like this :
+    /* fill the map with wall such that it forms a shape like this :
       1 1 1 1 1 1 1 1 1 1 1 1 1
       1 0 1 0 1 0 1 0 1 0 1 0 1
       1 1 1 1 1 1 1 1 1 1 1 1 1
