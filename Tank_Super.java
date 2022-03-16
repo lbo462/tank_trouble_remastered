@@ -24,6 +24,12 @@ public class Tank_Super extends Tank{
         this.activationTime = System.currentTimeMillis();
     }
 
+    public void update() {
+      this.keyPressed();
+      this.capacityActivation();
+      super.update();
+    }
+
     //Check if the capacity is activated and that it can be activated
     public void capacityActivation(){
         double currentTime = System.currentTimeMillis();
@@ -48,7 +54,6 @@ public class Tank_Super extends Tank{
     @Override
     public void draw(Graphics2D g2) {
       double currentTime = System.currentTimeMillis();
-      AffineTransform saveAt = g2.getTransform();
       g2.setColor(Color.BLACK);
       if(this.capacityActivated) {
         timeRemaining = (int)(this.capacityDuration-(currentTime-activationTime));
@@ -63,19 +68,14 @@ public class Tank_Super extends Tank{
 
       // draw avancement
       g2.setColor(Color.BLACK);
-      g2.drawLine(getX()-1-gp.tileSize/2, getY()-1 + gp.tileSize+2, getX()+1 + gp.tileSize-gp.tileSize/2, getY()-1+ gp.tileSize+2);
-      g2.drawLine(getX()-1-gp.tileSize/2, getY()-1 + gp.tileSize+2, getX()-1 -gp.tileSize/2, getY()+1 + gp.tileSize/16+ gp.tileSize+2);
-      g2.drawLine(getX()-1-gp.tileSize/2, getY()+1 + gp.tileSize/16 + gp.tileSize+2, getX()+1 + gp.tileSize -gp.tileSize/2, getY()+1 + gp.tileSize/16+ gp.tileSize+2);
-      g2.drawLine(getX()+1 + gp.tileSize-gp.tileSize/2, getY()-1 + gp.tileSize+2, getX()+1 + gp.tileSize -gp.tileSize/2, getY()+1 + gp.tileSize/16+ gp.tileSize+2);
+      g2.drawLine(getX()-1-width/2,         getY()-1 + height+2,             getX()+1 + width-width/2,  getY()-1 + height+2);
+      g2.drawLine(getX()-1-width/2,         getY()-1 + height+2,             getX()-1 - width/2,        getY()+1 + height/16+ height+2);
+      g2.drawLine(getX()-1-width/2,         getY()+1 + height/16 + height+2, getX()+1 + width -width/2, getY()+1 + height/16+ height+2);
+      g2.drawLine(getX()+1 + width-width/2, getY()-1 + height+2,             getX()+1 + width -width/2, getY()+1 + height/16+ height+2);
       if(this.capacityActivated) g2.setColor(Color.RED);
       else g2.setColor(Color.BLUE);
-      g2.drawRect(getX()-gp.tileSize/2, getY() + gp.tileSize + 2, (int)(gp.tileSize * pourcentage), gp.tileSize/16);
+      g2.fillRect(getX()-width/2, getY() + height + 2, (int)(width * pourcentage), height/16+1);
 
-      g2.transform(at);
-      g2.drawImage(sprite, x, y, gp.tileSize, gp.tileSize, null);
-      g2.setTransform(saveAt);
-
-      for(int i = 0; i < bullets.size(); i++) bullets.get(i).draw(g2);
-
+      super.draw(g2);
     }
 }

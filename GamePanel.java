@@ -3,6 +3,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.Color;
+
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -13,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
   public final int nbYtiles = 25;
 
   public final int tileSize = width / nbXtiles; // size a single tile
+  public BufferedImage background;
 
   int FPS = 60;
 
@@ -30,10 +36,16 @@ public class GamePanel extends JPanel implements Runnable {
     this.addKeyListener(keyH);
 
     System.out.println("Generating map ...");
+    // load the background image
+    try {
+      background = ImageIO.read(getClass().getResourceAsStream("assets/defaultMapBackground.png"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     currentMap = new Map(this);
 
-    players[0] = new Tank_Phantom(1, 2*tileSize, 2*tileSize, "phantom.png", this, keyH);
-    players[1] = new Tank(2, tileSize*(nbXtiles-2), tileSize*(nbYtiles-2), "painTank.png", this, keyH);
+    players[0] = new Tank_Kitty(1, 2*tileSize, 2*tileSize, this, keyH);
+    players[1] = new Tank_TiTank(2, tileSize*(nbXtiles-2), tileSize*(nbYtiles-2), this, keyH);
   }
 
   // start Thread, start the game
@@ -81,10 +93,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
-    currentMap.draw(g2); // draw the map
+    // draw the background
+    g2.drawImage(background, 0, 0, width, height, null);
+
     // draw players (and bullets)
     for(Tank t: players)
       t.draw(g2);
+    g2.setColor(Color.BLACK);
+
+    currentMap.draw(g2); // draw the map
 
     g2.dispose();
 

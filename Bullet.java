@@ -13,19 +13,23 @@ public class Bullet extends MovingEntity {
   private boolean UoDcollision;// Up or Down collisions
   private boolean LoRCollision;// Left or Right collisions
 
-  public Bullet(int x, int y, double direction,GamePanel gp) {
+  public Bullet(int x, int y, double direction, String image, GamePanel gp) {
     this.x = x;
     this.y = y;
     this.gp = gp;
     this.angle = direction;
     this.speed = 4;
+
     bornAt = System.currentTimeMillis();
 
     try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/bullet.png")); // load the sprite
+      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/bullet/"+image)); // load the sprite
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    this.width = sprite.getWidth();
+    this.height = sprite.getHeight();
   }
 
   public void update() {
@@ -38,13 +42,13 @@ public class Bullet extends MovingEntity {
   }
 
   public void draw(Graphics2D g2) {
-    g2.drawImage(sprite, x-5, y-5, null);
+    g2.drawImage(sprite, (int)(x-this.width), (int)(y-this.height), null);
   }
 
   @Override
   void collision() {
-    nextX += 5;
-    nextY += 5;
+    nextX += width/2;
+    nextY += height/2;
     LoRCollision = false;
     UoDcollision = false;
     // collision with window bounds
@@ -64,27 +68,26 @@ public class Bullet extends MovingEntity {
 
         // Magic piece of code, do not touch
         if(deltaX > 0)
-          deltaX -= 5;
+          deltaX -= width/2;
         if(deltaY > 0)
-          deltaY -= 5;
+          deltaY -= height/2;
 
-        if(Math.abs(deltaX) < 5 && deltaY < 0) { // coming from top
+        if(Math.abs(deltaX) < width/2 && deltaY < 0) { // coming from top
           if(currentTile.up) LoRCollision = true;
           else if(currentTile.down) UoDcollision = true;
         }
-        if(Math.abs(deltaX) < 5 && deltaY > 0) { // coming from bottom
+        if(Math.abs(deltaX) < width/2 && deltaY > 0) { // coming from bottom
           if(currentTile.down) LoRCollision = true;
           else if(currentTile.up) UoDcollision = true;
         }
-        if(Math.abs(deltaY) < 5 && deltaX > 0) { //coming from right
+        if(Math.abs(deltaY) < height/2 && deltaX > 0) { //coming from right
           if(currentTile.right) UoDcollision = true;
           else if(currentTile.left) LoRCollision = true;
         }
-        if(Math.abs(deltaY) < 5 && deltaX < 0) { //coming from left
+        if(Math.abs(deltaY) < height/2 && deltaX < 0) { //coming from left
           if(currentTile.left) UoDcollision = true;
           else if(currentTile.right) LoRCollision = true;
         }
-
 
       }
 

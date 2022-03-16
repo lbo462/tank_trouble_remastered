@@ -8,20 +8,12 @@ import java.awt.BasicStroke;
 public class Map {
 
   public GamePanel gp;
-  public BufferedImage background;
   public Tile[][] tiles;
 
   // Create a matrix of tiles, then fills it with a "labyrinth" randomly generated
   public Map(GamePanel gp) {
     this.gp = gp;
     this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
-
-    // load the background image
-    try {
-      background = ImageIO.read(getClass().getResourceAsStream("assets/defaultMapBackground.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
 
     generateMap();
   }
@@ -179,8 +171,6 @@ public class Map {
   }
 
   public void draw(Graphics2D g2) {
-    // draw the background
-    g2.drawImage(background, 0, 0, gp.width, gp.height, null);
 
     // draw bounds
     g2.setStroke(new BasicStroke(gp.tileSize));

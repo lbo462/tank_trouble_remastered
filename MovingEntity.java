@@ -3,6 +3,8 @@ public abstract class MovingEntity extends Entity{
     double angle;
     double speed;
 
+    double width, height;
+
 
     public void updateNextPosition(){
         nextX = x + (int)(speed * Math.sin(Math.toRadians(angle)));
