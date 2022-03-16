@@ -11,7 +11,7 @@ public abstract class MovingEntity extends Entity{
         nextY = y + (int)(speed * Math.cos(Math.toRadians(angle)));
     }
 
-    //abstract void update(); is not specified as it is an abstract class (i.e. supports abstract methods)
+    //abstract void update(); is not specified as it is an abstract class (i.e. supports abstract methods from mother class)
     abstract void collision();
     abstract void updatePosition();
 }
