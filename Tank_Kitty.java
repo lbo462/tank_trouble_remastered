@@ -13,7 +13,7 @@ public class Tank_Kitty extends Tank_Super{
     @Override
     public void update(){
         super.update();
-        if(this.capacityActivated)
+        if(this.capacityActive)
             shoot();
     }
 
@@ -32,9 +32,9 @@ public class Tank_Kitty extends Tank_Super{
     @Override
     public void shoot(){
       if(System.currentTimeMillis() - lastShot > 100) {
-        if(shotPressed && !capacityActivated) {
+        if(shotPressed && !capacityActive) {
           bullets.add(new Bullet(getX(), getY(), this.angle, "bullet.png", gp));
-        } else if(capacityActivated) {
+        } else if(capacityActive) {
           bulletsKitty.add(new Bullet_Kitty(getX(), getY(), this.angle, "kitty.png", "explodedKitty.png", gp));
         }
         lastShot = System.currentTimeMillis();

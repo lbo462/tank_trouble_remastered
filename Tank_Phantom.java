@@ -10,7 +10,7 @@ public class Tank_Phantom extends Tank_Super{
     @Override
     public void update(){
         super.update();
-        if(this.capacityActivated)
+        if(this.capacityActive)
             collisionWithTiles = false;
         else
             collisionWithTiles = true;
@@ -20,7 +20,7 @@ public class Tank_Phantom extends Tank_Super{
     public void draw(Graphics2D g2) {
       // transparency
       AlphaComposite alcom;
-      if(this.capacityActivated)
+      if(this.capacityActive)
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
       else
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);

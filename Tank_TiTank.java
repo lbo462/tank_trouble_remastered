@@ -1,20 +1,30 @@
 import java.awt.Graphics2D;
 
 public class Tank_TiTank extends Tank_Super {
+
+  boolean activated = false; // was the capacity activated?
+
   public Tank_TiTank(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-      super(number, x, y, "TiTank.png", gp, keyH,2000,20000);
+      super(number, x, y, "TiTank.png", gp, keyH,3000,200);
   }
 
   @Override
   public void update(){
       super.update();
-      if(this.capacityActivated) {
-        width = gp.tileSize*2;
-        height = gp.tileSize*2;
-      }
-      else {
+      if(this.capacityActive && !activated) {
+        width = gp.tileSize*3;
+        height = gp.tileSize*3;
+        y -= gp.tileSize;
+        x -= gp.tileSize;
+        speed /= 2;
+        activated = true;
+      } else if(!this.capacityActive && activated) {
         width = gp.tileSize;
         height = gp.tileSize;
+        y += gp.tileSize;
+        x += gp.tileSize;
+        speed *= 2;
+        activated = false;
       }
   }
 
@@ -22,7 +32,7 @@ public class Tank_TiTank extends Tank_Super {
   // remove the wall if there's a collision
   public void collision() {
     super.collision();
-    if(capacityActivated) {
+    if(capacityActive) {
       double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
       double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
       for(int i = nextY - (int)(height)/2; i <= nextY + (int)(height)/2; i += (int)(height/4)) {
