@@ -14,7 +14,7 @@ public class Tank_TiTank extends Tank_Super {
         height = gp.tileSize*3;
         y -= gp.tileSize;
         x -= gp.tileSize;
-        speed += 1;
+        speed += 2;
         activated = true;
       } else if(!this.capacityActive && activated) {
         width = gp.tileSize;
