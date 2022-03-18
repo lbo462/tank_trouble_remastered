@@ -130,12 +130,12 @@ public class GamePanel extends JPanel implements Runnable {
     if(!paused) {
       for(Tank t: players)
         t.update();
-      if(keyH.escapePressed && currentTime - timePaused > 100) {
+      if(keyH.escapePressed && currentTime - timePaused > 500) {
         paused = true;
         timePaused = currentTime;
       }
     } else {
-      if(keyH.escapePressed && currentTime - timePaused > 100) {
+      if(keyH.escapePressed && currentTime - timePaused > 500) {
         paused = false;
         timePaused = currentTime;
       }
