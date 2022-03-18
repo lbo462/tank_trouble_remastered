@@ -91,16 +91,17 @@ public class StartingWindow extends JFrame implements ActionListener {
 
   public void actionPerformed (ActionEvent e) {
 
+    // Select the characters from the inputs
     characters[0] = Integer.parseInt(choice1.getText());
     characters[1] = Integer.parseInt(choice2.getText());
 
-    this.getContentPane().removeAll();
+    this.getContentPane().removeAll(); // remove all the element of the menu
 
     // add GamePanel
     gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters);
     this.add(gamePanel);
-    this.pack(); // sets the window to its preferred size
+    this.pack(); // sets the window to its preferred size, should be useless
 
-    gamePanel.startGameThread();
+    gamePanel.startGameThread(); // start game loop
   }
 }
