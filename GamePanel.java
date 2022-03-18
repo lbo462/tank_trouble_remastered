@@ -11,13 +11,13 @@ import java.awt.Color;
 
 public class GamePanel extends JPanel implements Runnable {
 
-  public final int width = 1050;
-  public final int height = 750;
+  public int width;
+  public int height;
 
-  public final int nbXtiles = 35; // number of tiles on the x-axis
-  public final int nbYtiles = 25;
+  public int nbXtiles; // number of tiles on the x-axis
+  public int nbYtiles;
 
-  public final int tileSize = width / nbXtiles; // size a single tile
+  public int tileSize; // size a single tile
   public BufferedImage background;
 
   int FPS = 60;
@@ -25,9 +25,49 @@ public class GamePanel extends JPanel implements Runnable {
   KeyHandler keyH = new KeyHandler();
   Thread gameThread;
   public Map currentMap; // public because entities need it for collisions
-  Tank[] players = new Tank[2];
+  Tank[] players;
 
-  public GamePanel() {
+  public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
+
+    tileSize = width / nbXtiles;
+
+    this.width = width;
+    this.height = height;
+    this.nbXtiles = nbXtiles;
+    this.nbYtiles = nbYtiles;
+    this.players = new Tank[2];
+
+    for(int i = 0; i < characters.length; i++) {
+      // configure positions
+      int x = 0, y = 0;
+      switch (i+1) {
+        case 1:
+          x = 2*tileSize;
+          y = 2*tileSize;
+          break;
+        case 2:
+          x = tileSize*(nbXtiles-2);
+          y = tileSize*(nbYtiles-2);
+          break;
+      }
+
+      // configure character chosen
+      switch(characters[i]) {
+        case 1:
+          players[i] = new Tank(i+1, x, y, "painTank.png", this, keyH);
+          break;
+        case 2:
+          players[i] = new Tank_Phantom(i+1, x, y, this, keyH);
+          break;
+        case 3:
+          players[i] = new Tank_Kitty(i+1, x, y, this, keyH);
+          break;
+        case 4:
+          players[i] = new Tank_TiTank(i+1, x, y, this, keyH);
+          break;
+      }
+    }
+
     this.setPreferredSize(new Dimension(width, height));
     this.setBackground(Color.black);
     this.setDoubleBuffered(true); // Increase game performance
@@ -43,9 +83,6 @@ public class GamePanel extends JPanel implements Runnable {
       e.printStackTrace();
     }
     currentMap = new Map(this);
-
-    players[0] = new Tank_Kitty(1, 2*tileSize, 2*tileSize, this, keyH);
-    players[1] = new Tank_TiTank(2, tileSize*(nbXtiles-2), tileSize*(nbYtiles-2), this, keyH);
   }
 
   // start Thread, start the game
@@ -57,6 +94,8 @@ public class GamePanel extends JPanel implements Runnable {
 
   @Override
   public void run(){
+
+    this.requestFocus(); // get the window focus
 
     // FPS managing
     double drawInterval = 1000000000 / FPS; //time interval between two frame

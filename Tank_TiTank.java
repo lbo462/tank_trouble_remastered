@@ -5,7 +5,7 @@ public class Tank_TiTank extends Tank_Super {
   boolean activated = false; // was the capacity activated?
 
   public Tank_TiTank(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-      super(number, x, y, "TiTank.png", gp, keyH,3000,200);
+      super(number, x, y, "TiTank.png", gp, keyH,2500,3000);
   }
 
   @Override
