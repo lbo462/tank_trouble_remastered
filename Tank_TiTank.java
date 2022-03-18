@@ -1,5 +1,3 @@
-import java.awt.Graphics2D;
-
 public class Tank_TiTank extends Tank_Super {
 
   boolean activated = false; // was the capacity activated?
@@ -16,14 +14,14 @@ public class Tank_TiTank extends Tank_Super {
         height = gp.tileSize*3;
         y -= gp.tileSize;
         x -= gp.tileSize;
-        speed /= 2;
+        speed += 2;
         activated = true;
       } else if(!this.capacityActive && activated) {
         width = gp.tileSize;
         height = gp.tileSize;
         y += gp.tileSize;
         x += gp.tileSize;
-        speed *= 2;
+        speed -= 2;
         activated = false;
       }
   }
