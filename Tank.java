@@ -10,38 +10,31 @@ import java.awt.Color;
 public class Tank extends MovingEntity {
 
   int number;
-  double lastShot;
+  int width, height;
+  double lastShot; // time of the last shot
+  GamePanel gp;
   KeyHandler keyH;
 
-  AffineTransform at = new AffineTransform();
-  boolean dead = false;
+  AffineTransform at; // enable rotation
 
-  boolean collision;
+  boolean dead;
+  boolean collision; // check collision in update
+  boolean collisionWithTiles; // used to phantom
+  boolean slowed; // used for kitty
   boolean upPressed,downPressed,leftPressed,rightPressed,shotPressed;
 
-  boolean collisionWithTiles = true; // used to phantom
+  double timeToSlow; // time to stay slowed
+  double timeSlowed; // time slowed started
 
-  boolean slowed = false; // used for kitty
-  double timeToSlow = 5000;
-  double timeSlowed;
-
-  int width, height;
-
-  ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+  ArrayList<Bullet> bullets; // contains active bullets
 
   public Tank(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH) {
 
     this.gp = gp;
     this.keyH = keyH;
-
-    this.x = x;
-    this.y = y;
     this.number = number;
-    this.speed = 3;
-    this.angle = 0; // keep
 
-    this.width = gp.tileSize;
-    this.height = gp.tileSize;
+    reset(x, y); // initialise every variables
 
     // Loading the image of the tank
     try {
@@ -49,6 +42,22 @@ public class Tank extends MovingEntity {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  // reset every variables
+  public void reset(int x, int y) {
+    dead = false;
+    collisionWithTiles = true;
+    slowed = false;
+    timeToSlow = 5000;
+    this.x = x;
+    this.y = y;
+    this.speed = 3;
+    this.angle = 0;
+    this.width = gp.tileSize;
+    this.height = gp.tileSize;
+    at = new AffineTransform();
+    bullets = new ArrayList<Bullet>();
   }
 
   public void update() {

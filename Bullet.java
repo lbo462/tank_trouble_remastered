@@ -111,7 +111,6 @@ public class Bullet extends MovingEntity {
         for(int i = x - gp.tileSize/2; i < x + gp.tileSize/2; i++) {
           for(int j = y - gp.tileSize/2; j < y + gp.tileSize/2; j++) {
             if(i == t.getX() && j == t.getY()) {
-              System.out.println(t.number);
               t.dead = true; // kill player
               this.dead = true; // kill this bullet
               break;

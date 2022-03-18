@@ -8,12 +8,15 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.Color;
 import java.awt.AlphaComposite;
+import javax.swing.*;
 
 
 public class GamePanel extends JPanel implements Runnable {
 
   boolean paused = false;
   double timePaused; // used to regulate between two press on pause button
+  int gamesToPlay = 3; // number of games to play
+  int numberOfGames = 1; // how much games were played
 
   public int width;
   public int height;
@@ -44,17 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     for(int i = 0; i < characters.length; i++) {
       // configure positions
-      int x = 0, y = 0;
-      switch (i+1) {
-        case 1:
-          x = 2*tileSize;
-          y = 2*tileSize;
-          break;
-        case 2:
-          x = tileSize*(nbXtiles-2);
-          y = tileSize*(nbYtiles-2);
-          break;
-      }
+      int pos[] = playerPos(i+1);
+      int x = pos[0], y = pos[1];
 
       // configure character chosen
       switch(characters[i]) {
@@ -97,6 +91,34 @@ public class GamePanel extends JPanel implements Runnable {
 
   }
 
+  // return the position of the player of number 1 or 2 in the form {x, y}
+  public int[] playerPos(int number) {
+    int pos[] = new int[2];
+    switch (number) {
+      case 1: // first player, top left corner
+        pos[0] = tileSize;
+        pos[1] = tileSize;
+        break;
+      case 2: // second player bottom right corner
+        pos[0] = tileSize*(nbXtiles-2);
+        pos[1] = tileSize*(nbYtiles-2);
+        break;
+    }
+    return pos;
+  }
+
+  public void resetGame() {
+
+    for(int i = 0; i < players.length; i++) {
+      // configure positions
+      int pos[] = new int[2];
+      pos = playerPos(i+1);
+      players[i].reset(pos[0], pos[1]); // reset player given its coordinates
+    }
+
+    numberOfGames ++;
+  }
+
   @Override
   public void run(){
 
@@ -128,8 +150,27 @@ public class GamePanel extends JPanel implements Runnable {
   public void update() {
     double currentTime = System.currentTimeMillis();
     if(!paused) {
-      for(Tank t: players)
+      for(Tank t: players) {
         t.update();
+        if(t.dead) {
+          System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
+          resetGame();
+          if(numberOfGames > gamesToPlay) {
+
+            // SHOULD RETURN TO MENU
+            // STILL SEARCHING A WAY TO ACHIEVE THIS
+
+            /*
+            numberOfGames = 1;
+            System.out.println("Returning to menu.");
+            this.removeAll(); // reset this JPanel
+            // Reset JFrame ...
+            StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
+            topFrame.initGUI();
+            */
+          }
+        }
+      }
       if(keyH.escapePressed && currentTime - timePaused > 500) {
         paused = true;
         timePaused = currentTime;

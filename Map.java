@@ -123,9 +123,9 @@ public class Map {
     }
 
     // empty spaw points
-    tilesInt[2]              [2]               = 0;
-    tilesInt[2]              [gp.nbXtiles - 2] = 0;
-    tilesInt[gp.nbYtiles - 2][2]               = 0;
+    tilesInt[1]              [1]               = 0;
+    tilesInt[1]              [gp.nbXtiles - 2] = 0;
+    tilesInt[gp.nbYtiles - 2][1]               = 0;
     tilesInt[gp.nbYtiles - 2][gp.nbXtiles - 2] = 0;
 
     // remove alone cells

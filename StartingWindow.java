@@ -20,10 +20,24 @@ public class StartingWindow extends JFrame implements ActionListener {
 
   public StartingWindow(){
 
-    this.setResizable(false);
-    this.setTitle("Tank trouble");
 
+    this.setTitle("Tank trouble");
     this.setSize(width, height);
+    this.setResizable(false);
+    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    initGUI();
+
+    // display game window
+    this.setLocationRelativeTo(null);
+    this.setVisible(true);
+  }
+
+  public void initGUI() {
+
+    System.out.println("Lauching menu ...");
+    gamePanel = null;
+    this.getContentPane().removeAll(); // remove all the element of the menu
 
     /* Selection Pane */
 
@@ -77,16 +91,9 @@ public class StartingWindow extends JFrame implements ActionListener {
     globalPane.setLayout(null);
     globalPane.setBackground(Color.yellow);
 
-    // display game window
-    this.setLocationRelativeTo(null);
-    this.setVisible(true);
-
     globalPane.add(paneSelection);
     globalPane.add(paneResult);
     this.add(globalPane);
-
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setVisible(true);
   }
 
   public void actionPerformed (ActionEvent e) {

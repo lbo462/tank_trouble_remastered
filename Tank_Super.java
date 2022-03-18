@@ -24,6 +24,14 @@ public class Tank_Super extends Tank{
         this.activationTime = System.currentTimeMillis();
     }
 
+    @Override
+    public void reset(int x, int y){
+      super.reset(x, y);
+      pourcentage = 1;
+      this.lastUse = System.currentTimeMillis() - this.capacityCooldown;
+      this.activationTime = System.currentTimeMillis();
+    }
+
     public void update() {
       this.keyPressed();
       this.capacityActivation();
