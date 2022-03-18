@@ -7,9 +7,13 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.AlphaComposite;
 
 
 public class GamePanel extends JPanel implements Runnable {
+
+  boolean paused = false;
+  double timePaused; // used to regulate between two press on pause button
 
   public int width;
   public int height;
@@ -30,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
 
     tileSize = width / nbXtiles;
+    timePaused = System.currentTimeMillis(); // initialise with random stuff
 
     this.width = width;
     this.height = height;
@@ -121,8 +126,20 @@ public class GamePanel extends JPanel implements Runnable {
 
   // update for each frame
   public void update() {
-    for(Tank t: players)
-      t.update();
+    double currentTime = System.currentTimeMillis();
+    if(!paused) {
+      for(Tank t: players)
+        t.update();
+      if(keyH.escapePressed && currentTime - timePaused > 100) {
+        paused = true;
+        timePaused = currentTime;
+      }
+    } else {
+      if(keyH.escapePressed && currentTime - timePaused > 100) {
+        paused = false;
+        timePaused = currentTime;
+      }
+    }
   }
 
   // draw at each frame
@@ -141,6 +158,22 @@ public class GamePanel extends JPanel implements Runnable {
     g2.setColor(Color.BLACK);
 
     currentMap.draw(g2); // draw the map
+
+    // draw pause logo
+    if(paused) {
+      // transparency
+      g2.setColor(Color.WHITE);
+      AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
+      g2.setComposite(alcom);
+
+      // two rects of the logo
+      g2.fillRect(width - 100, 20, 25, 80);
+      g2.fillRect(width - 55, 20, 25, 80);
+
+      // reset transparency
+      alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+      g2.setComposite(alcom);
+    }
 
     g2.dispose();
 
