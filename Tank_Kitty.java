@@ -19,6 +19,12 @@ public class Tank_Kitty extends Tank_Super{
     }
 
     @Override
+    public void reset(int x, int y) {
+      super.reset(x, y);
+      bulletsKitty = new ArrayList<Bullet_Kitty>();
+    }
+
+    @Override
     public void deadBulletRemoval(){
       super.deadBulletRemoval();
 
