@@ -42,7 +42,7 @@ public class Bullet extends MovingEntity {
   }
 
   public void draw(Graphics2D g2) {
-    g2.drawImage(sprite, (int)(x-this.width), (int)(y-this.height), null);
+    g2.drawImage(sprite, (int)(x-this.width), (int)(y-this.height), (int)width, (int)height, null);
   }
 
   @Override

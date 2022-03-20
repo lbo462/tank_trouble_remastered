@@ -27,6 +27,20 @@ public class Tank_TiTank extends Tank_Super {
   }
 
   @Override
+  public void shoot(){
+    if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
+      Bullet b;
+      if(capacityActive)
+        b = new Bullet_Big(getX(), getY(), this.angle, "bullet.png", gp);
+      else
+        b = new Bullet(getX(), getY(), this.angle, "bullet.png", gp);
+      bullets.add(b);
+
+      lastShot = System.currentTimeMillis();
+    }
+  }
+
+  @Override
   // remove the wall if there's a collision
   public void collision() {
     super.collision();
