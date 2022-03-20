@@ -106,14 +106,20 @@ public class Bullet extends MovingEntity {
   public void didItTouch(){
     double currentTime = System.currentTimeMillis();
     if(currentTime - bornAt > 500) { // don't auto kill the shooter
-      for(Tank t: gp.players) {
+      // check every pixel of the bullet
+      for(int i = x; i < x + width; i++) {
+        for(int j = y; j < y + height; j++) {
 
-        for(int i = x - gp.tileSize/2; i < x + gp.tileSize/2; i++) {
-          for(int j = y - gp.tileSize/2; j < y + gp.tileSize/2; j++) {
-            if(i == t.getX() && j == t.getY()) {
-              t.dead = true; // kill player
-              this.dead = true; // kill this bullet
-              break;
+          for(Tank t: gp.players) { // for all tanks ...
+            // check every pixel of the tank
+            for(int k = t.getX() - t.width/2; k < t.getX() + t.width/2; k++) {
+              for(int l = t.getY() - t.height/2; l < t.getY() + t.height/2; l++) {
+                if(i == k && j == l) {
+                  t.dead = true; // kill player
+                  this.dead = true; // kill this bullet
+                  break;
+                }
+              }
             }
           }
         }
