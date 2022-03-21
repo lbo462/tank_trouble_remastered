@@ -160,14 +160,15 @@ public class GamePanel extends JPanel implements Runnable {
             // SHOULD RETURN TO MENU
             // STILL SEARCHING A WAY TO ACHIEVE THIS
 
-            /*
+
             numberOfGames = 1;
             System.out.println("Returning to menu.");
-            this.removeAll(); // reset this JPanel
+            // this.removeAll(); // reset this JPanel
             // Reset JFrame ...
             StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
             topFrame.initGUI();
-            */
+            paused = true;
+
           }
         }
       }

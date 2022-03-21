@@ -36,7 +36,6 @@ public class StartingWindow extends JFrame implements ActionListener {
   public void initGUI() {
 
     System.out.println("Lauching menu ...");
-    gamePanel = null;
     this.getContentPane().removeAll(); // remove all the element of the menu
 
     /* Selection Pane */
@@ -94,6 +93,10 @@ public class StartingWindow extends JFrame implements ActionListener {
     globalPane.add(paneSelection);
     globalPane.add(paneResult);
     this.add(globalPane);
+
+    this.setVisible(true);
+
+    gamePanel = null;
   }
 
   public void actionPerformed (ActionEvent e) {
