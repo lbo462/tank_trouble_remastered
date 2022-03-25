@@ -39,7 +39,6 @@ public class GamePanel extends JPanel implements Runnable {
   Tank[] players;
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
-
     tileSize = width / nbXtiles;
     timePaused = System.currentTimeMillis(); // initialise with random stuff
 
@@ -71,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
       }
     }
 
-    this.setPreferredSize(new Dimension(width, height));
+    this.setSize(width, height);
     this.setBackground(Color.black);
     this.setDoubleBuffered(true); // Increase game performance
     this.setFocusable(true); // so the window can be focused : needed to receive input from user
