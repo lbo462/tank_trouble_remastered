@@ -20,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
   double timePaused; // used to regulate between two press on pause button
   int gamesToPlay = 1; // number of games to play
   int numberOfGames = 1; // how much games were played
+  int winner; // number of the winner
 
   public int width;
   public int height;
@@ -154,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable {
     double currentTime = System.currentTimeMillis();
     if(gameOver) {
       if(currentTime - timeOver > 3000) {
-        System.out.println("Returning to menu.");
+        System.out.println("Returning to menu...");
         // Reset JFrame ...
         StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
         topFrame.initGUI();
@@ -171,6 +172,10 @@ public class GamePanel extends JPanel implements Runnable {
             if(numberOfGames > gamesToPlay) {
               numberOfGames = 1;
               gameOver = true;
+              int iMaxScore = 0;
+              for(int i = 0; i < players.length; i++)
+                if(players[i].score > players[iMaxScore].score) iMaxScore = i;
+              winner = players[iMaxScore].number;
               timeOver = currentTime;
             }
           }
@@ -228,11 +233,11 @@ public class GamePanel extends JPanel implements Runnable {
 
       // change font
       Font currentFont = g.getFont();
-      Font newFont = currentFont.deriveFont(currentFont.getSize() * 8F);
+      Font newFont = currentFont.deriveFont(currentFont.getSize() * 5F);
       g2.setFont(newFont);
 
       // two rects of the logo
-      g2.drawString("Game over ...", 200, 300);
+      g2.drawString("Player_"+winner+" won", 200, 300);
       g2.setFont(currentFont);
 
       // reset transparency

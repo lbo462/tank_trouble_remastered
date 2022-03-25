@@ -25,6 +25,7 @@ public class Tank extends MovingEntity {
   boolean collisionWithTiles; // used to phantom
   boolean slowed; // used for kitty
   boolean upPressed,downPressed,leftPressed,rightPressed,shotPressed;
+  int score;
 
   double timeToSlow; // time to stay slowed
   double timeSlowed; // time slowed started
@@ -38,6 +39,7 @@ public class Tank extends MovingEntity {
     this.gp = gp;
     this.keyH = keyH;
     this.number = number;
+    this.score = 0;
 
     reset(x, y); // initialise every variables
 
@@ -176,6 +178,18 @@ public class Tank extends MovingEntity {
   public void deadBulletRemoval(){
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();
+      if(this.dead) {
+        score--; // -1 if the player killed himself
+        break;
+      }
+      else {
+        for(Tank t: gp.players) { // check if someonelse died in the process
+          if(t.dead) {
+            score++;
+            break;
+          }
+        }
+      }
       if(bullets.get(i).dead){
         bullets.remove(i);
       }
