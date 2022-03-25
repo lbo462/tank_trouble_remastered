@@ -9,13 +9,16 @@ import java.io.IOException;
 import java.awt.Color;
 import java.awt.AlphaComposite;
 import javax.swing.*;
+import java.awt.Font;
 
 
 public class GamePanel extends JPanel implements Runnable {
 
   boolean paused = false;
+  boolean gameOver = false;
+  double timeOver; // time at which the game ended
   double timePaused; // used to regulate between two press on pause button
-  int gamesToPlay = 3; // number of games to play
+  int gamesToPlay = 1; // number of games to play
   int numberOfGames = 1; // how much games were played
 
   public int width;
@@ -149,37 +152,38 @@ public class GamePanel extends JPanel implements Runnable {
   // update for each frame
   public void update() {
     double currentTime = System.currentTimeMillis();
-    if(!paused) {
-      for(Tank t: players) {
-        t.update();
-        if(t.dead) {
-          System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
-          resetGame();
-          if(numberOfGames > gamesToPlay) {
-
-            // SHOULD RETURN TO MENU
-            // STILL SEARCHING A WAY TO ACHIEVE THIS
-
-
-            numberOfGames = 1;
-            System.out.println("Returning to menu.");
-            // this.removeAll(); // reset this JPanel
-            // Reset JFrame ...
-            StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
-            topFrame.initGUI();
-            paused = true;
-
-          }
-        }
-      }
-      if(keyH.escapePressed && currentTime - timePaused > 500) {
+    if(gameOver) {
+      if(currentTime - timeOver > 3000) {
+        System.out.println("Returning to menu.");
+        // Reset JFrame ...
+        StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
+        topFrame.initGUI();
         paused = true;
-        timePaused = currentTime;
+        gameOver = false;
       }
     } else {
-      if(keyH.escapePressed && currentTime - timePaused > 500) {
-        paused = false;
-        timePaused = currentTime;
+      if(!paused) {
+        for(Tank t: players) {
+          t.update();
+          if(t.dead) {
+            System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
+            resetGame();
+            if(numberOfGames > gamesToPlay) {
+              numberOfGames = 1;
+              gameOver = true;
+              timeOver = currentTime;
+            }
+          }
+        }
+        if(keyH.escapePressed && currentTime - timePaused > 500) {
+          paused = true;
+          timePaused = currentTime;
+        }
+      } else {
+        if(keyH.escapePressed && currentTime - timePaused > 500) {
+          paused = false;
+          timePaused = currentTime;
+        }
       }
     }
   }
@@ -211,6 +215,25 @@ public class GamePanel extends JPanel implements Runnable {
       // two rects of the logo
       g2.fillRect(width - 100, 20, 25, 80);
       g2.fillRect(width - 55, 20, 25, 80);
+
+      // reset transparency
+      alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+      g2.setComposite(alcom);
+    }
+    if(gameOver) {
+      // transparency
+      g2.setColor(Color.RED);
+      AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
+      g2.setComposite(alcom);
+
+      // change font
+      Font currentFont = g.getFont();
+      Font newFont = currentFont.deriveFont(currentFont.getSize() * 8F);
+      g2.setFont(newFont);
+
+      // two rects of the logo
+      g2.drawString("Game over ...", 200, 300);
+      g2.setFont(currentFont);
 
       // reset transparency
       alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);

@@ -42,9 +42,14 @@ public class Tank_Kitty extends Tank_Super{
       if(System.currentTimeMillis() - lastShot > 100) {
         if(shotPressed && !capacityActive) {
           bullets.add(new Bullet(getX(), getY(), this.angle, "bullet.png", gp));
+          clipPew.stop();
+          clipPew.play();
         } else if(capacityActive) {
           bulletsKitty.add(new Bullet_Kitty(getX(), getY(), this.angle, "kitty.png", "explodedKitty.png", gp));
+          clipPew.stop();
+          clipPew.play();
         }
+
         lastShot = System.currentTimeMillis();
       }
     }

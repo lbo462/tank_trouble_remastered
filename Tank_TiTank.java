@@ -35,7 +35,8 @@ public class Tank_TiTank extends Tank_Super {
       else
         b = new Bullet(getX(), getY(), this.angle, "bullet.png", gp);
       bullets.add(b);
-
+      clipPew.stop();
+      clipPew.play();
       lastShot = System.currentTimeMillis();
     }
   }
