@@ -38,7 +38,6 @@ public class GamePanel extends JPanel implements Runnable {
   Tank[] players;
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
-
     tileSize = width / nbXtiles;
     timePaused = System.currentTimeMillis(); // initialise with random stuff
 

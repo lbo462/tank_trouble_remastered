@@ -33,12 +33,11 @@ public class StartingWindow extends JFrame implements MouseListener{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(width,height);
-        
+
         choiceMap = 0;
-        characters[0] = 1;
-        characters[1] = 1;
+        characters[0] = 0;
+        characters[1] = 0;
         
-		
 		JPanel containerGlobal = new JPanel();
 		containerGlobal.setLayout(null);
 		containerGlobal.setBounds(0,0,width,height);
@@ -55,7 +54,7 @@ public class StartingWindow extends JFrame implements MouseListener{
             else
                 containerMap[i].setBackground(defaultBlueFrame);
             containerMap[i].addMouseListener(this);
-            Map[i] = new JLabel(new ImageIcon("menu/Map"+i+".png")); //size of image is 310*310 px
+            Map[i] = new JLabel(new ImageIcon("assets/menu/Map"+i+".png")); //size of image is 310*310 px
             Map[i].setBounds(10,10,310,310);
             Map[i].setBackground(Color.white); //if no image loaded default color is white
         }
@@ -135,7 +134,7 @@ public class StartingWindow extends JFrame implements MouseListener{
         play.setBackground(Color.white);
         play.setOpaque(true);
         
-        JLabel background = new JLabel(new ImageIcon("menu/BackgroundMenujpg"));
+        JLabel background = new JLabel(new ImageIcon("assets/menu/BackgroundMenujpg"));
         background.setBounds(0,0,width,height);
         
         //ADDING EVERY PANEL
@@ -190,9 +189,7 @@ public class StartingWindow extends JFrame implements MouseListener{
             characters[1] += 1;
             gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters);
             this.add(gamePanel);
-            this.pack();
             gamePanel.startGameThread(); // start game loop
-            System.out.println(characters[1]);
         }
     }
     
@@ -221,5 +218,4 @@ public class StartingWindow extends JFrame implements MouseListener{
         }
         if(e.getSource() == containerLaunch) containerLaunch.setBackground(defaultBlueFrame); //Checking the launch button
     }
-    
 }
