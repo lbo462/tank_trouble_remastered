@@ -63,8 +63,8 @@ public class Bullet extends MovingEntity {
         Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
         int xTile = (int)(xGrid * gp.tileSize) + gp.tileSize/2;
         int yTile = (int)(yGrid * gp.tileSize) + gp.tileSize/2;
-        int deltaX = nextX - xTile;
-        int deltaY = nextY - yTile;
+        double deltaX = nextX - xTile;
+        double deltaY = nextY - yTile;
 
         // Magic piece of code, do not touch
         if(deltaX > 0)

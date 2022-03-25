@@ -52,7 +52,9 @@ public class Tank extends MovingEntity {
     timeToSlow = 5000;
     this.x = x;
     this.y = y;
-    this.speed = 3;
+    this.increaseSpeed = 0.3;
+    this.speed = 0;
+    this.maxSpeed = 3;
     this.angle = 0;
     this.width = gp.tileSize;
     this.height = gp.tileSize;
@@ -76,12 +78,12 @@ public class Tank extends MovingEntity {
 
   public void slow(boolean shouldSlow) {
     if(shouldSlow) {
-      if(!slowed) speed /= 2;
+      if(!slowed) maxSpeed /= 2;
       slowed = true;
       timeSlowed = System.currentTimeMillis();
     } else if(slowed) {
       slowed = false;
-      speed *= 2;
+      maxSpeed *= 2;
     }
 
   }
@@ -126,9 +128,9 @@ public class Tank extends MovingEntity {
       double prevAngle = this.angle; // angle before the transformation
       // keyboard inputs
       if(leftPressed)
-        this.angle += this.speed;
+        this.angle += 3;
       if(rightPressed)
-        this.angle -= this.speed;
+        this.angle -= 3;
       double angleToRotate = prevAngle - this.angle; // angle difference to adjust between then and now
       at.rotate(Math.toRadians(angleToRotate), x+(int)(width/2), y+(int)(height/2)); // do the rotation at the right spot
     }
@@ -136,14 +138,20 @@ public class Tank extends MovingEntity {
 
   // TRANSLATION
   public void translation(){
+    nextY = y; // keep new y in a var before updating the real y: care for collisions
     if(upPressed || downPressed) {
-      nextY = y; // keep new y in a var before updating the real y: care for collisions
       // keyboard inputs
+      double temp = speed;
       if(upPressed)
-        nextY += speed*2;
+        speed += increaseSpeed;
       if(downPressed)
-        nextY -= speed*2;
+        speed -= increaseSpeed;
+      if(Math.abs(speed) > maxSpeed) speed = speed/Math.abs(speed) * maxSpeed;
+    } else {
+      speed *= 0.75;
+      if(Math.abs(speed) < 0.1) speed = 0;
     }
+    nextY += (int)speed;
   }
 
   public void shoot(){
@@ -191,7 +199,7 @@ public class Tank extends MovingEntity {
     collision = false;
     double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
     double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-    for(int i = nextY - (int)(height)/2; i <= nextY + (int)(height)/2; i += (int)(height/4)) {
+    for(int i = (int)(nextY - height/2); i <= nextY + (int)(height)/2; i += (int)(height/4)) {
       for(int j = x - (int)(width)/2; j <= x + (int)(width)/2; j += (int)(width/4)) {
         int xc = j + height/2, yc = i + width/2; // position of the center of the tank
         int nextX0 = (int)(m00 * xc + m01 * yc + m02);
@@ -225,10 +233,7 @@ public class Tank extends MovingEntity {
   @Override
   void updatePosition() {
     if(!collision) { // update only if there's no collision
-      if(upPressed)
-        y += speed;
-      if(downPressed)
-        y -= speed;
+      y = (int)nextY;
     }
   }
 }

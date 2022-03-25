@@ -14,14 +14,14 @@ public class Tank_TiTank extends Tank_Super {
         height = gp.tileSize*3;
         y -= gp.tileSize;
         x -= gp.tileSize;
-        speed += 2;
+        maxSpeed += 2;
         activated = true;
       } else if(!this.capacityActive && activated) {
         width = gp.tileSize;
         height = gp.tileSize;
         y += gp.tileSize;
         x += gp.tileSize;
-        speed -= 2;
+        maxSpeed -= 2;
         activated = false;
       }
   }
@@ -47,7 +47,7 @@ public class Tank_TiTank extends Tank_Super {
     if(capacityActive) {
       double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
       double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-      for(int i = nextY - (int)(height)/2; i <= nextY + (int)(height)/2; i += (int)(height/4)) {
+      for(int i = (int)(nextY - height/2); i <= nextY + (int)(height)/2; i += (int)(height/4)) {
         for(int j = x - (int)(width)/2; j <= x + (int)(width)/2; j += (int)(width/4)) {
           int xc = j + height/2, yc = i + width/2; // position of the center of the tank
           int nextX0 = (int)(m00 * xc + m01 * yc + m02);
