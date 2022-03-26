@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
@@ -69,12 +68,6 @@ public class GamePanel extends JPanel implements Runnable {
           break;
       }
     }
-
-    this.setSize(width, height);
-    this.setBackground(Color.black);
-    this.setDoubleBuffered(true); // Increase game performance
-    this.setFocusable(true); // so the window can be focused : needed to receive input from user
-
     this.addKeyListener(keyH);
 
     System.out.println("Generating map ...");
@@ -158,8 +151,8 @@ public class GamePanel extends JPanel implements Runnable {
         // Reset JFrame ...
         StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
         topFrame.initGUI();
-        paused = true;
         gameOver = false;
+        paused = true;
       }
     } else {
       if(!paused) {
@@ -196,7 +189,6 @@ public class GamePanel extends JPanel implements Runnable {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
     // draw the background
