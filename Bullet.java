@@ -16,14 +16,14 @@ public class Bullet extends MovingEntity {
   private boolean UoDcollision;// Up or Down collisions
   private boolean LoRCollision;// Left or Right collisions
 
-  AudioClip explosionSound; // pew pew sound
+  AudioClip explosionSound; // boum sound
 
   public Bullet(int x, int y, double direction, String image, GamePanel gp) {
     this.x = x;
     this.y = y;
     this.gp = gp;
     this.angle = direction;
-    this.speed = 4;
+    this.speed = 5;
 
     bornAt = System.currentTimeMillis();
 

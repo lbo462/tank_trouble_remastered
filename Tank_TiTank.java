@@ -10,12 +10,17 @@ public class Tank_TiTank extends Tank_Super {
   public void update(){
       super.update();
       if(this.capacityActive && !activated) {
-        width = gp.tileSize*3;
-        height = gp.tileSize*3;
-        y -= gp.tileSize;
-        x -= gp.tileSize;
-        maxSpeed += 2;
-        activated = true;
+        // check if the tank is not at a border
+        int x = getX();
+        int y = getY();
+        if(x > gp.tileSize*3 && x < gp.width - gp.tileSize*3 && y > gp.tileSize*3 && y < gp.height - gp.tileSize*3) {
+          width = gp.tileSize*3;
+          height = gp.tileSize*3;
+          y -= gp.tileSize;
+          x -= gp.tileSize;
+          maxSpeed += 2;
+          activated = true;
+        }
       } else if(!this.capacityActive && activated) {
         width = gp.tileSize;
         height = gp.tileSize;

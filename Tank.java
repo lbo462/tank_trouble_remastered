@@ -63,7 +63,7 @@ public class Tank extends MovingEntity {
     timeToSlow = 5000;
     this.x = x;
     this.y = y;
-    this.increaseSpeed = 0.3;
+    this.increaseSpeed = 0.2;
     this.speed = 0;
     this.maxSpeed = 3;
     this.angle = 0;
