@@ -2,9 +2,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
 
 public class Bullet extends MovingEntity {
 
@@ -15,8 +12,6 @@ public class Bullet extends MovingEntity {
   AffineTransform at = new AffineTransform();
   private boolean UoDcollision;// Up or Down collisions
   private boolean LoRCollision;// Left or Right collisions
-
-  AudioClip explosionSound; // boum sound
 
   public Bullet(int x, int y, double direction, String image, GamePanel gp) {
     this.x = x;
@@ -32,10 +27,6 @@ public class Bullet extends MovingEntity {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    // load sounds
-    URL url = getClass().getResource("assets/sounds/ouh_death_sound.wav");
-    explosionSound = Applet.newAudioClip(url);
 
     this.width = sprite.getWidth();
     this.height = sprite.getHeight();
@@ -126,8 +117,8 @@ public class Bullet extends MovingEntity {
                 if(i == k && j == l) {
                   t.dead = true; // kill player
                   this.dead = true; // kill this bullet
-                  explosionSound.stop();
-                  explosionSound.play();
+                  gp.s.explosionSound.stop();
+                  gp.s.explosionSound.play();
                   break;
                 }
               }

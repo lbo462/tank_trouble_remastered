@@ -35,13 +35,17 @@ public class Tank_TiTank extends Tank_Super {
   public void shoot(){
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
       Bullet b;
-      if(capacityActive)
+      if(capacityActive) {
         b = new Bullet_Big(getX(), getY(), this.angle, "bullet.png", gp);
-      else
+        gp.s.grosPew.stop();
+        gp.s.grosPew.play();
+      }
+      else {
         b = new Bullet(getX(), getY(), this.angle, "bullet.png", gp);
+        gp.s.pew.stop();
+        gp.s.pew.play();
+      }
       bullets.add(b);
-      clipPew.stop();
-      clipPew.play();
       lastShot = System.currentTimeMillis();
     }
   }

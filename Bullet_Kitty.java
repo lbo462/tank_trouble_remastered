@@ -2,9 +2,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
 
 public class Bullet_Kitty extends Bullet_Super {
 
@@ -12,7 +9,6 @@ public class Bullet_Kitty extends Bullet_Super {
   boolean exploded = false;
   int radius; // radius of explosion
   BufferedImage spriteExploded;
-  AudioClip splash; // splash sound
 
   public Bullet_Kitty(int x, int y, double direction, String image, String imageExploded, GamePanel gp) {
     super(x, y, direction, image, gp);
@@ -22,9 +18,6 @@ public class Bullet_Kitty extends Bullet_Super {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    URL url = getClass().getResource("assets/sounds/splash.wav");
-    splash = Applet.newAudioClip(url);
 
     radius = spriteExploded.getHeight()/2;
     lifeTime = 10000;
@@ -47,8 +40,8 @@ public class Bullet_Kitty extends Bullet_Super {
 
   public void explode() {
     exploded = true;
-    splash.stop();
-    splash.play();
+    gp.s.splash.stop();
+    gp.s.splash.play();
   }
 
   @Override

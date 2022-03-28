@@ -5,9 +5,6 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
 
 // TANK BOUM BOUM
 public class Tank extends MovingEntity {
@@ -32,8 +29,6 @@ public class Tank extends MovingEntity {
 
   ArrayList<Bullet> bullets; // contains active bullets
 
-  AudioClip clipPew; // pew pew sound
-
   public Tank(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH) {
 
     this.gp = gp;
@@ -49,10 +44,6 @@ public class Tank extends MovingEntity {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    // load sounds
-    URL urlpew = getClass().getResource("assets/sounds/pew.wav");
-    clipPew = Applet.newAudioClip(urlpew);
   }
 
   // reset every variables
@@ -173,8 +164,8 @@ public class Tank extends MovingEntity {
   public void shoot(){
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
       bullets.add(new Bullet(getX(), getY(), this.angle, "bullet.png", gp));
-      clipPew.stop();
-      clipPew.play();
+      gp.s.pew.stop();
+      gp.s.pew.play();
       lastShot = System.currentTimeMillis();
     }
   }

@@ -10,6 +10,9 @@ import java.awt.AlphaComposite;
 import javax.swing.*;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -34,10 +37,13 @@ public class GamePanel extends JPanel implements Runnable {
   int FPS = 60;
 
   KeyHandler keyH = new KeyHandler();
+  Sound s = new Sound(); // sound player
   Thread gameThread;
   public Map currentMap; // public because entities need it for collisions
   Tank[] players;
   ArrayList<Dust> dust; // contains dust
+
+  AudioClip music; // splash sound
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
     tileSize = width / nbXtiles;
@@ -81,6 +87,9 @@ public class GamePanel extends JPanel implements Runnable {
       e.printStackTrace();
     }
     currentMap = new Map(this);
+
+    // music maestro
+    s.music.loop();
   }
 
   // start Thread, start the game
@@ -156,6 +165,7 @@ public class GamePanel extends JPanel implements Runnable {
         topFrame.initGUI();
         gameOver = false;
         paused = true;
+        s.end.stop();
       }
     } else {
       if(!paused) {
@@ -168,6 +178,8 @@ public class GamePanel extends JPanel implements Runnable {
             if(numberOfGames > gamesToPlay) { // if the number of games to play has been reached
               numberOfGames = 1;
               gameOver = true;
+              s.music.stop();
+              s.end.play();
               // find winner
               int iMaxScore = 0;
               for(int i = 0; i < players.length; i++)
@@ -187,11 +199,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
         if(keyH.escapePressed && currentTime - timePaused > 500) {
           paused = true;
+          s.music.stop();
           timePaused = currentTime;
         }
       } else {
         if(keyH.escapePressed && currentTime - timePaused > 500) {
           paused = false;
+          s.music.loop();
           timePaused = currentTime;
         }
       }
