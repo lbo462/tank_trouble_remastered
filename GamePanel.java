@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.AlphaComposite;
 import javax.swing.*;
 import java.awt.Font;
+import java.util.ArrayList;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
   Thread gameThread;
   public Map currentMap; // public because entities need it for collisions
   Tank[] players;
+  ArrayList<Dust> dust; // contains dust
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
     tileSize = width / nbXtiles;
@@ -46,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     this.nbXtiles = nbXtiles;
     this.nbYtiles = nbYtiles;
     this.players = new Tank[2];
+    this.dust = new ArrayList<Dust>();
 
     for(int i = 0; i < characters.length; i++) {
       // configure positions
@@ -156,20 +159,30 @@ public class GamePanel extends JPanel implements Runnable {
       }
     } else {
       if(!paused) {
+        // update tanks
         for(Tank t: players) {
           t.update();
-          if(t.dead) {
+          if(t.dead) { // check if a tank died
             System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
             resetGame();
-            if(numberOfGames > gamesToPlay) {
+            if(numberOfGames > gamesToPlay) { // if the number of games to play has been reached
               numberOfGames = 1;
               gameOver = true;
+              // find winner
               int iMaxScore = 0;
               for(int i = 0; i < players.length; i++)
                 if(players[i].score > players[iMaxScore].score) iMaxScore = i;
               winner = players[iMaxScore].number;
-              timeOver = currentTime;
+              timeOver = currentTime; // record time of end-game for "animation"
             }
+          }
+        }
+        // update dust
+        for(int i = 0; i < dust.size(); i++) {
+          dust.get(i).update();
+          // remove dead dust
+          if(dust.get(i).dead){
+            dust.remove(i);
           }
         }
         if(keyH.escapePressed && currentTime - timePaused > 500) {
@@ -193,6 +206,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     // draw the background
     g2.drawImage(background, 0, 0, width, height, null);
+
+    // draw dust
+    for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
 
     // draw players (and bullets)
     for(Tank t: players)

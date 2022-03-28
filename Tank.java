@@ -69,6 +69,7 @@ public class Tank extends MovingEntity {
     this.angle = 0;
     this.width = gp.tileSize;
     this.height = gp.tileSize;
+    this.isMoving = false;
     at = new AffineTransform();
     bullets = new ArrayList<Bullet>();
   }
@@ -101,9 +102,12 @@ public class Tank extends MovingEntity {
 
   // Drawing the current picture
   public void draw(Graphics2D g2) {
+    AlphaComposite originalAlcom = (AlphaComposite)g2.getComposite();
+    for(Bullet b: bullets) b.draw(g2);
 
     AffineTransform saveAt = g2.getTransform();
     g2.transform(at);
+    g2.setComposite(originalAlcom);
     g2.drawImage(sprite, x, y, width, height, null);
     if(slowed) {
       AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
@@ -117,9 +121,6 @@ public class Tank extends MovingEntity {
       g2.setComposite(alcom);
     }
     g2.setTransform(saveAt);
-
-    for(int i = 0; i < bullets.size(); i++) bullets.get(i).draw(g2);
-
   }
 
   // get the position (X, Y) in the reference frame, reverting the rotating matrix at(Affine Transform)
@@ -161,6 +162,10 @@ public class Tank extends MovingEntity {
     } else {
       speed *= 0.75;
       if(Math.abs(speed) < 0.1) speed = 0;
+    }
+    if(Math.abs(speed) > 0 && Math.random() < 0.3) {
+      gp.dust.add(new Dust(getX(), getY()));
+      gp.dust.add(new Dust(getX(), getY()));
     }
     nextY += (int)speed;
   }

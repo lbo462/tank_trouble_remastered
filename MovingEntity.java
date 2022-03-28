@@ -4,6 +4,7 @@ public abstract class MovingEntity extends Entity{
     double increaseSpeed; // value tp add to trueSpeed on key pressed
     double speed; // actual speed to add to pos
     double maxSpeed;
+    boolean isMoving;
 
     double width, height;
 

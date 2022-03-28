@@ -10,6 +10,12 @@ public class Bullet_Big extends Bullet_Super {
   }
 
   @Override
+  public void update() {
+    super.update();
+    gp.dust.add(new Dust(x, y));
+  }
+
+  @Override
   void collision() {
     nextX += width/2;
     nextY += height/2;
