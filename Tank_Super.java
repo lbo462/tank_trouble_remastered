@@ -1,6 +1,5 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 
 // This class creates a tank with special (additional) capacities
 public class Tank_Super extends Tank{

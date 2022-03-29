@@ -144,7 +144,6 @@ public class Tank extends MovingEntity {
     nextY = y; // keep new y in a var before updating the real y: care for collisions
     if(upPressed || downPressed) {
       // keyboard inputs
-      double temp = speed;
       if(upPressed)
         speed += increaseSpeed;
       if(downPressed)
