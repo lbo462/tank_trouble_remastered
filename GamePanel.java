@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.net.URL;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -32,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
   public int nbYtiles;
 
   public int tileSize; // size a single tile
-  public BufferedImage background;
+  public Image background;
 
   int FPS = 60;
 
@@ -82,8 +87,8 @@ public class GamePanel extends JPanel implements Runnable {
     System.out.println("Generating map ...");
     // load the background image
     try {
-      background = ImageIO.read(getClass().getResourceAsStream("assets/defaultMapBackground.png"));
-    } catch (IOException e) {
+      background = new ImageIcon(getClass().getResource("assets/background.gif")).getImage();
+    }  catch (Exception e) {
       e.printStackTrace();
     }
     currentMap = new Map(this);
@@ -219,7 +224,7 @@ public class GamePanel extends JPanel implements Runnable {
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
     // draw the background
-    g2.drawImage(background, 0, 0, width, height, null);
+    g2.drawImage(background, 0, 0, width, height, this);
 
     // draw dust
     for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
