@@ -10,25 +10,20 @@ import java.awt.AlphaComposite;
 import javax.swing.*;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
-import javax.swing.ImageIcon;
-import java.awt.Image;
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class GamePanel extends JPanel implements Runnable {
+
+  boolean musicOn = false;
 
   boolean paused = false;
   boolean gameOver = false;
   double timeOver; // time at which the game ended
   double timePaused; // used to regulate between two press on pause button
-  int gamesToPlay = 1; // number of games to play
+  int gamesToPlay = 3; // number of games to play
   int numberOfGames = 1; // how much games were played
   int winner; // number of the winner
+  int frame; // number of frame
 
   public int width;
   public int height;
@@ -37,18 +32,16 @@ public class GamePanel extends JPanel implements Runnable {
   public int nbYtiles;
 
   public int tileSize; // size a single tile
-  public Image background;
 
   int FPS = 60;
 
-  KeyHandler keyH = new KeyHandler();
-  Sound s = new Sound(); // sound player
+  public KeyHandler keyH = new KeyHandler();
+  public Sound s = new Sound(); // sound player
+  public ImageManager im = new ImageManager();
   Thread gameThread;
   public Map currentMap; // public because entities need it for collisions
   Tank[] players;
   ArrayList<Dust> dust; // contains dust
-
-  AudioClip music; // splash sound
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
     tileSize = width / nbXtiles;
@@ -60,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     this.nbYtiles = nbYtiles;
     this.players = new Tank[2];
     this.dust = new ArrayList<Dust>();
+    frame = 0;
 
     for(int i = 0; i < characters.length; i++) {
       // configure positions
@@ -69,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
       // configure character chosen
       switch(characters[i]) {
         case 1:
-          players[i] = new Tank(i+1, x, y, "painTank.png", this, keyH);
+          players[i] = new Tank(i+1, x, y, im.painTank, im.defaultExplosion, this, keyH);
           break;
         case 2:
           players[i] = new Tank_Phantom(i+1, x, y, this, keyH);
@@ -85,16 +79,10 @@ public class GamePanel extends JPanel implements Runnable {
     this.addKeyListener(keyH);
 
     System.out.println("Generating map ...");
-    // load the background image
-    try {
-      background = new ImageIcon(getClass().getResource("assets/background.gif")).getImage();
-    }  catch (Exception e) {
-      e.printStackTrace();
-    }
     currentMap = new Map(this);
 
     // music maestro
-    s.music.loop();
+    if(musicOn) s.music.loop();
   }
 
   // start Thread, start the game
@@ -155,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
       } catch(InterruptedException e) {
         e.printStackTrace(); //if there was a problem during the Thread.sleep)(), print it
       }
+      frame++;
 
     }
   }
@@ -177,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
         // update tanks
         for(Tank t: players) {
           t.update();
-          if(t.dead) { // check if a tank died
+          if(t.dead && currentTime - t.timeDied > 600) { // check if a tank died
             System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
             resetGame();
             if(numberOfGames > gamesToPlay) { // if the number of games to play has been reached
@@ -210,7 +199,7 @@ public class GamePanel extends JPanel implements Runnable {
       } else {
         if(keyH.escapePressed && currentTime - timePaused > 500) {
           paused = false;
-          s.music.loop();
+          if(musicOn) s.music.loop();
           timePaused = currentTime;
         }
       }
@@ -224,7 +213,7 @@ public class GamePanel extends JPanel implements Runnable {
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
     // draw the background
-    g2.drawImage(background, 0, 0, width, height, this);
+    g2.drawImage(im.background, 0, 0, width, height, this);
 
     // draw dust
     for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);

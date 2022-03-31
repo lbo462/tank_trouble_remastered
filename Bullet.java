@@ -1,7 +1,6 @@
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.Image;
 
 public class Bullet extends MovingEntity {
 
@@ -13,23 +12,18 @@ public class Bullet extends MovingEntity {
   private boolean UoDcollision;// Up or Down collisions
   private boolean LoRCollision;// Left or Right collisions
 
-  public Bullet(int x, int y, double direction, String image, GamePanel gp) {
+  public Bullet(int x, int y, double direction, Image image, GamePanel gp) {
     this.x = x;
     this.y = y;
     this.gp = gp;
     this.angle = direction;
+    this.sprite = image;
     this.speed = 5;
 
     bornAt = System.currentTimeMillis();
 
-    try {
-      sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/bullet/"+image)); // load the sprite
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    this.width = sprite.getWidth();
-    this.height = sprite.getHeight();
+    this.width = 10;
+    this.height = 10;
   }
 
   public void update() {
@@ -116,6 +110,8 @@ public class Bullet extends MovingEntity {
               for(int l = t.getY() - t.height/2; l < t.getY() + t.height/2; l++) {
                 if(i == k && j == l) {
                   t.dead = true; // kill player
+                  t.timeDied = currentTime;
+                  gp.im.resetExplosions();
                   this.dead = true; // kill this bullet
                   gp.s.explosionSound.stop();
                   gp.s.explosionSound.play();

@@ -3,7 +3,7 @@ public class Tank_TiTank extends Tank_Super {
   boolean activated = false; // was the capacity activated?
 
   public Tank_TiTank(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-      super(number, x, y, "TiTank.png", gp, keyH,2500,3000);
+      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, keyH,2500,3000);
   }
 
   @Override
@@ -36,12 +36,12 @@ public class Tank_TiTank extends Tank_Super {
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
       Bullet b;
       if(capacityActive) {
-        b = new Bullet_Big(getX(), getY(), this.angle, "bullet.png", gp);
+        b = new Bullet_Big(getX(), getY(), this.angle, gp);
         gp.s.grosPew.stop();
         gp.s.grosPew.play();
       }
       else {
-        b = new Bullet(getX(), getY(), this.angle, "bullet.png", gp);
+        b = new Bullet(getX(), getY(), this.angle, gp.im.bullet, gp);
         gp.s.pew.stop();
         gp.s.pew.play();
       }

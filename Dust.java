@@ -3,6 +3,7 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.AlphaComposite;
+import java.awt.Image;
 
 public class Dust extends Entity {
 
@@ -12,30 +13,24 @@ public class Dust extends Entity {
   boolean dead;
   double timeToLive;
 
-  public Dust(int x, int y) {
+  public Dust(int x, int y, Image image) {
 
-    this.x = x + (int)(Math.random()*11)-5;
-    this.y = y + (int)(Math.random()*11)-5;
+    this.x = x + (int)(Math.random()*5)-2;
+    this.y = y + (int)(Math.random()*5)-2;
+    this.sprite = image;
     angle = 0;
     dead = false;
     at = new AffineTransform();
     timeCreated = System.currentTimeMillis();
-    timeToLive = 500 + Math.random() * 1000;
-
-    // Loading the image of the tank
-    try {
-      this.sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/dust.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    timeToLive = 500 + Math.random() * 600;
   }
 
   @Override
   public void update() {
     double currentTime = System.currentTimeMillis();
 
-    this.x += (int)(Math.random()*7)-3;
-    this.y += (int)(Math.random()*7)-3;
+    this.x += (int)(Math.random()*5)-2;
+    this.y += (int)(Math.random()*5)-2;
     angle += 11;
     at.setToRotation(Math.toRadians(angle), this.x+5, this.y+5);
 

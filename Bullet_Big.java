@@ -1,8 +1,8 @@
 
-public class Bullet_Big extends Bullet_Super {
+public class Bullet_Big extends Bullet {
 
-  public Bullet_Big(int x, int y, double direction, String image, GamePanel gp) {
-    super(x, y, direction, image, gp);
+  public Bullet_Big(int x, int y, double direction, GamePanel gp) {
+    super(x, y, direction, gp.im.bullet, gp);
     width *= 2;
     height *= 2;
     lifeTime = 1000;
@@ -12,7 +12,7 @@ public class Bullet_Big extends Bullet_Super {
   @Override
   public void update() {
     super.update();
-    gp.dust.add(new Dust(x, y));
+    gp.dust.add(new Dust(x, y, gp.im.dust));
   }
 
   @Override

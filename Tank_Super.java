@@ -1,5 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Image;
 
 // This class creates a tank with special (additional) capacities
 public class Tank_Super extends Tank{
@@ -15,8 +16,8 @@ public class Tank_Super extends Tank{
     double pourcentage = 1;
 
 
-    public Tank_Super(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH, double duration, double cooldown) {
-        super(number, x, y, image, gp, keyH);
+    public Tank_Super(int number, int x, int y, Image image, Image deadImage, GamePanel gp, KeyHandler keyH, double duration, double cooldown) {
+        super(number, x, y, image, deadImage, gp, keyH);
         this.capacityDuration = duration;
         this.capacityCooldown = cooldown;
         this.lastUse = System.currentTimeMillis() - this.capacityCooldown;

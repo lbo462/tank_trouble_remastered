@@ -1,7 +1,4 @@
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.IOException;
 import java.awt.BasicStroke;
 
 // Everything that the map concerns is implemented in this class

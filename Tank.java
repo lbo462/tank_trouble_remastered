@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Image;
 
 // TANK BOUM BOUM
 public class Tank extends MovingEntity {
@@ -16,6 +17,7 @@ public class Tank extends MovingEntity {
   KeyHandler keyH;
 
   AffineTransform at; // enable rotation
+  Image deadSprite; // image displayed when the tank dies
 
   boolean dead;
   boolean collision; // check collision in update
@@ -26,24 +28,20 @@ public class Tank extends MovingEntity {
 
   double timeToSlow; // time to stay slowed
   double timeSlowed; // time slowed started
+  double timeDied; // time at which tank died
 
   ArrayList<Bullet> bullets; // contains active bullets
 
-  public Tank(int number, int x, int y, String image, GamePanel gp, KeyHandler keyH) {
+  public Tank(int number, int x, int y, Image image, Image deadImage, GamePanel gp, KeyHandler keyH) {
 
     this.gp = gp;
     this.keyH = keyH;
     this.number = number;
     this.score = 0;
+    this.sprite = image;
+    this.deadSprite = deadImage;
 
     reset(x, y); // initialise every variables
-
-    // Loading the image of the tank
-    try {
-      this.sprite = ImageIO.read(getClass().getResourceAsStream("assets/entities/tank/"+image));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   // reset every variables
@@ -67,16 +65,22 @@ public class Tank extends MovingEntity {
 
   public void update() {
     double currentTime = System.currentTimeMillis();
-    if(slowed && currentTime-timeSlowed > timeToSlow) {
-      slow(false);
+    if(!dead) {
+      if(slowed && currentTime-timeSlowed > timeToSlow) {
+        slow(false);
+      }
+      this.keyPressed();
+      this.rotation();
+      this.translation();
+      this.collision();
+      if(Math.abs(speed) > 0 && gp.frame % 20 == 0 && !collision) {
+        for(int i = 0; i < 15; i++)
+        gp.dust.add(new Dust(getX(), getY(), gp.im.dust));
+      }
+      this.updatePosition();
+      this.shoot();
+      this.deadBulletRemoval();
     }
-    this.keyPressed();
-    this.rotation();
-    this.translation();
-    this.collision();
-    this.updatePosition();
-    this.shoot();
-    this.deadBulletRemoval();
   }
 
   public void slow(boolean shouldSlow) {
@@ -100,7 +104,8 @@ public class Tank extends MovingEntity {
     g2.transform(at);
     g2.setComposite(originalAlcom);
     g2.drawImage(sprite, x, y, width, height, null);
-    if(slowed) {
+    if(dead) g2.drawImage(deadSprite, x-width, y-height, 3*width, 3*height, null);
+    if(slowed && !dead) {
       AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
       g2.setComposite(alcom);
 
@@ -153,16 +158,12 @@ public class Tank extends MovingEntity {
       speed *= 0.75;
       if(Math.abs(speed) < 0.1) speed = 0;
     }
-    if(Math.abs(speed) > 0 && Math.random() < 0.3) {
-      gp.dust.add(new Dust(getX(), getY()));
-      gp.dust.add(new Dust(getX(), getY()));
-    }
     nextY += (int)speed;
   }
 
   public void shoot(){
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
-      bullets.add(new Bullet(getX(), getY(), this.angle, "bullet.png", gp));
+      bullets.add(new Bullet(getX(), getY(), this.angle, gp.im.bullet, gp));
       gp.s.pew.stop();
       gp.s.pew.play();
       lastShot = System.currentTimeMillis();

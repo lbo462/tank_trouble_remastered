@@ -8,7 +8,7 @@ public class Tank_Kitty extends Tank_Super{
     ArrayList<Bullet_Kitty> bulletsKitty = new ArrayList<Bullet_Kitty>();
 
     public Tank_Kitty(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-        super(number, x, y, "kittyTank.png", gp, keyH,100,1);
+        super(number, x, y, gp.im.kitty, gp.im.deadKitty, gp, keyH,100,1);
     }
 
     @Override
@@ -41,11 +41,11 @@ public class Tank_Kitty extends Tank_Super{
     public void shoot(){
       if(System.currentTimeMillis() - lastShot > 100) {
         if(shotPressed && !capacityActive) {
-          bullets.add(new Bullet(getX(), getY(), this.angle, "bullet.png", gp));
+          bullets.add(new Bullet(getX(), getY(), this.angle, gp.im.bullet, gp));
           gp.s.pew.stop();
           gp.s.pew.play();
         } else if(capacityActive) {
-          bulletsKitty.add(new Bullet_Kitty(getX(), getY(), this.angle, "kitty.png", "explodedKitty.png", gp));
+          bulletsKitty.add(new Bullet_Kitty(getX(), getY(), this.angle, gp));
           gp.s.pew.stop();
           gp.s.pew.play();
         }

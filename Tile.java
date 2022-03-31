@@ -46,13 +46,4 @@ public class Tile {
       g2.setStroke(new BasicStroke(1.0f));
     }
   }
-
-  // usd for debug
-  public String toString() {
-    String res = "Tile " + tileNum + " / collision " + collision;
-    if(collision)
-      res += "\n" + up + " " + down + " " + right + " " + left;
-    return res;
-  }
-
 }
