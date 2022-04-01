@@ -9,6 +9,7 @@ public class Tile {
 
   public boolean up = false, down = false, right = false, left = false;
 
+  // "wall" tile
   public Tile(GamePanel gp, String tileNum, boolean up, boolean down, boolean right, boolean left) {
     this.gp = gp;
     this.tileNum = tileNum;
@@ -21,6 +22,7 @@ public class Tile {
     collision = true;
   }
 
+  // "not-wall" tile
   public Tile(GamePanel gp, String tileNum) {
     this.gp = gp;
     this.tileNum = tileNum;
