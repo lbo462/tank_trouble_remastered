@@ -24,18 +24,10 @@ public class Tile {
     else collision = false;
   }
 
-<<<<<<< HEAD
   public void draw(Graphics2D g2) {
     int w = gp.tileSize-1; // width
     int xD = x+1;
     int yD = y+1;
-=======
-  // "not-wall" tile
-  public Tile(GamePanel gp, String tileNum) {
-    this.gp = gp;
-    this.tileNum = tileNum;
-  }
->>>>>>> 1cf126e34ef9e82450302d951df47ee0543610ef
 
     if(debug) {
       // draw cell bounds
