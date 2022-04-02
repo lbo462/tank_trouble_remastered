@@ -1,49 +1,59 @@
 import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.BasicStroke;
 
 public class Tile {
 
   GamePanel gp;
-  public boolean collision; // Can we get through and can we eat the wall ?
-  public String tileNum;
+  int x, y;
+  boolean collision;
+  boolean up = false, down = false, right = false, left = false; // collision state
+  boolean debug = false;
 
-  public boolean up = false, down = false, right = false, left = false;
-
-  public Tile(GamePanel gp, String tileNum, boolean up, boolean down, boolean right, boolean left) {
+  public Tile(GamePanel gp, int x, int y, boolean up, boolean down, boolean right, boolean left) {
     this.gp = gp;
-    this.tileNum = tileNum;
+    this.x = x;
+    this.y = y;
 
     this.up = up;
     this.down = down;
     this.right = right;
     this.left = left;
 
-    collision = true;
+    if(up || down || right || left) collision = true;
+    else collision = false;
   }
 
-  public Tile(GamePanel gp, String tileNum) {
-    this.gp = gp;
-    this.tileNum = tileNum;
-  }
+  public void draw(Graphics2D g2) {
+    int w = gp.tileSize-1; // width
+    int xD = x+1;
+    int yD = y+1;
 
-
-
-  public void draw(Graphics2D g2, int x, int y, int width, int height) {
-    // draw cell bounds
-    /*
-    g2.setStroke(new BasicStroke(1.0f));
-    g2.drawRect(x-width/2, y-height/2, width, height);*/
-    if(!tileNum.equals("0")) {
-      g2.setStroke(new BasicStroke(5.0f));
-      if(up)
-        g2.drawLine(x, y, x, y-height/2);
-      if(down)
-        g2.drawLine(x, y, x, y+height/2);
-      if(right)
-        g2.drawLine(x, y, x+width/2, y);
-      if(left)
-        g2.drawLine(x, y, x-width/2, y);
+    if(debug) {
+      // draw cell bounds
+      g2.setColor(Color.RED);
       g2.setStroke(new BasicStroke(1.0f));
+      g2.drawRect(x, y, w+1, w+1);
+    }
+
+
+
+
+    g2.setColor(Color.BLACK);
+    if(collision) {
+      g2.fillRect(xD+3*w/8, yD+3*w/8, w/4, w/4); // make nice transition between rectangles
+      if(up) {
+        g2.fillRect(xD+3*w/8, yD, w/4, w/2+1);
+      }
+      if(down) {
+        g2.fillRect(xD+3*w/8, yD+w/2, w/4, w/2+1);
+      }
+      if(right) {
+        g2.fillRect(xD+w/2, yD+3*w/8, w/2+1, w/4);
+      }
+      if(left) {
+        g2.fillRect(xD, yD+3*w/8, w/2+1, w/4);
+      }
     }
   }
 }

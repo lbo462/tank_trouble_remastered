@@ -1,5 +1,8 @@
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 // Everything that the map concerns is implemented in this class
 public class Map {
@@ -15,6 +18,35 @@ public class Map {
     generateMap();
   }
 
+  public Map(int number, GamePanel gp) {
+    this.gp = gp;
+    this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
+
+    generateMap();
+/*
+    int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];
+    try {
+      // read map file
+      InputStream is = getClass().getResourceAsStream("/assets/maps/"+number+"/map"+number+".txt");
+      BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+      // extract data from file
+      for(int i = 0; i <= gp.nbYtiles; i++) {
+        String line = br.readLine(); // recovers sometings like 0 0 0 0 1 1 1 1 0 0 0 0 ...
+        for(int j = 0; j <= gp.nbXtiles; j++) {
+          //String numbers[] = line.split(" "); // split into ["0", "0", "0", "0", "1", "1", ...]
+          tilesInt[i][j] = Integer.parseInt("1");
+        }
+        System.out.println(i);
+      }
+
+      br.close(); // close the buffer reader
+
+    } catch(Exception e) {}
+    mapIntToTiles(tilesInt); // transform number to Tiles
+
+    */
+  }
 
   // This method will generate a random labyrinth
   // Then it will randomly erase some of the walls (such that the map is playable enough, otherwise it's too hard to play)
@@ -120,10 +152,17 @@ public class Map {
     }
 
     // empty spaw points
+    // up right
     tilesInt[1]              [1]               = 0;
-    tilesInt[1]              [gp.nbXtiles - 2] = 0;
-    tilesInt[gp.nbYtiles - 2][1]               = 0;
+    tilesInt[1]              [2]               = 0;
+    tilesInt[2]              [1]               = 0;
+    tilesInt[2]              [2]               = 0;
+
+    // down left
     tilesInt[gp.nbYtiles - 2][gp.nbXtiles - 2] = 0;
+    tilesInt[gp.nbYtiles - 2][gp.nbXtiles - 3] = 0;
+    tilesInt[gp.nbYtiles - 3][gp.nbXtiles - 2] = 0;
+    tilesInt[gp.nbYtiles - 3][gp.nbXtiles - 3] = 0;
 
     // remove alone cells
     for(int i = 1; i < tilesInt.length - 1; i++) {
@@ -141,8 +180,15 @@ public class Map {
     }
 
     // finally transform the tilesInt[][] into actual Tiles
+    mapIntToTiles(tilesInt);
+  }
+
+  public void mapIntToTiles(int[][] tilesInt) {
     for(int i = 0; i < tilesInt.length; i++) {
       for(int j = 0; j < tilesInt[i].length; j++) {
+        int x = j * gp.tileSize;
+        int y = i * gp.tileSize;
+        boolean u = false, r = false, l = false, d = false;
         if(tilesInt[i][j] == 1 && i > 0 && i < tilesInt.length-1 && j > 0 && j < tilesInt[i].length-1) {
           // r = right, l = left, u = up, d = down st
           /* Represent the presence of tiles around this one
@@ -151,18 +197,12 @@ public class Map {
               x | d | x
           */
 
-          boolean u = false, r = false, l = false, d = false;
           if(tilesInt[i-1][j] == 1) u = true;
           if(tilesInt[i][j+1] == 1) r = true;
           if(tilesInt[i][j-1] == 1) l = true;
           if(tilesInt[i+1][j] == 1) d = true;
-
-          tiles[i][j] = new Tile(gp, "1", u, d, r, l);
-
         }
-        else {
-          tiles[i][j] = new Tile(gp, Integer.toString(tilesInt[i][j]));
-        }
+        tiles[i][j] = new Tile(gp, x, y, u, d, r, l);
       }
     }
   }
@@ -176,7 +216,7 @@ public class Map {
     // draw the tiles
     for(int i = 0; i < gp.nbYtiles; i++) {
       for(int j = 0; j < gp.nbXtiles; j++) {
-        tiles[i][j].draw(g2, j * gp.tileSize, i * gp.tileSize, gp.tileSize, gp.tileSize);
+        tiles[i][j].draw(g2);
       }
     }
   }

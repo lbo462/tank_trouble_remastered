@@ -5,7 +5,7 @@ public class Bullet_Big extends Bullet {
     super(x, y, direction, gp.im.bullet, gp);
     width *= 2;
     height *= 2;
-    lifeTime = 1000;
+    lifeTime = 600;
     speed = 8;
   }
 

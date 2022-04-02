@@ -89,7 +89,6 @@ public class GamePanel extends JPanel implements Runnable {
   public void startGameThread(){
     gameThread = new Thread(this);
     gameThread.start();
-
   }
 
   // return the position of the player of number 1 or 2 in the form {x, y}
@@ -120,7 +119,6 @@ public class GamePanel extends JPanel implements Runnable {
     numberOfGames ++;
   }
 
-  @Override
   public void run(){
 
     this.requestFocus(); // get the window focus
@@ -163,6 +161,10 @@ public class GamePanel extends JPanel implements Runnable {
       }
     } else {
       if(!paused) {
+
+        for(int i=0; i<currentMap.tiles.length; i++)
+          for(int j=0; j<currentMap.tiles[i].length; j++)
+            currentMap.tiles[i][j].debug = false;
         // update tanks
         for(Tank t: players) {
           t.update();
@@ -183,6 +185,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
           }
         }
+
         // update dust
         for(int i = 0; i < dust.size(); i++) {
           dust.get(i).update();

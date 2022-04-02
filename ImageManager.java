@@ -21,7 +21,7 @@ public class ImageManager {
 
   public ImageManager() {
     try {
-      background = new ImageIcon(getClass().getResource("assets/background.gif")).getImage();
+      background = new ImageIcon(getClass().getResource("assets/maps/background.gif")).getImage();
       dust = new ImageIcon(getClass().getResource("assets/entities/dust.png")).getImage();
 
       // bullets

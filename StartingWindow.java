@@ -19,10 +19,12 @@ public class StartingWindow extends JFrame implements MouseListener {
       public final Color hover_orange = new Color(255, 127, 0);
       public final Color selectedRedFrame = new Color(237, 0, 0);
       int choiceMap;
-      public final int width = 1050;
-      public final int height = 750;
+
       public final int nbXtiles = 35; // number of tiles on the x-axis
       public final int nbYtiles = 25;
+      public final int tileSize = 33;
+      public final int width = nbXtiles * tileSize;
+      public final int height = nbYtiles * tileSize;
 
   	public StartingWindow() {
       this.setTitle("Tank trouble");

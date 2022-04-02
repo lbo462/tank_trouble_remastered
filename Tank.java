@@ -10,6 +10,8 @@ import java.awt.Image;
 // TANK BOUM BOUM
 public class Tank extends MovingEntity {
 
+  boolean debug = false;
+
   int number;
   int width, height;
   double lastShot; // time of the last shot
@@ -116,7 +118,24 @@ public class Tank extends MovingEntity {
       alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
       g2.setComposite(alcom);
     }
+
     g2.setTransform(saveAt);
+
+    if(debug) { // display hitbox
+      // rotation matrix coeffs
+      double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
+      double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
+
+      for(int i=x; i<=x+width; i++) {
+        for(int j=(int)nextY; j<=(int)nextY+height; j++) {
+          // next position of the tank
+          int nx = (int)(m00 * i + m01 * j + m02);
+          int ny = (int)(m10 * j + m11 * i + m12);
+          g2.setColor(Color.RED);
+          g2.drawRect(nx, ny, 1, 1);
+        }
+      }
+    }
   }
 
   // get the position (X, Y) in the reference frame, reverting the rotating matrix at(Affine Transform)
@@ -133,14 +152,14 @@ public class Tank extends MovingEntity {
   // ROTATION
   public void rotation(){
     if(leftPressed || rightPressed) {
-      double prevAngle = this.angle; // angle before the transformation
+      prevAngle = this.angle; // angle before the transformation
       // keyboard inputs
       if(leftPressed)
         this.angle += 3;
       if(rightPressed)
         this.angle -= 3;
-      double angleToRotate = prevAngle - this.angle; // angle difference to adjust between then and now
-      at.rotate(Math.toRadians(angleToRotate), x+(int)(width/2), y+(int)(height/2)); // do the rotation at the right spot
+      nextA = prevAngle - this.angle; // angle difference to adjust between then and now
+      at.rotate(Math.toRadians(nextA), x+(int)(width/2), y+(int)(height/2)); // do the rotation at the right spot
     }
   }
 
@@ -155,7 +174,7 @@ public class Tank extends MovingEntity {
         speed -= increaseSpeed;
       if(Math.abs(speed) > maxSpeed) speed = speed/Math.abs(speed) * maxSpeed;
     } else {
-      speed *= 0.75;
+      speed *= 0.9;
       if(Math.abs(speed) < 0.1) speed = 0;
     }
     nextY += (int)speed;
@@ -217,34 +236,51 @@ public class Tank extends MovingEntity {
 
   public void collision() {
     collision = false;
+
+    // rotation matrix coeffs
     double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
     double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-    for(int i = (int)(nextY - height/2); i <= nextY + (int)(height)/2; i += (int)(height/4)) {
-      for(int j = x - (int)(width)/2; j <= x + (int)(width)/2; j += (int)(width/4)) {
-        int xc = j + height/2, yc = i + width/2; // position of the center of the tank
-        int nextX0 = (int)(m00 * xc + m01 * yc + m02);
-        // The next line is hell. I hate this line. I wish it was never born and hope it'll die soon
-        int nextY0 = (int)(m10 * yc + m11 * xc + m12); // you motherf*cker I hate u and you were adopted
-        int xGrid, yGrid; // pos inside the map grid
-        xGrid = (int)(nextX0 / gp.tileSize);
-        yGrid = (int)(nextY0 / gp.tileSize);
-        // collision with window bounds
-        if(nextY0 < height/2 || nextY0 >= gp.height - height/2 || nextX0 < width/2 || nextX0 >= gp.width - width/2)
+
+    Tile currentTile = gp.currentMap.tiles[0][0]; // tile with which we should check collision, initialise with random stuff
+    int w = gp.tileSize-1; // true size of a tile
+
+    for(int i=x; i<=x+width; i++) {
+      for(int j=(int)nextY; j<=(int)nextY+height; j++) {
+        // next position of the tank
+        int nx = (int)(m00 * i + m01 * j + m02);
+        int ny = (int)(m10 * j + m11 * i + m12);
+
+        // first check collision with outside bounds of the map
+        if(ny < height/2 || ny >= gp.height - height/2 || nx < width/2 || nx >= gp.width - width/2)
           collision = true;
-        else if(gp.currentMap.tiles[yGrid][xGrid].collision && collisionWithTiles) { // collision with tile
-          Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
-          int xTile = (int)(xGrid * gp.tileSize);
-          int yTile = (int)(yGrid * gp.tileSize);
-          int deltaX = nextX0 - xTile;
-          int deltaY = nextY0 - yTile;
-          if(currentTile.up && Math.abs(deltaX) < gp.tileSize/4 && deltaY < 0)
-            collision = true;
-          else if(currentTile.down && Math.abs(deltaX) < gp.tileSize/4 && deltaY > 0)
-            collision = true;
-          else if(currentTile.right && Math.abs(deltaY) < gp.tileSize/4 && deltaX > 0)
-            collision = true;
-          else if(currentTile.left && Math.abs(deltaY) < gp.tileSize/4 && deltaX < 0)
-            collision = true;
+        else if(collisionWithTiles) {
+          // find the tile to check collision
+          if((i==x && j==(int)nextY) || (i==x+width && j==(int)nextY) || (i==x && j==(int)nextY+height) || (i==x+width && j==(int)nextY+height)) {
+            int xCorner = nx;
+            int yCorner = ny; // position of the 4 corners of the tank
+            // position of the tile where the corner sits
+            int xGrid = (int)(xCorner / gp.tileSize); int yGrid = (int)(yCorner / gp.tileSize);
+            currentTile = gp.currentMap.tiles[yGrid][xGrid]; // retrieve the tile
+            if(debug) currentTile.debug = true;
+          }
+          // check if the hitbox hits the tile somewhere
+          if(currentTile.collision) {
+            // I used the same coeffs that I used for drawing the tile
+            if((currentTile.up
+              && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+              && ny > currentTile.y+1 && ny < currentTile.y+1 + w/2+1)
+              || (currentTile.down
+              && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+              && ny > currentTile.y+1+w/2 && ny < currentTile.y+1+w/2 + w/2+1)
+              || (currentTile.right
+              && nx > currentTile.x+1+w/2 && nx < currentTile.x+1+w/2 + w/2+1
+              && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+              || (currentTile.left
+              && nx > currentTile.x+1 && nx < currentTile.x+1 + w/2+1
+              && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+              )
+                collision = true;
+          }
         }
       }
     }
@@ -254,6 +290,9 @@ public class Tank extends MovingEntity {
   void updatePosition() {
     if(!collision) { // update only if there's no collision
       y = (int)nextY;
+    } else if(leftPressed || rightPressed) {
+      this.angle = prevAngle;
+      at.rotate(Math.toRadians(-nextA), x+(int)(width/2), y+(int)(height/2)); // cancel the rotation
     }
   }
 }

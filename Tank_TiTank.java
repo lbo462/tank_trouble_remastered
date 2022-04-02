@@ -3,32 +3,37 @@ public class Tank_TiTank extends Tank_Super {
   boolean activated = false; // was the capacity activated?
 
   public Tank_TiTank(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, keyH,2500,3000);
+      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, keyH,2500,500);
   }
 
   @Override
   public void update(){
-      super.update();
       if(this.capacityActive && !activated) {
         // check if the tank is not at a border
-        int x = getX();
-        int y = getY();
-        if(x > gp.tileSize*3 && x < gp.width - gp.tileSize*3 && y > gp.tileSize*3 && y < gp.height - gp.tileSize*3) {
-          width = gp.tileSize*3;
-          height = gp.tileSize*3;
-          y -= gp.tileSize;
-          x -= gp.tileSize;
-          maxSpeed += 2;
-          activated = true;
-        }
+        activate();
+        this.collision();
+        if(collision) deactivate();
       } else if(!this.capacityActive && activated) {
-        width = gp.tileSize;
-        height = gp.tileSize;
-        y += gp.tileSize;
-        x += gp.tileSize;
-        maxSpeed -= 2;
-        activated = false;
+        deactivate();
       }
+      super.update();
+  }
+
+  // activate capacity
+  void activate() {
+    width = gp.tileSize*3;
+    height = gp.tileSize*3;
+    x -= gp.tileSize;
+    maxSpeed += 2;
+    activated = true;
+  }
+  // deactivate capacity
+  void deactivate() {
+    width = gp.tileSize;
+    height = gp.tileSize;
+    x += gp.tileSize;
+    maxSpeed -= 2;
+    activated = false;
   }
 
   @Override
@@ -37,6 +42,7 @@ public class Tank_TiTank extends Tank_Super {
       Bullet b;
       if(capacityActive) {
         b = new Bullet_Big(getX(), getY(), this.angle, gp);
+        speed -= 10;
         gp.s.grosPew.stop();
         gp.s.grosPew.play();
       }
@@ -54,33 +60,58 @@ public class Tank_TiTank extends Tank_Super {
   // remove the wall if there's a collision
   public void collision() {
     super.collision();
-    if(capacityActive) {
-      double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
-      double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-      for(int i = (int)(nextY - height/2); i <= nextY + (int)(height)/2; i += (int)(height/4)) {
-        for(int j = x - (int)(width)/2; j <= x + (int)(width)/2; j += (int)(width/4)) {
-          int xc = j + height/2, yc = i + width/2; // position of the center of the tank
-          int nextX0 = (int)(m00 * xc + m01 * yc + m02);
-          // The next line is hell. I hate this line. I wish it was never born and hope it'll die soon
-          int nextY0 = (int)(m10 * yc + m11 * xc + m12); // you motherf*cker I hate u and you were adopted
-          int xGrid, yGrid; // pos inside the map grid
-          xGrid = (int)(nextX0 / gp.tileSize);
-          yGrid = (int)(nextY0 / gp.tileSize);
-          // collision with window bounds
-          if(nextY0 < height/2 || nextY0 >= gp.height - height/2 || nextX0 < width/2 || nextX0 >= gp.width - width/2)
-            collision = true;
-          else if(gp.currentMap.tiles[yGrid][xGrid].collision && collisionWithTiles) { // collision with tile
-            Tile currentTile = gp.currentMap.tiles[yGrid][xGrid];
-            // remove collisions hence remove wall
-            currentTile.collision = false;
-            currentTile.up = false;
-            currentTile.down = false;
-            currentTile.right = false;
-            currentTile.left = false;
+    if(capacityActive && activated) {
+        collision = false;
+        // rotation matrix coeffs
+        double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
+        double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
+
+        Tile currentTile = gp.currentMap.tiles[0][0]; // tile with which we should check collision, initialise with random stuff
+        int w = gp.tileSize-1; // true size of a tile
+
+        for(int i=x; i<=x+width; i+=w/2) {
+          for(int j=(int)nextY; j<=(int)nextY+height; j+=w/2) {
+            // next position of the tank
+            int nx = (int)(m00 * i + m01 * j + m02);
+            int ny = (int)(m10 * j + m11 * i + m12);
+
+            // first check collision with outside bounds of the map
+            if(ny < 0 || ny >= gp.height || nx < 0 || nx >= gp.width)
+              collision = true;
+            else if(collisionWithTiles) {
+              // find the tile to check collision
+              int xCorner = nx;
+              int yCorner = ny; // position of the 4 corners of the tank
+              // position of the tile where the corner sits
+              int xGrid = (int)(xCorner / gp.tileSize); int yGrid = (int)(yCorner / gp.tileSize);
+              currentTile = gp.currentMap.tiles[yGrid][xGrid]; // retrieve the tile
+              if(debug) currentTile.debug = true;
+              // check if the hitbox hits the tile somewhere
+              if(currentTile.collision) {
+                // I used the same coeffs that I used for drawing the tile
+                if((currentTile.up
+                  && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+                  && ny > currentTile.y+1 && ny < currentTile.y+1 + w/2+1)
+                  || (currentTile.down
+                  && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+                  && ny > currentTile.y+1+w/2 && ny < currentTile.y+1+w/2 + w/2+1)
+                  || (currentTile.right
+                  && nx > currentTile.x+1+w/2 && nx < currentTile.x+1+w/2 + w/2+1
+                  && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+                  || (currentTile.left
+                  && nx > currentTile.x+1 && nx < currentTile.x+1 + w/2+1
+                  && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+                  ) {
+                    currentTile.collision = false;
+                    currentTile.up = false;
+                    currentTile.down = false;
+                    currentTile.right = false;
+                    currentTile.left = false;
+                  }
+              }
+            }
           }
-        }
       }
     }
-
   }
 }

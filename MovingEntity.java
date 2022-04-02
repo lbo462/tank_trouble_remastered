@@ -1,5 +1,7 @@
 public abstract class MovingEntity extends Entity{
     double nextX,nextY;
+    double nextA; // next angle
+    double prevAngle; // previous angle
     double angle;
     double increaseSpeed; // value tp add to trueSpeed on key pressed
     double speed; // actual speed to add to pos
