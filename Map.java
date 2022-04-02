@@ -151,7 +151,6 @@ public class Map {
       tilesInt[yToKill][xToKill] = 0;
     }
 
-    // empty spaw points
     // up right
     tilesInt[1]              [1]               = 0;
     tilesInt[1]              [2]               = 0;
@@ -193,7 +192,7 @@ public class Map {
           // r = right, l = left, u = up, d = down st
           /* Represent the presence of tiles around this one
               x | u | x
-              r | x | l
+              l | x | r
               x | d | x
           */
 
