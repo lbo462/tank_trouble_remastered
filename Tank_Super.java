@@ -4,65 +4,50 @@ import java.awt.Image;
 
 // This class creates a tank with special (additional) capacities
 public class Tank_Super extends Tank{
-    boolean capacityActive;//true if the capacity is in use
-    double capacityDuration;// how long does the capacity lasts
-    double capacityCooldown;// how long it takes to reuse the ability
-    boolean capacityButtonPressed;// true if the capacity button is presssed
-    double lastUse; // last use of the capacity
-    double activationTime; // time at which the capacity was activated
+    public boolean capacityActive; // true if the capacity is in use
+    public double capacityDuration; // how long does the capacity lasts
+    public double capacityCooldown; // how long it takes to reuse the ability
+    public boolean capacityButtonPressed; // true if the capacity button is presssed
+    public double lastUse; // last use of the capacity
+    public double activationTime; // time at which the capacity was activated
 
     // for drawing bar beneath player
-    double timeRemaining;
-    double pourcentage = 1;
+    private double timeRemaining; // time remaining from next possible capacity activation
+    private double pourcentage = 1; // corresponding pourcentage wrt cooldown
 
 
-    public Tank_Super(int number, int x, int y, Image image, Image deadImage, GamePanel gp, KeyHandler keyH, double duration, double cooldown) {
-        super(number, x, y, image, deadImage, gp, keyH);
+    public Tank_Super(int number, int x, int y, Image image, Image deadImage, GamePanel gp, double duration, double cooldown) {
+        super(number, x, y, image, deadImage, gp);
         this.capacityDuration = duration;
         this.capacityCooldown = cooldown;
-        this.lastUse = System.currentTimeMillis() - this.capacityCooldown;
+        this.lastUse = System.currentTimeMillis() - this.capacityCooldown; // make the capacity directly usable
         this.activationTime = System.currentTimeMillis();
     }
 
     @Override
     public void reset(int x, int y){
       super.reset(x, y);
-      pourcentage = 1;
+      /* reset capacity timing */
+      this.pourcentage = 1;
       this.lastUse = System.currentTimeMillis() - this.capacityCooldown;
       this.activationTime = System.currentTimeMillis();
     }
 
+    @Override
     public void update() {
       this.keyPressed();
-      this.capacityActivation();
-      super.update();
-    }
 
-    //Check if the capacity is activated and that it can be activated
-    public void capacityActivation(){
-        double currentTime = System.currentTimeMillis();
-        if(this.capacityButtonPressed && !this.capacityActive && this.capacityCooldown<currentTime-lastUse){ //checks if the cooldown is over
-            this.capacityActive=true;
-            activationTime = currentTime;
-        } else if(this.capacityActive && this.capacityDuration<currentTime-activationTime) { // checks if the duration is over
-           this.capacityActive=false;
-           lastUse = currentTime;
-        }
-    }
-
-    public void keyPressed(){
-        super.keyPressed();
-        if(this.number == 1){
-            this.capacityButtonPressed = keyH.aPressed;
-        }else if(this.number == 2){
-            this.capacityButtonPressed = keyH.mPressed;
-        }
-    }
-
-    @Override
-    public void draw(Graphics2D g2) {
+      /* Check if the capacity can be activated */
       double currentTime = System.currentTimeMillis();
-      g2.setColor(Color.BLACK);
+      if(capacityButtonPressed && !capacityActive && capacityCooldown<currentTime-lastUse){ //checks if the cooldown is over
+          capacityActive=true;
+          activationTime = currentTime;
+      } else if(capacityActive && capacityDuration<currentTime-activationTime) { // checks if the duration is over
+         capacityActive=false;
+         lastUse = currentTime;
+      }
+
+      /* Update pourcentage */
       if(this.capacityActive) {
         timeRemaining = (int)(this.capacityDuration-(currentTime-activationTime));
         pourcentage = timeRemaining / this.capacityDuration;
@@ -74,7 +59,11 @@ public class Tank_Super extends Tank{
         else pourcentage = 1;
       }
 
-      // draw avancement
+      super.update();
+    }
+
+    @Override // adds a cool cooldown evolution bar
+    public void draw(Graphics2D g2) {
       g2.setColor(Color.BLACK);
       g2.drawRect(getX()-width/2-1, getY()+height+1, width+1, height/8+1);
       if(this.capacityActive) g2.setColor(Color.RED);
@@ -82,5 +71,15 @@ public class Tank_Super extends Tank{
       g2.fillRect(getX()-width/2, getY()+height+2, (int)(width * pourcentage), height/8);
 
       super.draw(g2);
+    }
+
+    @Override // adds capacity button
+    public void keyPressed(){
+        super.keyPressed();
+        if(this.number == 1){
+            this.capacityButtonPressed = keyH.aPressed;
+        }else if(this.number == 2){
+            this.capacityButtonPressed = keyH.mPressed;
+        }
     }
 }

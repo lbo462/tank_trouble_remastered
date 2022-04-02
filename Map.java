@@ -208,11 +208,6 @@ public class Map {
   }
 
   public void draw(Graphics2D g2) {
-
-    // draw bounds
-    g2.setStroke(new BasicStroke(gp.tileSize));
-    g2.drawRect(0, 0, gp.width, gp.height);
-
     // draw the tiles
     for(int i = 0; i < gp.nbYtiles; i++) {
       for(int j = 0; j < gp.nbXtiles; j++) {

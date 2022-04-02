@@ -63,16 +63,16 @@ public class GamePanel extends JPanel implements Runnable {
       // configure character chosen
       switch(characters[i]) {
         case 1:
-          players[i] = new Tank(i+1, x, y, im.painTank, im.defaultExplosion, this, keyH);
+          players[i] = new Tank(i+1, x, y, im.painTank, im.defaultExplosion, this);
           break;
         case 2:
-          players[i] = new Tank_Phantom(i+1, x, y, this, keyH);
+          players[i] = new Tank_Phantom(i+1, x, y, this);
           break;
         case 3:
-          players[i] = new Tank_Kitty(i+1, x, y, this, keyH);
+          players[i] = new Tank_Kitty(i+1, x, y, this);
           break;
         case 4:
-          players[i] = new Tank_TiTank(i+1, x, y, this, keyH);
+          players[i] = new Tank_TiTank(i+1, x, y, this);
           break;
       }
     }

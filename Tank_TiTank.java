@@ -1,22 +1,21 @@
 public class Tank_TiTank extends Tank_Super {
 
-  boolean activated = false; // was the capacity activated?
+  public boolean activated; // was the capacity activated?
 
-  public Tank_TiTank(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, keyH,2500,500);
+  public Tank_TiTank(int number, int x, int y, GamePanel gp){
+      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, 2500, 500);
+      this.activated = false;
   }
 
   @Override
   public void update(){
-      if(this.capacityActive && !activated) {
-        // check if the tank is not at a border
-        activate();
-        this.collision();
-        if(collision) deactivate();
-      } else if(!this.capacityActive && activated) {
-        deactivate();
-      }
-      super.update();
+    if(this.capacityActive && !activated) {
+      activate(); // try to scale the tank
+      this.collision(); // check if the tank is going to be stuck inside a boundary
+      if(collision) deactivate(); // if a collsion will be caused by the scale, do not scale
+    } else if(!this.capacityActive && activated)
+      deactivate(); // scale down when capacity is over
+    super.update();
   }
 
   // activate capacity
@@ -24,7 +23,7 @@ public class Tank_TiTank extends Tank_Super {
     width = gp.tileSize*3;
     height = gp.tileSize*3;
     x -= gp.tileSize;
-    maxSpeed += 2;
+    maxSpeed = 5;
     activated = true;
   }
   // deactivate capacity
@@ -32,22 +31,21 @@ public class Tank_TiTank extends Tank_Super {
     width = gp.tileSize;
     height = gp.tileSize;
     x += gp.tileSize;
-    maxSpeed -= 2;
+    maxSpeed = 3;
     activated = false;
   }
 
-  @Override
+  @Override // eventually shoot big bullets
   public void shoot(){
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
       Bullet b;
       if(capacityActive) {
-        b = new Bullet_Big(getX(), getY(), this.angle, gp);
-        speed -= 10;
+        b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
+        speed -= 10; // un peu de recul pour nerf
         gp.s.grosPew.stop();
         gp.s.grosPew.play();
-      }
-      else {
-        b = new Bullet(getX(), getY(), this.angle, gp.im.bullet, gp);
+      } else {
+        b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp); // normal bullet
         gp.s.pew.stop();
         gp.s.pew.play();
       }
@@ -56,8 +54,7 @@ public class Tank_TiTank extends Tank_Super {
     }
   }
 
-  @Override
-  // remove the wall if there's a collision
+  @Override // remove the wall if there's a collision
   public void collision() {
     super.collision();
     if(capacityActive && activated) {
@@ -109,8 +106,8 @@ public class Tank_TiTank extends Tank_Super {
                     currentTile.left = false;
                   }
               }
-            }
           }
+        }
       }
     }
   }

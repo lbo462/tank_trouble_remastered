@@ -5,57 +5,30 @@ import java.awt.Color;
 // Super funny tank that has a "super" capacity : create slow zone
 public class Tank_Kitty extends Tank_Super{
 
-    ArrayList<Bullet_Kitty> bulletsKitty = new ArrayList<Bullet_Kitty>();
+    public ArrayList<Bullet_Kitty> bulletsKitty = new ArrayList<Bullet_Kitty>();
 
-    public Tank_Kitty(int number, int x, int y, GamePanel gp, KeyHandler keyH){
-        super(number, x, y, gp.im.kitty, gp.im.deadKitty, gp, keyH,100,1);
-    }
-
-    @Override
-    public void update(){
-        super.update();
-        if(this.capacityActive && bulletsKitty.size() < 5)
-            shoot();
+    public Tank_Kitty(int number, int x, int y, GamePanel gp){
+      super(number, x, y, gp.im.kitty, gp.im.deadKitty, gp, 100, 1);
     }
 
     @Override
     public void reset(int x, int y) {
       super.reset(x, y);
-      bulletsKitty = new ArrayList<Bullet_Kitty>();
+      this.bulletsKitty = new ArrayList<Bullet_Kitty>(); // empty bullets_kitty
     }
 
     @Override
-    public void deadBulletRemoval(){
-      super.deadBulletRemoval();
-
-      for(int i = bulletsKitty.size()-1; i >= 0; i--) {
-        Bullet_Kitty current = bulletsKitty.get(i);
-        current.update();
-        if(current.dead || (bulletsKitty.size() > 5 && !current.exploded)){
-          bulletsKitty.remove(i);
-        }
-      }
-    }
-
-    @Override
-    public void shoot(){
-      if(System.currentTimeMillis() - lastShot > 100) {
-        if(shotPressed && !capacityActive) {
-          bullets.add(new Bullet(getX(), getY(), this.angle, gp.im.bullet, gp));
-          gp.s.pew.stop();
-          gp.s.pew.play();
-        } else if(capacityActive) {
-          bulletsKitty.add(new Bullet_Kitty(getX(), getY(), this.angle, gp));
-          gp.s.pew.stop();
-          gp.s.pew.play();
-        }
-
+    public void update(){
+      super.update();
+      if(this.capacityActive && bulletsKitty.size() < 5 && System.currentTimeMillis() - lastShot > 100) {
+        shootKittys(); // shoot kittys whenever the capacity is active
         lastShot = System.currentTimeMillis();
       }
     }
 
     @Override
     public void draw(Graphics2D g2) {
+      /* draw the bullets_kitty */
       for(int i = 0; i < bulletsKitty.size(); i++) bulletsKitty.get(i).draw(g2);
 
       // draw number of bullets_kitty remaining
@@ -69,5 +42,26 @@ public class Tank_Kitty extends Tank_Super{
       }
 
       super.draw(g2);
+    }
+
+    @Override
+    public void updateBullets(){
+      super.updateBullets();
+
+      /* update bullets_kitty */
+      for(int i = bulletsKitty.size()-1; i >= 0; i--) {
+        Bullet_Kitty current = bulletsKitty.get(i);
+        current.update();
+        if(current.dead || (bulletsKitty.size() > 5 && !current.exploded)){
+          bulletsKitty.remove(i);
+        }
+      }
+    }
+
+    // add one bullets_kitty
+    public void shootKittys() {
+      bulletsKitty.add(new Bullet_Kitty(getX()-5, getY()-5, this.angle, gp));
+      gp.s.pew.stop();
+      gp.s.pew.play();
     }
 }
