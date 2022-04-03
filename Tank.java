@@ -86,7 +86,7 @@ public class Tank extends MovingEntity {
       this.collision(); // check collision with tiles
 
       /* add some dust */
-      if(Math.abs(speed) > 0 && gp.frame % 20 == 0 && !collision)
+      if(Math.abs(speed) > 0 && gp.frame % 20 == 0 && !collision && collisionWithTiles)
         for(int i = 0; i < 15; i++) gp.dust.add(new Dust(getX(), getY(), gp.im.dust));
 
       this.updatePosition(); // update as a function of collisions
@@ -159,21 +159,13 @@ public class Tank extends MovingEntity {
 
   // Removing bullets when they stayed
   public void updateBullets(){
-    double currentTime = System.currentTimeMillis();
-    int prevScore = score;
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();
-      if(this.dead) {
-        score--; // -1 if the player killed himself
-        break;
-      } else {
-        for(Tank t: gp.players) { // check if someonelse died in the process
-          if(t.dead && currentTime - t.timeDied > 600 && prevScore == score) score++;
-        }
-      }
-      if(bullets.get(i).dead){
+      if(bullets.get(i).killed && !this.dead) score++;
+      else if(this.dead) score--;
+      if(bullets.get(i).killed) break;
+      if(bullets.get(i).dead)
         bullets.remove(i);
-      }
     }
   }
 

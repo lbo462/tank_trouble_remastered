@@ -5,7 +5,8 @@ import java.awt.Image;
 public class Bullet extends MovingEntity {
 
   public boolean UoDcollision;// Up or Down collisions
-  public boolean LoRCollision;// Left or Right collisions
+  public boolean LoRCollision;// Left or Right collisions$
+  public boolean killed; // tells if the bullet killed a player
   public Tile currentTile;
   public Vector currPos, lastPos;
 
@@ -22,6 +23,7 @@ public class Bullet extends MovingEntity {
     this.lifeTime = 5000; // in ms
 
     this.dead = false;
+    this.killed = false;
     this.at = new AffineTransform();
     at.rotate(Math.toRadians(-this.angle), x+(int)(width/2), y+(int)(height/2)); // make the inital rotation
     int xGrid = (int)(x / gp.tileSize); int yGrid = (int)(y / gp.tileSize);
@@ -133,6 +135,7 @@ public class Bullet extends MovingEntity {
               t.dead = true; // kill player
               t.timeDied = currentTime; // record its time of death
               gp.im.resetExplosions(); // flush images i.e. reset gifs animation
+              this.killed = true;
               this.dead = true; // kill this bullet
               /* play a little boom */
               gp.s.explosionSound.stop();

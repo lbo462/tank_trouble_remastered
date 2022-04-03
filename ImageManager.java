@@ -52,8 +52,8 @@ public class ImageManager {
       painTank = new ImageIcon(getClass().getResource("assets/entities/tank/painTank.png")).getImage();
       defaultExplosion = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
 
-      phantom = new ImageIcon(getClass().getResource("assets/entities/tank/phantom.png")).getImage();
-      deadPhantom = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
+      phantom = new ImageIcon(getClass().getResource("assets/entities/tank/phantom.gif")).getImage();
+      deadPhantom = new ImageIcon(getClass().getResource("assets/entities/tank/phantomExplosion.gif")).getImage();
 
       kitty = new ImageIcon(getClass().getResource("assets/entities/tank/kittyTank.gif")).getImage();
       deadKitty = new ImageIcon(getClass().getResource("assets/entities/tank/kittyExplosion.gif")).getImage();
