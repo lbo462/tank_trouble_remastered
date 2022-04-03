@@ -41,7 +41,7 @@ public class Tank_TiTank extends Tank_Super {
       Bullet b;
       if(capacityActive) {
         b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
-        speed -= 10; // un peu de recul pour nerf
+        dash(-10); // un peu de recul pour nerf
         gp.s.grosPew.stop();
         gp.s.grosPew.play();
       } else {

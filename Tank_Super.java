@@ -27,10 +27,11 @@ public class Tank_Super extends Tank{
     @Override
     public void reset(int x, int y){
       super.reset(x, y);
-      /* reset capacity timing */
+      /* reset capacity */
       this.pourcentage = 1;
       this.lastUse = System.currentTimeMillis() - this.capacityCooldown;
-      this.activationTime = System.currentTimeMillis();
+      this.capacityActive = false;
+      this.activationTime = System.currentTimeMillis() - this.capacityCooldown;
     }
 
     @Override

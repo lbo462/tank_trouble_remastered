@@ -10,8 +10,17 @@ public abstract class MovingEntity extends Entity{
     public double maxSpeed;
     public double bornAt; // time of birth
     public double lifeTime; // how much it should last
+    public double dashedAt;
+    public boolean dashing;
     public boolean dead; // is it dead
     public AffineTransform at; // matrice of rotation
+
+    // perform a dash
+    public void dash(int speed) {
+      this.speed += speed;
+      this.dashing = true;
+      this.dashedAt = System.currentTimeMillis();
+    }
 
     //abstract void update(); is not specified as it is an abstract class (i.e. supports abstract methods from mother class)
     abstract void collision(); // sets the collision variables to evaluate the state of the entity

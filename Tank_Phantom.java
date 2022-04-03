@@ -3,18 +3,27 @@ import java.awt.AlphaComposite;
 
 // Super funny tank that has a "super" capacity : go through walls for a short period of time (when A is pressed)
 public class Tank_Phantom extends Tank_Super{
+
+  public boolean activated; // was the capacity activated
+
   public Tank_Phantom(int number, int x, int y, GamePanel gp){
-      super(number, x, y, gp.im.phantom, gp.im.deadPhantom, gp,3000,10000);
+      super(number, x, y, gp.im.phantom, gp.im.deadPhantom, gp,3000,1000);
   }
 
   @Override
   public void update(){
     super.update();
     /* deactivate collision with tiles when capacity is active */
-    if(this.capacityActive)
+    if(this.capacityActive && !activated) {
       collisionWithTiles = false;
-    else
+      dash(10); // make a small dash, see MovingEntity
+      activated = true;
+    }
+    else if(!this.capacityActive && activated) {
       collisionWithTiles = true;
+      activated = false;
+    }
+
   }
 
   @Override // make it transparent under capacity

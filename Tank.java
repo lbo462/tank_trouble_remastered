@@ -49,6 +49,8 @@ public class Tank extends MovingEntity {
     this.dead = false;
     this.collisionWithTiles = true;
     this.slowed = false;
+    this.dashing = true;
+    this.dashedAt = System.currentTimeMillis() - 1000;
     this.at = new AffineTransform();
     this.bullets = new ArrayList<Bullet>();
   }
@@ -57,6 +59,7 @@ public class Tank extends MovingEntity {
     double currentTime = System.currentTimeMillis();
     if(!dead) { // only update if alive
       if(slowed && currentTime-timeSlowed > timeToSlow) slow(false); // verify slow time
+      if(dashing && currentTime-dashedAt > 1000 || speed <= maxSpeed) dashing = false; // verify dashing time
 
       this.keyPressed(); // verify which keys are pressed
       if(leftPressed || rightPressed) { // ROTATE
@@ -70,7 +73,7 @@ public class Tank extends MovingEntity {
       }
       /* ***** */
       nextY = y;
-      if(upPressed || downPressed) { // TRANSLATE
+      if((upPressed || downPressed) && !dashing) { // TRANSLATE
         // keyboard inputs
         if(upPressed)
           speed += increaseSpeed;
@@ -81,6 +84,7 @@ public class Tank extends MovingEntity {
         speed *= 0.9;
         if(Math.abs(speed) < 0.1) speed = 0;
       }
+
       nextY += (int)speed;
 
       this.collision(); // check collision with tiles
@@ -159,13 +163,15 @@ public class Tank extends MovingEntity {
 
   // Removing bullets when they stayed
   public void updateBullets(){
+    int prevScore = score;
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();
-      if(bullets.get(i).killed && !this.dead) score++;
+      if(bullets.get(i).killed && !this.dead && prevScore == score) score++;
       else if(this.dead) score--;
-      if(bullets.get(i).killed) break;
-      if(bullets.get(i).dead)
+      if(bullets.get(i).killed || bullets.get(i).dead) {
         bullets.remove(i);
+        break;
+      }
     }
   }
 

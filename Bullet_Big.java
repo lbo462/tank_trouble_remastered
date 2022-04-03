@@ -13,7 +13,7 @@ public class Bullet_Big extends Bullet {
   @Override
   public void update() {
     super.update();
-    gp.dust.add(new Dust(getX(), getY(), gp.im.dust)); // just add some dust
+    gp.dust.add(new Dust(getX()+5, getY()+5, gp.im.dust)); // just add some dust
   }
 
   @Override

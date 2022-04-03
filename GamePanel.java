@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public boolean paused;
   public boolean gameOver;
   public double timePaused; // used to regulate between two press on pause button
+  public boolean tankDead; // is a tank dead ?
   public int frame; // index of the current frame, uselfull for animation
   public int width;
   public int height;
@@ -59,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.FPS = 60;
     this.gamesToPlay = 3;
     this.numberOfGames = 1;
+    this.tankDead = false;
 
     this.s = new Sound();
     this.im = new ImageManager();
@@ -136,12 +138,13 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         currentMap.update(); // update tiles
         // update tanks
         for(Tank t: players) {
-          t.update();
           if(t.dead && currentTime - t.timeDied > 600) { // check if a tank died
             System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
             resetGame();
             if(numberOfGames > gamesToPlay) goToEndMenu();
-          }
+            break;
+          } else if(t.dead) tankDead = true;
+          if(!tankDead) t.update();
         }
 
         // update dust
@@ -329,6 +332,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
   // reset game
   public void resetGame() {
+    this.tankDead = false;
     for(int i = 0; i < players.length; i++) {
       // configure positions
       Vector pos = new Vector();
