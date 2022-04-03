@@ -3,21 +3,21 @@ import java.awt.Image;
 
 public class ImageManager {
 
-  Image background;
-  Image dust;
+  public Image background;
+  public Image dust;
 
-  Image bullet;
-  Image bulletKitty;
-  Image explodedKitty;
+  public Image bullet;
+  public Image bulletKitty;
+  public Image explodedKitty;
 
-  Image painTank;
-  Image defaultExplosion;
-  Image phantom;
-  Image deadPhantom;
-  Image kitty;
-  Image deadKitty;
-  Image titank;
-  Image deadTitank;
+  public Image painTank;
+  public Image defaultExplosion;
+  public Image phantom;
+  public Image deadPhantom;
+  public Image kitty;
+  public Image deadKitty;
+  public Image titank;
+  public Image deadTitank;
 
   public ImageManager() {
     try {

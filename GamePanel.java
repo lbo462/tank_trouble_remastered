@@ -14,51 +14,57 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
 
-  boolean musicOn = false;
-
-  boolean paused = false;
-  boolean gameOver = false;
-  double timeOver; // time at which the game ended
-  double timePaused; // used to regulate between two press on pause button
-  int gamesToPlay = 3; // number of games to play
-  int numberOfGames = 1; // how much games were played
-  int winner; // number of the winner
-  int frame; // number of frame
-
+  private boolean musicOn;
+  public boolean paused;
+  public boolean gameOver;
+  public double timeOver; // time at which the game ended
+  public double timePaused; // used to regulate between two press on pause button
+  public int frame; // index of the current frame, uselfull for animation
   public int width;
   public int height;
-
   public int nbXtiles; // number of tiles on the x-axis
   public int nbYtiles;
-
   public int tileSize; // size a single tile
-
-  int FPS = 60;
-
-  public KeyHandler keyH = new KeyHandler();
-  public Sound s = new Sound(); // sound player
-  public ImageManager im = new ImageManager();
-  Thread gameThread;
+  public KeyHandler keyH;
+  public Sound s; // sound player
+  public ImageManager im;
   public Map currentMap; // public because entities need it for collisions
-  Tank[] players;
-  ArrayList<Dust> dust; // contains dust
+  public Tank[] players;
+  public ArrayList<Dust> dust; // contains dust
+
+  private int FPS;
+  private Thread gameThread;
+  private int gamesToPlay; // number of games to play
+  private int numberOfGames; // how much games were played
+  private int winner; // number of the winner
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
-    tileSize = width / nbXtiles;
-    timePaused = System.currentTimeMillis(); // initialise with random stuff
-
     this.width = width;
     this.height = height;
     this.nbXtiles = nbXtiles;
     this.nbYtiles = nbYtiles;
+    this.tileSize = width / nbXtiles;
+    this.musicOn = false;
+    this.paused = false;
+    this.gameOver = false;
+    this.timePaused = System.currentTimeMillis(); // initialise with random stuff
     this.players = new Tank[2];
     this.dust = new ArrayList<Dust>();
-    frame = 0;
+    this.frame = 0;
+    this.FPS = 60;
+    this.gamesToPlay = 3;
+    this.numberOfGames = 1;
 
+    this.s = new Sound();
+    this.im = new ImageManager();
+    this.keyH = new KeyHandler();
+    this.addKeyListener(keyH);
+
+    // initialise players
     for(int i = 0; i < characters.length; i++) {
       // configure positions
-      int pos[] = playerPos(i+1);
-      int x = pos[0], y = pos[1];
+      Vector pos = playerPos(i+1); // spawn point
+      int x = pos.x, y = pos.y;
 
       // configure character chosen
       switch(characters[i]) {
@@ -76,10 +82,9 @@ public class GamePanel extends JPanel implements Runnable {
           break;
       }
     }
-    this.addKeyListener(keyH);
 
     System.out.println("Generating map ...");
-    currentMap = new Map(this);
+    currentMap = new Map(this); // creates the map
 
     // music maestro
     if(musicOn) s.music.loop();
@@ -91,36 +96,8 @@ public class GamePanel extends JPanel implements Runnable {
     gameThread.start();
   }
 
-  // return the position of the player of number 1 or 2 in the form {x, y}
-  public int[] playerPos(int number) {
-    int pos[] = new int[2];
-    switch (number) {
-      case 1: // first player, top left corner
-        pos[0] = tileSize;
-        pos[1] = tileSize;
-        break;
-      case 2: // second player bottom right corner
-        pos[0] = tileSize*(nbXtiles-2);
-        pos[1] = tileSize*(nbYtiles-2);
-        break;
-    }
-    return pos;
-  }
-
-  public void resetGame() {
-
-    for(int i = 0; i < players.length; i++) {
-      // configure positions
-      int pos[] = new int[2];
-      pos = playerPos(i+1);
-      players[i].reset(pos[0], pos[1]); // reset player given its coordinates
-    }
-
-    numberOfGames ++;
-  }
-
+  @Override
   public void run(){
-
     this.requestFocus(); // get the window focus
 
     // FPS managing
@@ -131,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
     while(gameThread != null) {
       update();
       repaint();
+
       // Wait correct amount of time to achieve correct FPS
       // Here, we take into account the time needed to update and paint the current frame so that we respect the correct FPS
       try {
@@ -142,7 +120,6 @@ public class GamePanel extends JPanel implements Runnable {
         e.printStackTrace(); //if there was a problem during the Thread.sleep)(), print it
       }
       frame++;
-
     }
   }
 
@@ -155,9 +132,9 @@ public class GamePanel extends JPanel implements Runnable {
         // Reset JFrame ...
         StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
         topFrame.initGUI();
-        gameOver = false;
-        paused = true;
-        s.end.stop();
+        this.gameOver = false;
+        this.paused = true;
+        s.end.stop(); // stop music
       }
     } else {
       if(!paused) {
@@ -172,7 +149,7 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
             resetGame();
             if(numberOfGames > gamesToPlay) { // if the number of games to play has been reached
-              numberOfGames = 1;
+              numberOfGames = 1; // reset games counter
               gameOver = true;
               s.music.stop();
               s.end.play();
@@ -181,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable {
               for(int i = 0; i < players.length; i++)
                 if(players[i].score > players[iMaxScore].score) iMaxScore = i;
               winner = players[iMaxScore].number;
-              timeOver = currentTime; // record time of end-game for "animation"
+              timeOver = currentTime; // record time of end-game for animation
             }
           }
         }
@@ -194,12 +171,12 @@ public class GamePanel extends JPanel implements Runnable {
             dust.remove(i);
           }
         }
-        if(keyH.escapePressed && currentTime - timePaused > 500) {
+        if(keyH.escapePressed && currentTime - timePaused > 500) { // check pause
           paused = true;
           s.music.stop();
           timePaused = currentTime;
         }
-      } else {
+      } else { // cancel pause
         if(keyH.escapePressed && currentTime - timePaused > 500) {
           paused = false;
           if(musicOn) s.music.loop();
@@ -229,20 +206,8 @@ public class GamePanel extends JPanel implements Runnable {
     currentMap.draw(g2); // draw the map
 
     // draw pause logo
-    if(paused) {
-      // transparency
-      g2.setColor(Color.WHITE);
-      AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
-      g2.setComposite(alcom);
+    if(paused) drawLogo(g2);
 
-      // two rects of the logo
-      g2.fillRect(width - 100, 20, 25, 80);
-      g2.fillRect(width - 55, 20, 25, 80);
-
-      // reset transparency
-      alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
-      g2.setComposite(alcom);
-    }
     if(gameOver) {
       // transparency
       g2.setColor(Color.RED);
@@ -264,6 +229,47 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     g2.dispose();
+  }
 
+  void drawLogo(Graphics2D g2) {
+    // transparency
+    g2.setColor(Color.WHITE);
+    AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
+    g2.setComposite(alcom);
+
+    // two rects of the logo
+    g2.fillRect(width - 100, 20, 25, 80);
+    g2.fillRect(width - 55, 20, 25, 80);
+
+    // reset transparency
+    alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
+    g2.setComposite(alcom);
+  }
+
+  // return the spawn point of the player of number 1 or 2
+  public Vector playerPos(int number) {
+    Vector pos = new Vector();
+    switch (number) {
+      case 1: // first player, top left corner
+        pos.x = tileSize;
+        pos.y = tileSize;
+        break;
+      case 2: // second player bottom right corner
+        pos.x = tileSize*(nbXtiles-2);
+        pos.y = tileSize*(nbYtiles-2);
+        break;
+    }
+    return pos;
+  }
+
+  // reset game
+  public void resetGame() {
+    for(int i = 0; i < players.length; i++) {
+      // configure positions
+      Vector pos = new Vector();
+      pos = playerPos(i+1);
+      players[i].reset(pos.x, pos.y); // reset player given its coordinates
+    }
+    numberOfGames ++;
   }
 }

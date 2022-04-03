@@ -4,12 +4,12 @@ import java.net.URL;
 
 public class Sound {
 
-  AudioClip music; // main theme
-  AudioClip splash; // splash sound
-  AudioClip explosionSound; // death sound
-  AudioClip pew; // pew pew sound
-  AudioClip grosPew; // gros pew pew
-  AudioClip end; // game over sound
+  public AudioClip music; // main theme
+  public AudioClip splash; // splash sound
+  public AudioClip explosionSound; // death sound
+  public AudioClip pew; // pew pew sound
+  public AudioClip grosPew; // gros pew pew
+  public AudioClip end; // game over sound
 
   public Sound() {
 

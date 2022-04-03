@@ -22,8 +22,7 @@ public class Map {
     this.gp = gp;
     this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
 
-    generateMap();
-/*
+
     int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];
     try {
       // read map file
@@ -45,7 +44,6 @@ public class Map {
     } catch(Exception e) {}
     mapIntToTiles(tilesInt); // transform number to Tiles
 
-    */
   }
 
   // This method will generate a random labyrinth

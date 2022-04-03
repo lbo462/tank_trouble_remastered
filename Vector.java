@@ -1,6 +1,8 @@
 public class Vector {
   public int x, y;
 
+  public Vector() {} // creates an empty vector
+
   public Vector(int x, int y) {
     this.x = x; this.y = y;
   }
