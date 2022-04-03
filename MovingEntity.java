@@ -8,12 +8,20 @@ public abstract class MovingEntity extends Entity{
     public double increaseSpeed; // value tp add to trueSpeed on key pressed
     public double speed; // actual speed to add to pos
     public double maxSpeed;
-    public boolean dead;
+    public double bornAt; // time of birth
+    public double lifeTime; // how much it should last
+    public boolean dead; // is it dead
     public AffineTransform at; // matrice of rotation
 
     //abstract void update(); is not specified as it is an abstract class (i.e. supports abstract methods from mother class)
     abstract void collision(); // sets the collision variables to evaluate the state of the entity
     /* get the position (X, Y) in the reference frame, reverting the rotating matrix at(Affine Transform) */
-    abstract int getX();
-    abstract int getY();
+    public int getX() {
+      double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
+      return (int)(m00 * (x+width/2) + m01 * (y+height/2) + m02);
+    }
+    public int getY() {
+      double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
+      return (int)(m10 * (y+height/2) + m11 * (x+width/2) + m12);
+    }
 }

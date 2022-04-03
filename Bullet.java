@@ -4,8 +4,6 @@ import java.awt.Image;
 
 public class Bullet extends MovingEntity {
 
-  public double lifeTime = 5000; // LifeTime of a bullet in ms
-  public double bornAt;
   public boolean UoDcollision;// Up or Down collisions
   public boolean LoRCollision;// Left or Right collisions
   public Tile currentTile;
@@ -20,7 +18,8 @@ public class Bullet extends MovingEntity {
 
     this.width = 10;
     this.height = 10;
-    this.speed = 4;
+    this.speed = 4; // in pixels
+    this.lifeTime = 5000; // in ms
 
     this.dead = false;
     this.at = new AffineTransform();
@@ -143,16 +142,5 @@ public class Bullet extends MovingEntity {
         }
       }
     }
-  }
-
-  @Override
-  public int getX() {
-    double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
-    return (int)(m00 * (x+width/2) + m01 * (y+height/2) + m02);
-  }
-  @Override
-  public int getY() {
-    double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-    return (int)(m10 * (y+height/2) + m11 * (x+width/2) + m12);
   }
 }

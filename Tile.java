@@ -36,9 +36,6 @@ public class Tile {
       g2.drawRect(x, y, w+1, w+1);
     }
 
-
-
-
     g2.setColor(Color.BLACK);
     if(collision) {
       g2.fillRect(xD+3*w/8, yD+3*w/8, w/4, w/4); // make nice transition between rectangles

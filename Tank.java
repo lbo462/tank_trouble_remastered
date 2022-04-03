@@ -256,16 +256,6 @@ public class Tank extends MovingEntity {
     }
   }
 
-  @Override
-  public int getX() {
-    double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
-    return (int)(m00 * (x+width/2) + m01 * (y+height/2) + m02);
-  }
-  @Override
-  public int getY() {
-    double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-    return (int)(m10 * (y+height/2) + m11 * (x+width/2) + m12);
-  }
 
   // verify which keys are pressed depending on the player number
   public void keyPressed() {
