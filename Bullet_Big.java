@@ -41,14 +41,7 @@ public class Bullet_Big extends Bullet {
         int xGrid = (int)(nx / gp.tileSize); int yGrid = (int)(ny / gp.tileSize);
         currentTile = gp.currentMap.tiles[yGrid][xGrid]; // retrieve the tile where the bullet stands
         if(debug) currentTile.debug = true;
-        if(currentTile.collision) {
-          // remove every collision from the tile
-          currentTile.collision = false;
-          currentTile.up = false;
-          currentTile.down = false;
-          currentTile.right = false;
-          currentTile.left = false;
-        }
+        if(currentTile.collision) currentTile.destroy(); // remove collisions
       }
       if(UoDcollision && LoRCollision) {
         // If hits a corner, make demi-tour

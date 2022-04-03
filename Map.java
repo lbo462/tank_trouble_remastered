@@ -21,6 +21,13 @@ public class Map {
     else generateMap();
   }
 
+  // just update tiles
+  public void update() {
+    for(int i=0; i<tiles.length; i++)
+      for(int j=0; j<tiles[i].length; j++)
+        if(tiles[i][j].collision) tiles[i][j].update();
+  }
+
   // This loads an already existing map in assets/maps
   public void loadMap(int number) {
     int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];

@@ -103,7 +103,7 @@ public class Tank extends MovingEntity {
     AffineTransform saveAt = g2.getTransform();
     g2.transform(at);
     g2.setComposite(originalAlcom);
-    g2.drawImage(sprite, x, y, width, height, null);
+    g2.drawImage(sprite, x, y, width, height, gp);
     if(dead) g2.drawImage(deadSprite, x-width, y-height, 3*width, 3*height, null);
     if(slowed && !dead) {
       AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
@@ -164,8 +164,7 @@ public class Tank extends MovingEntity {
       if(this.dead) {
         score--; // -1 if the player killed himself
         break;
-      }
-      else {
+      } else {
         for(Tank t: gp.players) { // check if someonelse died in the process
           if(t.dead) {
             score++;

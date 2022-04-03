@@ -100,6 +100,7 @@ public class Bullet extends MovingEntity {
         }
       }
     }
+    if(UoDcollision || LoRCollision) currentTile.life--;
     if(UoDcollision && LoRCollision) {
       // If hits a corner, make demi-tour
       angle += 180;
@@ -128,7 +129,7 @@ public class Bullet extends MovingEntity {
             // every pixel of the tank
             int xt = (int)(m00 * i + m01 * j + m02);
             int yt = (int)(m10 * j + m11 * i + m12);
-            if(getX() == xt && getY() == yt) { // if the bullet center hits the tank somewhere
+            if(getX() == xt && getY() == yt && !t.dead) { // if the bullet center hits the tank somewhere
               t.dead = true; // kill player
               t.timeDied = currentTime; // record its time of death
               gp.im.resetExplosions(); // flush images i.e. reset gifs animation

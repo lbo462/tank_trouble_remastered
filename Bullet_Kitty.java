@@ -13,7 +13,7 @@ public class Bullet_Kitty extends Bullet {
     super(x, y, direction, gp.im.bulletKitty, gp);
     this.explodedSprite = gp.im.explodedKitty;
 
-    this.radius = 50; // radius of the cake after explosion
+    this.radius = 70; // radius of the cake after explosion
     this.lifeTime = 10000; // total time to live, from birth to cake vanishing
     this.timeBeforeExplosion = 1000;
     this.exploded = false;
@@ -40,7 +40,7 @@ public class Bullet_Kitty extends Bullet {
     if(exploded) { // only check if the bullet exploded. It does nothing otherwise
       for(Tank t: gp.players) {
         // check if a player is inside a circle of radius r
-        for(int r = 0; r < radius; r += 5) {
+        for(int r = 0; r < radius+t.width/2; r += 5) {
           for(int a = 0; a < 360; a += 2) {
             // corresponding pos in cartesian coordinates
             int xCord = (int)(getX() + r * Math.cos(Math.toRadians(a)));
@@ -59,6 +59,6 @@ public class Bullet_Kitty extends Bullet {
   @Override
   public void draw(Graphics2D g2) {
     if(!exploded) super.draw(g2);
-    else g2.drawImage(explodedSprite, getX()-radius, getY()-radius, gp); // draw the cake
+    else g2.drawImage(explodedSprite, getX()-radius, getY()-radius, 2*radius, 2*radius, gp); // draw the cake
   }
 }

@@ -163,6 +163,8 @@ public class GamePanel extends JPanel implements Runnable {
           }
         }
 
+        currentMap.update(); // update tiles to destroy them
+
         // update dust
         for(int i = 0; i < dust.size(); i++) {
           dust.get(i).update();

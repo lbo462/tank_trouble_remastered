@@ -99,11 +99,7 @@ public class Tank_TiTank extends Tank_Super {
                   && nx > currentTile.x+1 && nx < currentTile.x+1 + w/2+1
                   && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
                   ) {
-                    currentTile.collision = false;
-                    currentTile.up = false;
-                    currentTile.down = false;
-                    currentTile.right = false;
-                    currentTile.left = false;
+                    currentTile.destroy();
                   }
               }
           }
