@@ -24,8 +24,10 @@ public class Map {
   // just update tiles
   public void update() {
     for(int i=0; i<tiles.length; i++)
-      for(int j=0; j<tiles[i].length; j++)
+      for(int j=0; j<tiles[i].length; j++) {
         if(tiles[i][j].collision) tiles[i][j].update();
+        tiles[i][j].debug = false;
+      }
   }
 
   // This loads an already existing map in assets/maps

@@ -10,14 +10,14 @@ import java.awt.AlphaComposite;
 import javax.swing.*;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.awt.event.*;
 
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel implements Runnable, MouseListener {
 
   private boolean musicOn;
   public boolean paused;
   public boolean gameOver;
-  public double timeOver; // time at which the game ended
   public double timePaused; // used to regulate between two press on pause button
   public int frame; // index of the current frame, uselfull for animation
   public int width;
@@ -31,6 +31,11 @@ public class GamePanel extends JPanel implements Runnable {
   public Map currentMap; // public because entities need it for collisions
   public Tank[] players;
   public ArrayList<Dust> dust; // contains dust
+  public JPanel restartPane;
+  public JPanel closePane;
+  public final Color defaultBlueFrame = new Color(1, 49, 180);
+  public final Color hover_orange = new Color(255, 127, 0);
+  public final Color selectedRedFrame = new Color(237, 0, 0);
 
   private int FPS;
   private Thread gameThread;
@@ -126,53 +131,25 @@ public class GamePanel extends JPanel implements Runnable {
   // update for each frame
   public void update() {
     double currentTime = System.currentTimeMillis();
-    if(gameOver) {
-      if(currentTime - timeOver > 3000) {
-        System.out.println("Returning to menu...");
-        // Reset JFrame ...
-        StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
-        topFrame.initGUI();
-        this.gameOver = false;
-        this.paused = true;
-        s.end.stop(); // stop music
-      }
-    } else {
+    if(!gameOver) {
       if(!paused) {
-
-        for(int i=0; i<currentMap.tiles.length; i++)
-          for(int j=0; j<currentMap.tiles[i].length; j++)
-            currentMap.tiles[i][j].debug = false;
+        currentMap.update(); // update tiles
         // update tanks
         for(Tank t: players) {
           t.update();
           if(t.dead && currentTime - t.timeDied > 600) { // check if a tank died
             System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
             resetGame();
-            if(numberOfGames > gamesToPlay) { // if the number of games to play has been reached
-              numberOfGames = 1; // reset games counter
-              gameOver = true;
-              s.music.stop();
-              s.end.play();
-              // find winner
-              int iMaxScore = 0;
-              for(int i = 0; i < players.length; i++)
-                if(players[i].score > players[iMaxScore].score) iMaxScore = i;
-              winner = players[iMaxScore].number;
-              timeOver = currentTime; // record time of end-game for animation
-            }
+            if(numberOfGames > gamesToPlay) goToEndMenu();
           }
         }
-
-        currentMap.update(); // update tiles to destroy them
 
         // update dust
         for(int i = 0; i < dust.size(); i++) {
           dust.get(i).update();
-          // remove dead dust
-          if(dust.get(i).dead){
-            dust.remove(i);
-          }
+          if(dust.get(i).dead) dust.remove(i); // remove dead dust
         }
+
         if(keyH.escapePressed && currentTime - timePaused > 500) { // check pause
           paused = true;
           s.music.stop();
@@ -191,46 +168,132 @@ public class GamePanel extends JPanel implements Runnable {
   // draw at each frame
   @Override
   public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
+    if(!gameOver) {
+      super.paintComponent(g);
+      Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
-    // draw the background
-    currentMap.drawBackground(g2);
+      // draw the background
+      currentMap.drawBackground(g2);
 
-    // draw dust
-    for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
+      // draw dust
+      for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
 
-    // draw players (and bullets)
-    for(Tank t: players)
-      t.draw(g2);
-    g2.setColor(Color.BLACK);
+      // draw players (and bullets)
+      for(Tank t: players)
+        t.draw(g2);
+      g2.setColor(Color.BLACK);
 
-    currentMap.draw(g2); // draw the map
+      currentMap.draw(g2); // draw the map
 
-    // draw pause logo
-    if(paused) drawLogo(g2);
+      // draw pause logo
+      if(paused) drawLogo(g2);
 
-    if(gameOver) {
-      // transparency
-      g2.setColor(Color.RED);
-      AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
-      g2.setComposite(alcom);
+      g2.dispose();
+    }
+  }
 
-      // change font
-      Font currentFont = g.getFont();
-      Font newFont = currentFont.deriveFont(currentFont.getSize() * 5F);
-      g2.setFont(newFont);
+  void goToEndMenu() {
+    gameOver = true;
+    s.music.stop();
+    s.end.play();
+    // find winner
+    int iMaxScore = 0;
+    for(int i = 0; i < players.length; i++)
+      if(players[i].score > players[iMaxScore].score) iMaxScore = i;
+    winner = players[iMaxScore].number;
+    System.out.println("Player_"+winner+" won.");
 
-      // two rects of the logo
-      g2.drawString("Player_"+winner+" won", 200, 300);
-      g2.setFont(currentFont);
+    this.removeAll();
 
-      // reset transparency
-      alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f);
-      g2.setComposite(alcom);
+    JPanel globalPane = new JPanel();
+    globalPane.setLayout(null);
+    globalPane.setBounds(0,0,width,height);
+    globalPane.setBackground(defaultBlueFrame);
+
+    // display winner
+    JLabel winnerLbl = new JLabel("<html><body>Player_"+winner+" won !  GG<br>Scores :</body></html>");
+    winnerLbl.setFont(new Font("Serif", Font.BOLD, 25));
+    winnerLbl.setForeground(defaultBlueFrame);
+    winnerLbl.setBounds(10,10,width/2,100);
+    winnerLbl.setBackground(Color.white);
+    winnerLbl.setOpaque(true);
+    globalPane.add(winnerLbl);
+
+    // display score
+    for(Tank t: players) {
+      JLabel playerScoreLbl = new JLabel("Player_"+t.number+" : "+t.score);
+      playerScoreLbl.setFont(new Font("Serif", Font.BOLD, 25));
+      playerScoreLbl.setForeground(defaultBlueFrame);
+      playerScoreLbl.setBounds(10,30+70*t.number,width/2,70);
+      playerScoreLbl.setBackground(Color.white);
+      playerScoreLbl.setOpaque(true);
+      globalPane.add(playerScoreLbl);
     }
 
-    g2.dispose();
+    // restart button
+    restartPane = new JPanel();
+    restartPane.setLayout(null);
+    restartPane.setBounds((width/2)-160,590,160,90);
+    restartPane.setBackground(defaultBlueFrame);
+    restartPane.addMouseListener(this);
+    JLabel restartLbl = new JLabel("Play again");
+    restartLbl.setFont(new Font("Serif", Font.BOLD, 25));
+    restartLbl.setForeground(defaultBlueFrame);
+    restartLbl.setBounds(10,10,140,70);
+    restartLbl.setBackground(Color.white);
+    restartLbl.setOpaque(true);
+    restartPane.add(restartLbl);
+    globalPane.add(restartPane);
+
+    // close button
+    closePane = new JPanel();
+    closePane.setLayout(null);
+    closePane.setBounds((width/2),590,160,90);
+    closePane.setBackground(defaultBlueFrame);
+    closePane.addMouseListener(this);
+    JLabel closeLbl = new JLabel("Quit");
+    closeLbl.setFont(new Font("Serif", Font.BOLD, 25));
+    closeLbl.setForeground(defaultBlueFrame);
+    closeLbl.setBounds(10,10,140,70);
+    closeLbl.setBackground(Color.white);
+    closeLbl.setOpaque(true);
+    closePane.add(closeLbl);
+    globalPane.add(closePane);
+
+    JLabel background = new JLabel(new ImageIcon("assets/menu/BackgroundMenu.jpg"));
+    background.setBounds(0,0,width,height);
+    globalPane.add(background);
+
+    this.add(globalPane);
+  }
+
+  public void mouseClicked(MouseEvent e){
+    if(e.getSource() == restartPane) returnToMenu(); // go back to main menu
+    if(e.getSource() == closePane) System.exit(0); // end programm
+  }
+
+  public void mousePressed(MouseEvent e){}
+
+  public void mouseReleased(MouseEvent e){}
+
+  public void mouseEntered(MouseEvent e){ //Detecting mouse entering
+    if(e.getSource() == restartPane) restartPane.setBackground(hover_orange);
+    if(e.getSource() == closePane) closePane.setBackground(hover_orange);
+  }
+
+  public void mouseExited(MouseEvent e){
+    if(e.getSource() == restartPane) restartPane.setBackground(defaultBlueFrame);
+    if(e.getSource() == closePane) closePane.setBackground(defaultBlueFrame);
+  }
+
+  void returnToMenu () {
+    System.out.println("Returning to menu...");
+    // Reset JFrame ...
+    StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
+    topFrame.initGUI();
+    this.gameOver = false;
+    this.paused = true;
+    s.end.stop(); // stop music
   }
 
   void drawLogo(Graphics2D g2) {

@@ -159,6 +159,8 @@ public class Tank extends MovingEntity {
 
   // Removing bullets when they stayed
   public void updateBullets(){
+    double currentTime = System.currentTimeMillis();
+    int prevScore = score;
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();
       if(this.dead) {
@@ -166,10 +168,7 @@ public class Tank extends MovingEntity {
         break;
       } else {
         for(Tank t: gp.players) { // check if someonelse died in the process
-          if(t.dead) {
-            score++;
-            break;
-          }
+          if(t.dead && currentTime - t.timeDied > 600 && prevScore == score) score++;
         }
       }
       if(bullets.get(i).dead){
