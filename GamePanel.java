@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
   private int numberOfGames; // how much games were played
   private int winner; // number of the winner
 
-  public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters) {
+  public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters, int mapNumber) {
     this.width = width;
     this.height = height;
     this.nbXtiles = nbXtiles;
@@ -84,7 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     System.out.println("Generating map ...");
-    currentMap = new Map(this); // creates the map
+    currentMap = new Map(mapNumber, this); // creates the map
 
     // music maestro
     if(musicOn) s.music.loop();
@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
     Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
 
     // draw the background
-    g2.drawImage(im.background, 0, 0, width, height, this);
+    currentMap.drawBackground(g2);
 
     // draw dust
     for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);

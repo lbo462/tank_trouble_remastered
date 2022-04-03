@@ -3,26 +3,26 @@ import java.awt.BasicStroke;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.awt.Image;
 
 // Everything that the map concerns is implemented in this class
 public class Map {
 
   public GamePanel gp;
   public Tile[][] tiles;
-
-  // Create a matrix of tiles, then fills it with a "labyrinth" randomly generated
-  public Map(GamePanel gp) {
-    this.gp = gp;
-    this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
-
-    generateMap();
-  }
+  public Image background;
 
   public Map(int number, GamePanel gp) {
     this.gp = gp;
     this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];
+    this.background = gp.im.background[number];
 
+    if(number != 0) loadMap(number);
+    else generateMap();
+  }
 
+  // This loads an already existing map in assets/maps
+  public void loadMap(int number) {
     int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];
     try {
       // read map file
@@ -30,20 +30,18 @@ public class Map {
       BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
       // extract data from file
-      for(int i = 0; i <= gp.nbYtiles; i++) {
+      for(int i = 0; i < gp.nbYtiles; i++) {
         String line = br.readLine(); // recovers sometings like 0 0 0 0 1 1 1 1 0 0 0 0 ...
-        for(int j = 0; j <= gp.nbXtiles; j++) {
-          //String numbers[] = line.split(" "); // split into ["0", "0", "0", "0", "1", "1", ...]
-          tilesInt[i][j] = Integer.parseInt("1");
+        for(int j = 0; j < gp.nbXtiles; j++) {
+          String numbers[] = line.split(" "); // split into ["0", "0", "0", "0", "1", "1", ...]
+          tilesInt[i][j] = Integer.parseInt(numbers[j]);
         }
-        System.out.println(i);
       }
 
       br.close(); // close the buffer reader
 
     } catch(Exception e) {}
     mapIntToTiles(tilesInt); // transform number to Tiles
-
   }
 
   // This method will generate a random labyrinth
@@ -211,5 +209,9 @@ public class Map {
         tiles[i][j].draw(g2);
       }
     }
+  }
+
+  public void drawBackground(Graphics2D g2) {
+    g2.drawImage(this.background, 0, 0, gp.width, gp.height, gp);
   }
 }

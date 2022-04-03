@@ -3,7 +3,7 @@ import java.awt.Image;
 
 public class ImageManager {
 
-  public Image background;
+  public Image[] background;
   public Image dust;
 
   public Image bullet;
@@ -20,8 +20,13 @@ public class ImageManager {
   public Image deadTitank;
 
   public ImageManager() {
+    background = new Image[3];
     try {
-      background = new ImageIcon(getClass().getResource("assets/maps/background.gif")).getImage();
+      // default background
+      background[0] = new ImageIcon(getClass().getResource("assets/maps/background.gif")).getImage();
+      // custom maps background
+      background[1] = new ImageIcon(getClass().getResource("assets/maps/1/background.gif")).getImage();
+      background[2] = new ImageIcon(getClass().getResource("assets/maps/2/background.gif")).getImage();
       dust = new ImageIcon(getClass().getResource("assets/entities/dust.png")).getImage();
 
       // bullets
