@@ -18,6 +18,12 @@ public class Tank_TiTank extends Tank_Super {
     super.update();
   }
 
+  @Override
+  public void reset(int x, int y) {
+    if(this.capacityActive) deactivate();
+    super.reset(x, y);
+  }
+
   // activate capacity
   void activate() {
     width = gp.tileSize*3;

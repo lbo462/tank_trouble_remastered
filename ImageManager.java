@@ -58,8 +58,8 @@ public class ImageManager {
       kitty = new ImageIcon(getClass().getResource("assets/entities/tank/kittyTank.gif")).getImage();
       deadKitty = new ImageIcon(getClass().getResource("assets/entities/tank/kittyExplosion.gif")).getImage();
 
-      titank = new ImageIcon(getClass().getResource("assets/entities/tank/TiTank.png")).getImage();
-      deadTitank = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
+      titank = new ImageIcon(getClass().getResource("assets/entities/tank/TiTank.gif")).getImage();
+      deadTitank = new ImageIcon(getClass().getResource("assets/entities/tank/titankExplosion.gif")).getImage();
 
     }  catch (Exception e) {
       e.printStackTrace();
