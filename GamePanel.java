@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   private int numberOfGames; // how much games were played
   private int winner; // number of the winner
 
-  public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters, int mapNumber) {
+  public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters, int mapNumber, int gamesToPlay) {
     this.width = width;
     this.height = height;
     this.nbXtiles = nbXtiles;
@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.dust = new ArrayList<Dust>();
     this.frame = 0;
     this.FPS = 60;
-    this.gamesToPlay = 3;
+    this.gamesToPlay = gamesToPlay;
     this.numberOfGames = 1;
     this.tankDead = false;
 

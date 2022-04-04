@@ -201,7 +201,7 @@ public class StartingWindow extends JFrame implements MouseListener {
           this.getContentPane().removeAll(); // remove all the element of the menu
 
           // add game panel
-          gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters, 0);
+          gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters, 0, 2);
           gamePanel.setPreferredSize(new Dimension(width, height));
           gamePanel.setBackground(Color.black);
           gamePanel.setDoubleBuffered(true); // Increase game performance
