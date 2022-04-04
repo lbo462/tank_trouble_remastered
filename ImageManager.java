@@ -49,7 +49,7 @@ public class ImageManager {
       explodedKitty = new ImageIcon(getClass().getResource("assets/entities/bullet/explodedKitty.gif")).getImage();
 
       // tanks
-      painTank = new ImageIcon(getClass().getResource("assets/entities/tank/painTank.png")).getImage();
+      painTank = new ImageIcon(getClass().getResource("assets/entities/tank/defaultTank.gif")).getImage();
       defaultExplosion = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
 
       phantom = new ImageIcon(getClass().getResource("assets/entities/tank/phantom.gif")).getImage();

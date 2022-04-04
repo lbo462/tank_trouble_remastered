@@ -224,7 +224,10 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
     // display score
     for(Tank t: players) {
-      JLabel playerScoreLbl = new JLabel("Player_"+t.number+" : "+t.score);
+
+      JLabel playerScoreLbl = new JLabel();
+      if(t.numberOfShoots != 0) playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" | "+Double.toString(100*t.score/t.numberOfShoots)+"% hits");
+      else playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" | no hits");
       playerScoreLbl.setFont(new Font("Serif", Font.BOLD, 25));
       playerScoreLbl.setForeground(defaultBlueFrame);
       playerScoreLbl.setBounds(10,30+70*t.number,width/2,70);

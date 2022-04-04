@@ -44,6 +44,7 @@ public class Tank_TiTank extends Tank_Super {
   @Override // eventually shoot big bullets
   public void shoot(){
     if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
+      this.numberOfShoots++;
       Bullet b;
       if(capacityActive) {
         b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet

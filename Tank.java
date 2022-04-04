@@ -15,6 +15,7 @@ public class Tank extends MovingEntity {
   public boolean collisionWithTiles; // used to phantom
   public boolean slowed; // used for kitty
   public int score;
+  public int numberOfShoots;
   public ArrayList<Bullet> bullets; // contains active bullets
   public double lastShot; // time of the last shot
   public KeyHandler keyH;
@@ -29,6 +30,7 @@ public class Tank extends MovingEntity {
     this.keyH = gp.keyH;
     this.number = number;
     this.score = 0;
+    this.numberOfShoots = 0;
     this.sprite = image;
     this.deadSprite = deadImage;
 
@@ -156,6 +158,7 @@ public class Tank extends MovingEntity {
 
   public void shoot(){
     bullets.add(new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp));
+    this.numberOfShoots++;
     gp.s.pew.stop();
     gp.s.pew.play();
     lastShot = System.currentTimeMillis();
