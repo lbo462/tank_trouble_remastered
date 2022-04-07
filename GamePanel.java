@@ -2,10 +2,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.awt.Color;
 import java.awt.AlphaComposite;
 import javax.swing.*;
 import java.awt.Font;
@@ -201,8 +197,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     s.end.play();
     // find winner
     int iMaxScore = 0;
-    for(int i = 0; i < players.length; i++)
+    for(int i = 0; i < players.length; i++){
       if(players[i].score > players[iMaxScore].score) iMaxScore = i;
+    }
     winner = players[iMaxScore].number;
     System.out.println("Player_"+winner+" won.");
 
