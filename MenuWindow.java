@@ -1,9 +1,6 @@
 import javax.swing.*;
-import java.awt.Color;
 import java.awt.event.*;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.Dimension;
+import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class MenuWindow  extends JFrame implements MouseListener {
@@ -29,7 +26,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public int nbGames;//numbers of games to be played
   
   JPanel containerGlobal;
-
   //background image
   ResizeImageLabel background; 
 
@@ -65,15 +61,13 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public GamePanel gamePanel;
 
   public MenuWindow(){
-    String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
-      UIManager.setLookAndFeel(lookAndFeel);
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     }   
     catch (Exception e) {
         e.printStackTrace();
     }
-    
     this.setTitle("Tank Trouble");
     this.setSize(width, height);
     this.setResizable(false);
@@ -83,8 +77,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.add(containerGlobal);
     this.logoAnimation();
     this.startGUI();
-    
-    this.repaint();
   }
 
   public void logoAnimation(){
@@ -93,7 +85,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     animation.setBackground(Color.orange);
     animation.updateResizedImageIcon(new ImageIcon("assets/menu/tankTrouble.gif"));
     containerGlobal.add(animation);
-    this.repaint();
+    containerGlobal.repaint();
     System.out.println("animation start");
     try {
       Thread.sleep(2500);
@@ -111,9 +103,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public void setGlobalParameters(){
     containerGlobal = new JPanel();
-    containerGlobal.setLayout(null);
     containerGlobal.setBounds(0,0,width,height);
     containerGlobal.setBackground(transparent);
+    containerGlobal.setLayout(null);
   }
 
   public void setStartingParameters(){
@@ -183,11 +175,11 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapDescriptions = new String[nbMaps];
 
     mapNames[0] = "   Vanilla 1";
-    mapImages[0] = new ImageIcon("assets/map/1/background.gif");
+    mapImages[0] = new ImageIcon("assets/maps/1/background.gif");
     mapDescriptions[0] = "map 1";
 
     mapNames[1] = "   Vanilla 2";
-    mapImages[1] = new ImageIcon("assets/map/2/background.gif");
+    mapImages[1] = new ImageIcon("assets/maps/2/background.gif");
     mapDescriptions[1] = "map 2";
 
     for(HoverButton button:tankSelection){
@@ -220,6 +212,8 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     nbGamesPanel = new NumberChoicePanel(width/2-250, height/2-250, 500, 500, 1, defaultFont, Color.green);
     containerGlobal.add(nbGamesPanel);
+    containerGlobal.revalidate();
+    containerGlobal.repaint();
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){
