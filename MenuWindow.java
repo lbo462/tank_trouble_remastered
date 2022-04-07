@@ -66,6 +66,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public MenuWindow(){
     String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
       UIManager.setLookAndFeel(lookAndFeel);
     }   
@@ -232,12 +233,12 @@ public class MenuWindow  extends JFrame implements MouseListener {
   @Override
   public void mouseClicked(MouseEvent e){
     switch(stateOfGUI){
-      case 1,2:
+      case 1:
+      case 2:
         for (int i = 0;i<tankSelection.length;i++){
           if(e.getSource() == tankSelection[i]){
             previewIndex = i;
             preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
-            
             this.repaint();
           }
         }
@@ -268,6 +269,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
         case 3:
           choiceMap = this.previewIndex;
           this.setOptionsParameters();
+          break;
         default:
           nbGames = nbGamesPanel.number;
           this.getContentPane().removeAll(); // remove all the element of the menu
