@@ -1,5 +1,4 @@
 import java.awt.Graphics2D;
-import javax.swing.ImageIcon;
 import java.awt.Image;
 
 public class Bullet_Kitty extends Bullet {

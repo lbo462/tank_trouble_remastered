@@ -23,9 +23,6 @@ public class Bullet_Big extends Bullet {
       // rotation matrix coeffs
       double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
       double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
-
-      int w = gp.tileSize-1; // true size of a tile
-
       // next position of the center of the bullet
       int nx = (int)(m00 * (x+width/2) + m01 * (y+height/2) + m02);
       int ny = (int)(m10 * (y+height/2) + m11 * (x+width/2) + m12);

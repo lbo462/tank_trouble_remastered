@@ -1,5 +1,4 @@
 import java.awt.Graphics2D;
-import java.awt.BasicStroke;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
