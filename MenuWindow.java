@@ -195,7 +195,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     for (int i=0;i<mapSelection.length;i++){
       mapSelection[i] = new HoverButton();
       mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
-      //mapSelection[i].setIcon(mapImages[i]);
+      mapSelection[i].setIcon(mapImages[i]);
       setBackground(Color.darkGray);
       mapSelection[i].addMouseListener(this);
       containerGlobal.add(mapSelection[i],-1);
