@@ -12,8 +12,8 @@ public class Tank_Super extends Tank{
     public double activationTime; // time at which the capacity was activated
 
     // for drawing bar beneath player
-    private double timeRemaining; // time remaining from next possible capacity activation
-    private double pourcentage = 1; // corresponding pourcentage wrt cooldown
+    double timeRemaining; // time remaining from next possible capacity activation
+    double pourcentage = 1; // corresponding pourcentage wrt cooldown
 
 
     public Tank_Super(int number, int x, int y, Image image, Image deadImage, GamePanel gp, double duration, double cooldown) {

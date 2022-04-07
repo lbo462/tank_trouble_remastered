@@ -1,12 +1,9 @@
 import java.awt.Graphics2D;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Image;
-import java.util.ArrayList;
 
 // TANK BOUM BOUM
 public class Tank extends MovingEntity {
@@ -25,6 +22,8 @@ public class Tank extends MovingEntity {
   public double timeSlowed; // time slowed started
   public double timeDied; // time at which tank died
 
+  public int bulletAmplifier; //Impacted by the "BiggerBalls" power up
+
   public Tank(int number, int x, int y, Image image, Image deadImage, GamePanel gp) {
     this.gp = gp;
     this.keyH = gp.keyH;
@@ -33,6 +32,7 @@ public class Tank extends MovingEntity {
     this.numberOfShoots = 0;
     this.sprite = image;
     this.deadSprite = deadImage;
+    bulletAmplifier = 1;
 
     reset(x, y); // initialise every variables
   }
@@ -157,7 +157,9 @@ public class Tank extends MovingEntity {
   }
 
   public void shoot(){
-    bullets.add(new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp));
+    Bullet b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp);
+    b.width *= bulletAmplifier;
+    bullets.add(b);
     this.numberOfShoots++;
     gp.s.pew.stop();
     gp.s.pew.play();
