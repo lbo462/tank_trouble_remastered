@@ -11,7 +11,7 @@ public class HoverButton extends JButton implements MouseListener{
     public HoverButton(){
         super();
         this.setBorder(BorderFactory.createLoweredBevelBorder());
-        this.setHorizontalAlignment(SwingConstants.CENTER);
+        this.setHorizontalAlignment(SwingConstants.CENTER); //Centers text
         setBackground(Color.CYAN);
         addMouseListener(this);
     }
