@@ -9,40 +9,43 @@ public class NumberChoicePanel extends JPanel implements MouseListener{
     JLabel display;
     JButton incrementButton;
     JButton decrementButton;
-    int number;
+    public int number;
 
-    public NumberChoicePanel(int posX,int posY,int width,int height,int defaultNumber,Font bFont,Color labelColor){
-        number = defaultNumber;
-
+    public NumberChoicePanel(int posX,int posY,int width,int height,int defaultNumber,Font bFont){
         this.setBounds(posX, posY, width, height);
-        this.setBackground(Color.gray);
+        this.setBackground(Color.WHITE);
 
         display = new JLabel();
+        display.setText(" " + Integer.toString(number) + " game");
         display.setBounds(10,10,width-20,60);
-        display.setBackground(labelColor);
         display.setHorizontalAlignment(SwingConstants.CENTER);
         display.setFont(bFont);
-        display.setText(String.valueOf(number));
         display.setOpaque(true);
-        add(display);
+        display.setBackground(Color.WHITE);
+        add(display, 0);
 
         incrementButton = new JButton();
         incrementButton.setIcon(new ImageIcon("assets/menu/incrementButton.gif"));
         incrementButton.setBounds(10, 70, width/2-10, height/2-45);
         incrementButton.setFont(bFont);
         incrementButton.setBackground(Color.darkGray);
+        incrementButton.addMouseListener(this);
         add(incrementButton);
 
         decrementButton = new JButton();
-        decrementButton.setIcon(new ImageIcon("assets/menu/incrementButton.gif"));
+        decrementButton.setIcon(new ImageIcon("assets/menu/decrementButton.gif"));
         decrementButton.setBounds(width/2+10, 70, width/2-10, height/2-45);
         decrementButton.setFont(bFont);
         decrementButton.setBackground(Color.darkGray);
+        decrementButton.addMouseListener(this);
         add(decrementButton);
+
+        setVisible(true);
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -53,8 +56,10 @@ public class NumberChoicePanel extends JPanel implements MouseListener{
         }else if (e.getSource() == incrementButton){
             number++;
         }
-        this.revalidate();
-        this.repaint();
+        if(number > 1)
+          display.setText(" " + Integer.toString(number) + " games");
+        else
+          display.setText(" " + Integer.toString(number) + " game");
     }
 
     @Override

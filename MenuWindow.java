@@ -63,6 +63,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public MenuWindow(){
     System.out.println("Starting menu ...");
+    this.setIconImage(new ImageIcon("assets/icon.png").getImage());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -78,8 +79,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.setVisible(true);
     this.add(containerGlobal);
     this.logoAnimation();
-
-    // this.setIconImage();
 
     ImageIcon backImage = new ImageIcon("assets/menu/tankTroubleMenu.png");
     background = new ResizeImageLabel();
@@ -128,10 +127,10 @@ public class MenuWindow  extends JFrame implements MouseListener {
     characters[1] = 0;
 
     topLabel = new JLabel();
-    topLabel.setBounds(20, 150, 200, 70);
+    topLabel.setBounds(20, 150, width, 50);
     topLabel.setFont(defaultFont);
     topLabel.setForeground(Color.RED);
-    topLabel.setText("Player 1 choose ...");
+    topLabel.setText("Player_1 choose ...");
     containerGlobal.add(topLabel, 0);
 
     //Filling in the tank arrays:
@@ -210,15 +209,18 @@ public class MenuWindow  extends JFrame implements MouseListener {
   }
 
   public void setOptionsParameters(){
+    containerGlobal.repaint();
+
+    choiceMap = this.previewIndex;
+    topLabel.setText("Choose number of games : ");
+
     containerGlobal.remove(preview);
     for (HoverButton button:mapSelection){
       containerGlobal.remove(button);
     }
 
-    nbGamesPanel = new NumberChoicePanel(width/2-250, height/2-250, 500, 500, 1, defaultFont, Color.green);
+    nbGamesPanel = new NumberChoicePanel(width/2-250, height/2-250, 500, 500, 1, defaultFont);
     containerGlobal.add(nbGamesPanel);
-    containerGlobal.revalidate();
-    containerGlobal.repaint();
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){
@@ -255,13 +257,22 @@ public class MenuWindow  extends JFrame implements MouseListener {
       switch(stateOfGUI){
         case 0: // first start menu
           // start tanks choices
+
+          /* remove background image */
+          containerGlobal.remove(background);
+          JPanel newbackground = new JPanel();
+          newbackground.setBounds(0,0,width,height);
+          newbackground.setBackground(Color.WHITE);
+          containerGlobal.add(newbackground);
+          containerGlobal.repaint();
+          
           this.setPlayerParameters();
           previewIndex = 0; // preview first tank
           break;
         case 1: // first tank chosen
           characters[0] = this.previewIndex+1; // register choice
           previewIndex = 0; // reset preview
-          topLabel.setText("Player 2 choose ...");
+          topLabel.setText("Player_2's turn :");
           preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
           preview.repaint();
           break;
@@ -270,11 +281,8 @@ public class MenuWindow  extends JFrame implements MouseListener {
           topLabel.setText("Choose map ...");
           this.setMapParameters();
           break;
-        case 3:
-          choiceMap = this.previewIndex;
-          topLabel.setText("Number of game : ");
+        case 3: // choose number of games
           this.setOptionsParameters();
-
           break;
         default:
           nbGames = nbGamesPanel.number;

@@ -208,14 +208,14 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     JPanel globalPane = new JPanel();
     globalPane.setLayout(null);
     globalPane.setBounds(0,0,width,height);
-    globalPane.setBackground(defaultBlueFrame);
+    globalPane.setBackground(Color.WHITE);
 
     // display winner
-    JLabel winnerLbl = new JLabel("<html><body>Player_"+winner+" won !  GG<br>Scores :</body></html>");
+    JLabel winnerLbl = new JLabel("Player_"+winner+" won !");
     winnerLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    winnerLbl.setForeground(defaultBlueFrame);
-    winnerLbl.setBounds(10,10,width/2,100);
-    winnerLbl.setBackground(Color.white);
+    winnerLbl.setBackground(Color.WHITE);
+    winnerLbl.setForeground(Color.RED);
+    winnerLbl.setBounds(30,10,width/2,100);
     winnerLbl.setOpaque(true);
     globalPane.add(winnerLbl);
 
@@ -223,12 +223,12 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     for(Tank t: players) {
 
       JLabel playerScoreLbl = new JLabel();
-      if(t.numberOfShoots != 0) playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" | "+Double.toString(100*t.score/t.numberOfShoots)+"% hits");
-      else playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" | no hits");
+      if(t.numberOfShoots != 0) playerScoreLbl.setText("<html><body>Player_"+t.number+" : "+t.score+" points <br> Accuracy : "+Double.toString(100*t.score/t.numberOfShoots)+"%</body></html>");
+      else playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" points");
       playerScoreLbl.setFont(new Font("Serif", Font.BOLD, 25));
-      playerScoreLbl.setForeground(defaultBlueFrame);
-      playerScoreLbl.setBounds(10,30+70*t.number,width/2,70);
-      playerScoreLbl.setBackground(Color.white);
+      playerScoreLbl.setBackground(Color.WHITE);
+      playerScoreLbl.setForeground(Color.BLACK);
+      playerScoreLbl.setBounds(20,30+80*t.number,width/2,70);
       playerScoreLbl.setOpaque(true);
       globalPane.add(playerScoreLbl);
     }
@@ -237,14 +237,15 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     restartPane = new JPanel();
     restartPane.setLayout(null);
     restartPane.setBounds((width/2)-160,590,160,90);
-    restartPane.setBackground(defaultBlueFrame);
+    restartPane.setBackground(Color.RED);
     restartPane.addMouseListener(this);
     JLabel restartLbl = new JLabel("Play again");
     restartLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    restartLbl.setForeground(defaultBlueFrame);
+    restartLbl.setForeground(Color.BLACK);
     restartLbl.setBounds(10,10,140,70);
-    restartLbl.setBackground(Color.white);
+    restartLbl.setBackground(Color.WHITE);
     restartLbl.setOpaque(true);
+    restartLbl.setHorizontalAlignment(SwingConstants.CENTER);
     restartPane.add(restartLbl);
     globalPane.add(restartPane);
 
@@ -252,18 +253,19 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     closePane = new JPanel();
     closePane.setLayout(null);
     closePane.setBounds((width/2),590,160,90);
-    closePane.setBackground(defaultBlueFrame);
+    closePane.setBackground(Color.RED);
     closePane.addMouseListener(this);
     JLabel closeLbl = new JLabel("Quit");
     closeLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    closeLbl.setForeground(defaultBlueFrame);
+    closeLbl.setForeground(Color.BLACK);
     closeLbl.setBounds(10,10,140,70);
-    closeLbl.setBackground(Color.white);
+    closeLbl.setBackground(Color.WHITE);
     closeLbl.setOpaque(true);
+    closeLbl.setHorizontalAlignment(SwingConstants.CENTER);
     closePane.add(closeLbl);
     globalPane.add(closePane);
 
-    JLabel background = new JLabel(new ImageIcon("assets/menu/BackgroundMenu.jpg"));
+    JLabel background = new JLabel(new ImageIcon("assets/menu/tankTroubleMenu.png"));
     background.setBounds(0,0,width,height);
     globalPane.add(background);
 
@@ -285,8 +287,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   }
 
   public void mouseExited(MouseEvent e){
-    if(e.getSource() == restartPane) restartPane.setBackground(defaultBlueFrame);
-    if(e.getSource() == closePane) closePane.setBackground(defaultBlueFrame);
+    if(e.getSource() == restartPane) restartPane.setBackground(Color.RED);
+    if(e.getSource() == closePane) closePane.setBackground(Color.RED);
   }
 
   void returnToMenu () {
