@@ -3,6 +3,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
 
 public class NumberChoicePanel extends JPanel implements MouseListener{
     JLabel display;
@@ -25,13 +26,15 @@ public class NumberChoicePanel extends JPanel implements MouseListener{
         display.setOpaque(true);
         add(display);
 
-        incrementButton = new JButton("+");
+        incrementButton = new JButton();
+        incrementButton.setIcon(new ImageIcon("assets/menu/incrementButton.gif"));
         incrementButton.setBounds(10, 70, width/2-10, height/2-45);
         incrementButton.setFont(bFont);
         incrementButton.setBackground(Color.darkGray);
         add(incrementButton);
 
-        decrementButton = new JButton("-");
+        decrementButton = new JButton();
+        decrementButton.setIcon(new ImageIcon("assets/menu/incrementButton.gif"));
         decrementButton.setBounds(width/2+10, 70, width/2-10, height/2-45);
         decrementButton.setFont(bFont);
         decrementButton.setBackground(Color.darkGray);

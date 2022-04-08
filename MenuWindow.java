@@ -4,9 +4,6 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 
 public class MenuWindow  extends JFrame implements MouseListener {
-  public final Color defaultBlueFrame = new Color(1, 49, 180);
-  public final Color selectedRedFrame = new Color(237, 0, 0);
-  public final Color hover_orange = new Color(255, 127, 0);
   public final Color transparent = new Color(0, 0, 0,0);
   public final Font defaultFont = new Font("Serif", Font.BOLD, 25);
   public final int nbXtiles = 35; // number of tiles on the x-axis
@@ -59,9 +56,13 @@ public class MenuWindow  extends JFrame implements MouseListener {
   //Gif for introduction
   ResizeImageLabel animation;
 
+  // display number of player choosing and other things
+  JLabel topLabel;
+
   public GamePanel gamePanel;
 
   public MenuWindow(){
+    System.out.println("Starting menu ...");
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -77,39 +78,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.setVisible(true);
     this.add(containerGlobal);
     this.logoAnimation();
-    this.startGUI();
-  }
 
-  public void logoAnimation(){
-    animation = new ResizeImageLabel();
-    animation.setSize(width, height);
-    animation.setBackground(Color.orange);
-    animation.updateResizedImageIcon(new ImageIcon("assets/menu/tankTrouble.gif"));
-    containerGlobal.add(animation);
-    containerGlobal.repaint();
-    System.out.println("animation start");
-    try {
-      Thread.sleep(2500);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    }
-    System.out.println("animation end");
-    containerGlobal.remove(animation);
-  }
+    // this.setIconImage();
 
-  public void startGUI(){
-      this.setStartingParameters();
-      stateOfGUI = 0;
-  }
-
-  public void setGlobalParameters(){
-    containerGlobal = new JPanel();
-    containerGlobal.setBounds(0,0,width,height);
-    containerGlobal.setBackground(transparent);
-    containerGlobal.setLayout(null);
-  }
-
-  public void setStartingParameters(){
     ImageIcon backImage = new ImageIcon("assets/menu/tankTroubleMenu.png");
     background = new ResizeImageLabel();
     background.setBounds(0,0,width,height);
@@ -125,6 +96,30 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     containerGlobal.add(nextButton);
     containerGlobal.add(background,-1);
+    this.repaint();
+    stateOfGUI = 0;
+  }
+
+  public void logoAnimation(){
+    animation = new ResizeImageLabel();
+    animation.setSize(width, height);
+    animation.setBackground(Color.orange);
+    animation.updateResizedImageIcon(new ImageIcon("assets/menu/tankTrouble.gif"));
+    containerGlobal.add(animation);
+    containerGlobal.repaint();
+    try {
+      Thread.sleep(2500);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    containerGlobal.remove(animation);
+  }
+
+  public void setGlobalParameters(){
+    containerGlobal = new JPanel();
+    containerGlobal.setBounds(0,0,width,height);
+    containerGlobal.setBackground(transparent);
+    containerGlobal.setLayout(null);
   }
 
   public void setPlayerParameters(){
@@ -132,12 +127,19 @@ public class MenuWindow  extends JFrame implements MouseListener {
     characters[0] = 0;
     characters[1] = 0;
 
+    topLabel = new JLabel();
+    topLabel.setBounds(20, 150, 200, 70);
+    topLabel.setFont(defaultFont);
+    topLabel.setForeground(Color.RED);
+    topLabel.setText("Player 1 choose ...");
+    containerGlobal.add(topLabel, 0);
+
     //Filling in the tank arrays:
     tankNames = new String[nbTanks];
     tankImages = new ImageIcon[nbTanks];
     tankDescriptions = new String[nbTanks];
 
-    tankNames[0] = "Pain Tank";
+    tankNames[0] = "Default Tank";
     tankImages[0] = new ImageIcon("assets/entities/tank/defaultTank.gif");
     tankDescriptions[0] = "Original tank with no capacity. Vintage = for the connaisseur.";
 
@@ -167,6 +169,8 @@ public class MenuWindow  extends JFrame implements MouseListener {
       containerGlobal.add(tankSelection[i]);
     }
 
+    nextButton.setText("NEXT");
+
     this.repaint();
   }
 
@@ -175,13 +179,13 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapImages = new ImageIcon[nbMaps];
     mapDescriptions = new String[nbMaps];
 
-    mapNames[0] = "   Vanilla 1";
+    mapNames[0] = "Random";
     mapImages[0] = new ImageIcon("assets/maps/1/background.gif");
-    mapDescriptions[0] = "map 1";
+    mapDescriptions[0] = "Randomly generated map";
 
-    mapNames[1] = "   Vanilla 2";
+    mapNames[1] = "Lava map";
     mapImages[1] = new ImageIcon("assets/maps/2/background.gif");
-    mapDescriptions[1] = "map 2";
+    mapDescriptions[1] = "Map made of lava.";
 
     for(HoverButton button:tankSelection){
       containerGlobal.remove(button);
@@ -249,21 +253,28 @@ public class MenuWindow  extends JFrame implements MouseListener {
     }
     if(e.getSource() == nextButton){
       switch(stateOfGUI){
-        case 0:
+        case 0: // first start menu
+          // start tanks choices
           this.setPlayerParameters();
-          previewIndex = 0;
+          previewIndex = 0; // preview first tank
           break;
-        case 1:
-          characters[0] = this.previewIndex+1;
-          previewIndex = 0;
+        case 1: // first tank chosen
+          characters[0] = this.previewIndex+1; // register choice
+          previewIndex = 0; // reset preview
+          topLabel.setText("Player 2 choose ...");
+          preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
+          preview.repaint();
           break;
         case 2:
           characters[1] = this.previewIndex+1;
+          topLabel.setText("Choose map ...");
           this.setMapParameters();
           break;
         case 3:
           choiceMap = this.previewIndex;
+          topLabel.setText("Number of game : ");
           this.setOptionsParameters();
+
           break;
         default:
           nbGames = nbGamesPanel.number;
@@ -282,8 +293,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
       }
       stateOfGUI++;
     }
-    this.revalidate();
-    this.repaint();
   }
 
   @Override
