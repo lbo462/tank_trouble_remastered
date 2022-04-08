@@ -292,8 +292,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   void returnToMenu () {
     System.out.println("Returning to menu...");
     // Reset JFrame ...
-    StartingWindow topFrame = (StartingWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
-    topFrame.initGUI();
+    MenuWindow topFrame = (MenuWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
+    topFrame.startGUI();
     this.gameOver = false;
     this.paused = true;
     s.end.stop(); // stop music
