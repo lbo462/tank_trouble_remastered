@@ -9,10 +9,11 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public final Color hover_orange = new Color(255, 127, 0);
   public final Color transparent = new Color(0, 0, 0,0);
   public final Font defaultFont = new Font("Serif", Font.BOLD, 25);
-  public final int width = 1050;
-  public final int height = 750;
   public final int nbXtiles = 35; // number of tiles on the x-axis
   public final int nbYtiles = 25;
+  public final int tileSize = 33;
+  public final int width = nbXtiles * tileSize;
+  public final int height = nbYtiles * tileSize;
   public final int nbTanks = 4;
   public final int nbMaps = 2;
   public final int buttonWidth = 200;
@@ -24,10 +25,10 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public int[] characters;//tanks choosen by players
   public int choiceMap;//map choosen by players
   public int nbGames;//numbers of games to be played
-  
+
   JPanel containerGlobal;
   //background image
-  ResizeImageLabel background; 
+  ResizeImageLabel background;
 
   //Tank dictionnary
   String[] tankNames;
@@ -64,7 +65,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    }   
+    }
     catch (Exception e) {
         e.printStackTrace();
     }
@@ -114,7 +115,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     background.setBounds(0,0,width,height);
     background.setBackground(Color.white);
     background.updateResizedImageIcon(backImage);
-    
+
     nextButton = new HoverButton();
     nextButton.setText("START");
     nextButton.setFont(defaultFont);
@@ -134,7 +135,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     //Filling in the tank arrays:
     tankNames = new String[nbTanks];
     tankImages = new ImageIcon[nbTanks];
-    tankDescriptions = new String[nbTanks]; 
+    tankDescriptions = new String[nbTanks];
 
     tankNames[0] = "Pain Tank";
     tankImages[0] = new ImageIcon("assets/entities/tank/defaultTank.gif");
@@ -154,7 +155,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,defaultFont,60);
     previewIndex = 0;
-    preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);     
+    preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
     containerGlobal.add(preview,0);
 
     tankSelection = new HoverButton[nbTanks];
@@ -279,7 +280,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
           gamePanel.startGameThread();
           break;
       }
-      stateOfGUI++; 
+      stateOfGUI++;
     }
     this.revalidate();
     this.repaint();
@@ -293,7 +294,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   @Override
   public void mouseEntered(MouseEvent e){}
-  
+
   @Override
   public void mouseExited(MouseEvent e){}
 }
