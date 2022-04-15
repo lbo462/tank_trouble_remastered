@@ -9,7 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class HoverButton extends JButton implements MouseListener{
-  
+
+    AudioClip click;
 
     public HoverButton(){
         super();
@@ -17,20 +18,14 @@ public class HoverButton extends JButton implements MouseListener{
         this.setHorizontalAlignment(SwingConstants.CENTER); //Centers text
         setBackground(Color.RED);
         addMouseListener(this);
-        click = new AudioClip();
-        URL url;
-        url = getClass().getResource("assets/sounds/click.wav");
+        URL url = getClass().getResource("assets/sounds/click.wav");
         click = Applet.newAudioClip(url);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        try{
-            click.start();
-        }catch(Exception e){
-            System.out.println("problem with HoverButton click sound");
-            e.printStackTrace();
-        }
+      click.stop();
+      click.play();
      }
 
     @Override
