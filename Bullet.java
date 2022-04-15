@@ -68,9 +68,9 @@ public class Bullet extends MovingEntity {
     int ny = (int)(m10 * (y+height/2) + m11 * (x+width/2) + m12);
 
     // first check collision with outside bounds of the map
-    if(ny < height/2 || ny >= gp.height - height/2)
+    if(ny < height/2+gp.tileSize/2 || ny >= gp.height - height/2 - gp.tileSize/2)
        UoDcollision = true;
-    else if(nx < width/2 || nx >= gp.width - width/2)
+    else if(nx < width/2+gp.tileSize/2 || nx >= gp.width - width/2 - gp.tileSize/2)
        LoRCollision = true;
     else {
       /* find the tile to check collision */

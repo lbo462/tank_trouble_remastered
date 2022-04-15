@@ -217,6 +217,18 @@ public class Map {
         tiles[i][j].draw(g2);
       }
     }
+
+    // draw bush bounds
+
+    int ts = gp.tileSize;
+    for(int i = 0; i <= gp.height; i += ts) { // horizontal draw
+      for(int j = 0; j <= gp.width; j += gp.width)
+        g2.drawImage(gp.im.bush, j-ts/2, i-ts/2, ts, ts, null);
+    }
+    for(int j = 0; j <= gp.width; j += ts) { // vertical draw
+      for(int i = 0; i <= gp.height; i += gp.height)
+        g2.drawImage(gp.im.bush, j-ts/2, i-ts/2, ts, ts, null);
+    }
   }
 
   public void drawBackground(Graphics2D g2) {

@@ -146,18 +146,26 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         }
 
         // eventually pop new power ups
-        if(frame % 2000 == 0) {
-          double rand = Math.random();
-          int numberOfPowerUps = 2;
-          double ratio = 1 / numberOfPowerUps;
+        if(frame % 1000 == 0) {
+          double ratio = 0.5;
 
-          int x = (int)(Math.random() * (width-tileSize));
-          int y = (int)(Math.random() * (height-tileSize));
+          double rand = Math.random();
+          int x = (int)(tileSize + Math.random() * (width-2*tileSize));
+          int y = (int)(tileSize + Math.random() * (height-2*tileSize));
+          int xOnGrid = (int)(x / tileSize);
+          int yOnGrid = (int)(y / tileSize);
+
+          while(currentMap.tiles[yOnGrid][xOnGrid].collision) {
+            x = (int)(Math.random() * (width-tileSize));
+            y = (int)(Math.random() * (height-tileSize));
+            xOnGrid = (int)(x / tileSize);
+            yOnGrid = (int)(y / tileSize);
+          }
 
           if(rand < ratio)
-            pu.add(new PU_ResetCooldown(this, x, y));
+            pu.add(new PU_ResetCooldown(this, xOnGrid*tileSize, yOnGrid*tileSize));
           else
-            pu.add(new PU_SpeedUp(this, x, y));
+            pu.add(new PU_SpeedUp(this, xOnGrid*tileSize, yOnGrid*tileSize));
         }
 
         // update power ups

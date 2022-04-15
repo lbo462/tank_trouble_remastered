@@ -15,6 +15,6 @@ public class Eff_SpeedBoost extends Effect {
 
   @Override
   void draw(int x, int y, int size, Graphics2D g2) {
-    g2.drawImage(this.sprite, x, y, size, size, null);
+    g2.drawImage(this.sprite, x, y-(int)(0.65*size), size, (int)(size*1.65), null);
   }
 }

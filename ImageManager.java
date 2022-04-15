@@ -4,6 +4,7 @@ import java.awt.Image;
 public class ImageManager {
 
   public Image[] background;
+  public Image bush;
   public Image dust, dustWall;
 
   public Image UoDfull, UoDcrack1, UoDcrack2, UoDcrack3;
@@ -35,6 +36,7 @@ public class ImageManager {
       // custom maps background
       background[1] = new ImageIcon(getClass().getResource("assets/maps/1/background.gif")).getImage();
       background[2] = new ImageIcon(getClass().getResource("assets/maps/2/background.gif")).getImage();
+      bush = new ImageIcon(getClass().getResource("assets/bush.gif")).getImage();
       dust = new ImageIcon(getClass().getResource("assets/entities/dust.png")).getImage();
       dustWall = new ImageIcon(getClass().getResource("assets/entities/dustWall.gif")).getImage();
 

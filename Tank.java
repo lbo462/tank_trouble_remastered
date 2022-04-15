@@ -40,6 +40,7 @@ public class Tank extends MovingEntity {
 
   // reset/initialise every variables
   public void reset(int x, int y) {
+    //this.debug = true;
     this.x = x;
     this.y = y;
     this.timeToSlow = 5000; // duration of the slow
@@ -140,8 +141,11 @@ public class Tank extends MovingEntity {
       ArrayList<Tile> toCheck = new ArrayList<Tile>(); // tiles with which we should check collision
       int w = gp.tileSize-1; // true size of a tile
 
-      for(int i=x; i<=x+width; i+=width) {
-        for(int j=(int)nextY; j<=(int)nextY+height; j+=height) {
+      for(int r=0; r<width/2; r++) {
+        for(int a=0; a<=360; a++) {
+          int i = x+width/2 + (int)(r * Math.cos(Math.toRadians(a)));
+          int j = y+height/2 + (int)(r * Math.sin(Math.toRadians(a)));
+
           // next position of the pixels
           int nx = (int)(m00 * i + m01 * j + m02);
           int ny = (int)(m10 * j + m11 * i + m12);
@@ -227,6 +231,40 @@ public class Tank extends MovingEntity {
       }
     }
 
+    if(collisionWithTiles && !collision) {
+      for(int r=0; r<width/2; r++) {
+        for(int a=0; a<=360; a++) {
+          int i = x+width/2 + (int)(r * Math.cos(Math.toRadians(a)));
+          int j = (int)(nextY+height/2 + r * Math.sin(Math.toRadians(a)));
+
+          int nx = (int)(m00 * i + m01 * j + m02);
+          int ny = (int)(m10 * j + m11 * i + m12);
+
+          for(Tile currentTile: toCheck) {
+            // check if the hitbox hits the tile somewhere
+            if(currentTile.collision) {
+              // I used the same coeffs that I used for drawing the tile
+              if((currentTile.up
+                && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+                && ny > currentTile.y+1 && ny < currentTile.y+1 + w/2+1)
+                || (currentTile.down
+                && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
+                && ny > currentTile.y+1+w/2 && ny < currentTile.y+1+w/2 + w/2+1)
+                || (currentTile.right
+                && nx > currentTile.x+1+w/2 && nx < currentTile.x+1+w/2 + w/2+1
+                && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+                || (currentTile.left
+                && nx > currentTile.x+1 && nx < currentTile.x+1 + w/2+1
+                && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
+                )
+                  collision = true;
+            }
+          }
+        }
+      }
+    }
+
+/*
     // now check collision with these tiles
     if(collisionWithTiles && !collision) { // maybe the tank already collided with map boundaries
       for(int i=x; i<=x+width; i++) {
@@ -257,7 +295,7 @@ public class Tank extends MovingEntity {
           }
         }
       }
-    }
+    }*/
   }
 
   // update position checking collision
