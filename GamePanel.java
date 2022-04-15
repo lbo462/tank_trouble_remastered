@@ -146,9 +146,18 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         }
 
         // eventually pop new power ups
-        if(frame % 10 == 0) {
+        if(frame % 2000 == 0) {
           double rand = Math.random();
           int numberOfPowerUps = 2;
+          double ratio = 1 / numberOfPowerUps;
+
+          int x = (int)(Math.random() * (width-tileSize));
+          int y = (int)(Math.random() * (height-tileSize));
+
+          if(rand < ratio)
+            pu.add(new PU_ResetCooldown(this, x, y));
+          else
+            pu.add(new PU_SpeedUp(this, x, y));
         }
 
         // update power ups
