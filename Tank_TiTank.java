@@ -3,7 +3,7 @@ public class Tank_TiTank extends Tank_Super {
   public boolean activated; // was the capacity activated?
 
   public Tank_TiTank(int number, int x, int y, GamePanel gp){
-      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, 2500, 500);
+      super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, 2500, 10000);
       this.activated = false;
   }
 

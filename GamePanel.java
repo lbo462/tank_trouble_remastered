@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public ImageManager im;
   public Map currentMap; // public because entities need it for collisions
   public Tank[] players;
+  public ArrayList<PowerUp> pu;
   public ArrayList<Dust> dust; // contains dust
   public JPanel restartPane;
   public JPanel closePane;
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.gameOver = false;
     this.timePaused = System.currentTimeMillis(); // initialise with random stuff
     this.players = new Tank[2];
+    this.pu = new ArrayList<PowerUp>();
     this.dust = new ArrayList<Dust>();
     this.frame = 0;
     this.FPS = 60;
@@ -88,6 +90,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
     System.out.println("Generating map ...");
     currentMap = new Map(mapNumber, this); // creates the map
+
+    for(int i = 0; i < 10; i++)
+      pu.add(new PU_SpeedUp(this, (3+i)*tileSize , (5+2*i)*tileSize ));
 
     // music maestro
     if(musicOn) s.music.loop();
@@ -143,6 +148,12 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           if(!tankDead) t.update();
         }
 
+        // update power ups
+        for(int i = 0; i < pu.size(); i++) {
+          pu.get(i).update();
+          if(!pu.get(i).isAlive) pu.remove(i); // remove trash
+        }
+
         // update dust
         for(int i = 0; i < dust.size(); i++) {
           dust.get(i).update();
@@ -176,6 +187,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
       // draw dust
       for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
+
+      // draw power ups
+      for(int i = 0; i < pu.size(); i++) pu.get(i).draw(g2);
 
       // draw players (and bullets)
       for(Tank t: players)
