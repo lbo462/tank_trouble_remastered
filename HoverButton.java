@@ -9,15 +9,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class HoverButton extends JButton implements MouseListener{
-    AudioClip click;
+  
+
     public HoverButton(){
         super();
         this.setBorder(BorderFactory.createLoweredBevelBorder());
         this.setHorizontalAlignment(SwingConstants.CENTER); //Centers text
         setBackground(Color.RED);
         addMouseListener(this);
-        click = new AudioClip();
-        URL url;
     }
 
     @Override
@@ -32,12 +31,12 @@ public class HoverButton extends JButton implements MouseListener{
     @Override
     public void mouseEntered(MouseEvent e) {
         this.setBorder(BorderFactory.createRaisedBevelBorder());
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
-        
+
     }
 }

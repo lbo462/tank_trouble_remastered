@@ -91,9 +91,6 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     System.out.println("Generating map ...");
     currentMap = new Map(mapNumber, this); // creates the map
 
-    for(int i = 0; i < 10; i++)
-      pu.add(new PU_SpeedUp(this, (3+i)*tileSize , (5+2*i)*tileSize ));
-
     // music maestro
     if(musicOn) s.music.loop();
   }
@@ -146,6 +143,12 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
             break;
           } else if(t.dead) tankDead = true;
           if(!tankDead) t.update();
+        }
+
+        // eventually pop new power ups
+        if(frame % 10 == 0) {
+          double rand = Math.random();
+          int numberOfPowerUps = 2;
         }
 
         // update power ups
