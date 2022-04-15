@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager.*;
 
 public class MenuWindow  extends JFrame implements MouseListener {
   public final Color transparent = new Color(0, 0, 0,0);
@@ -22,6 +23,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public int[] characters;//tanks choosen by players
   public int choiceMap;//map choosen by players
   public int nbGames;//numbers of games to be played
+  public Font titleFont = new Font("serif",Font.BOLD,25);//imported font
 
   JPanel containerGlobal;
   //background image
@@ -66,10 +68,18 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.setIconImage(new ImageIcon("assets/icon.png").getImage());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    }
-    catch (Exception e) {
-        e.printStackTrace();
+      for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+          if ("Nimbus".equals(info.getName())) {
+              UIManager.setLookAndFeel(info.getClassName());
+              break;
+          }
+      }
+    } catch (Exception e) {
+      try{
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      }catch(Exception f){
+        System.out.println("problem with look and feel");
+      }
     }
     this.setTitle("Tank Trouble");
     this.setSize(width, height);
@@ -154,7 +164,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankImages[3] = new ImageIcon("assets/entities/tank/TiTank.gif");
     tankDescriptions[3] = "A tank with the ability to become bigger and break walls. Yes Ricco, \"Kaboom\".";
 
-    preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,defaultFont,60);
+    preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,60);
     previewIndex = 0;
     preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
     containerGlobal.add(preview,0);
@@ -165,7 +175,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
       tankSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
       tankSelection[i].setIcon(tankImages[i]);
       tankSelection[i].addMouseListener(this);
-      containerGlobal.add(tankSelection[i]);
+      containerGlobal.add(tankSelection[i],0);
     }
 
     nextButton.setText("NEXT");
@@ -202,7 +212,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
       mapSelection[i].setIcon(mapImages[i]);
       setBackground(Color.darkGray);
       mapSelection[i].addMouseListener(this);
-      containerGlobal.add(mapSelection[i],-1);
+      containerGlobal.add(mapSelection[i],0);
       containerGlobal.revalidate();
       containerGlobal.repaint();
     }
@@ -225,9 +235,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){
     if(c instanceof JLabel){
-      ((JLabel)c).setIcon(new ImageIcon(img.getImage().getScaledInstance(this.getSize().width,this.getSize().height , Image.SCALE_DEFAULT)));
+      ((JLabel)c).setIcon(new ImageIcon(img.getImage().getScaledInstance(c.getSize().width/2,c.getSize().height/2, Image.SCALE_DEFAULT)));
     }else if(c instanceof JButton){
-      ((JButton)c).setIcon(new ImageIcon(img.getImage().getScaledInstance(this.getSize().width,this.getSize().height , Image.SCALE_DEFAULT)));
+      ((JButton)c).setIcon(new ImageIcon(img.getImage().getScaledInstance(c.getSize().width/2,c.getSize().height/2, Image.SCALE_DEFAULT)));
     }
   }
 
@@ -237,7 +247,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
       case 1:
       case 2:
         for (int i = 0;i<tankSelection.length;i++){
-          if(e.getSource() == tankSelection[i]){
+          if(e.getSource() == tankSelection[i]){//changing the tank displayed when clicking on a button
             previewIndex = i;
             preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
             this.repaint();
@@ -246,7 +256,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
         break;
       case 3:
         for (int i = 0;i<mapSelection.length;i++){
-          if(e.getSource() == mapSelection[i]){
+          if(e.getSource() == mapSelection[i]){//changing the map displayed when clicking on a button
             choiceMap = i;
             preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
           }

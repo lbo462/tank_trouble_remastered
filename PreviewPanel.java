@@ -6,16 +6,18 @@ public class PreviewPanel extends JPanel{
     JLabel pName;
     ResizeImageLabel pImage;
     JTextArea pDescription;
+    Font titleFont = new Font("ChunkFive-Regular",Font.BOLD,50);//imported font
+    Font textFont = new Font("Gasalt-Thin",Font.PLAIN,20);
 
-    public PreviewPanel(int posX,int posY,int shortSide,Color backColor,Font pFont,int titleHeight){
+    public PreviewPanel(int posX,int posY,int shortSide,Color backColor,int titleHeight){
         super();
         setLayout(null);
         setBounds(posX,posY,2*shortSide,shortSide);
-        setBackground(Color.white);
+        setBackground(Color.WHITE);
 
         pName = new JLabel();
         pName.setHorizontalAlignment(SwingConstants.CENTER);
-        pName.setFont(pFont);
+        pName.setFont(titleFont);
         pName.setBackground(backColor);
         pName.setBounds(shortSide,0,shortSide,titleHeight);
 
@@ -24,7 +26,8 @@ public class PreviewPanel extends JPanel{
         pImage.setBackground(Color.pink);
 
         pDescription = new JTextArea();
-        pDescription.setFont(pFont);
+        pDescription.setFont(textFont);
+        pDescription.setForeground(Color.BLACK);
         pDescription.setBackground(backColor);
         pDescription.setBounds(shortSide,titleHeight,shortSide,shortSide-titleHeight);
         pDescription.setLineWrap(true);//set to go back to newline when reaching border
