@@ -29,7 +29,7 @@ public class Tank_TiTank extends Tank_Super {
     width = gp.tileSize*3;
     height = gp.tileSize*3;
     x -= gp.tileSize;
-    maxSpeed = 5;
+    maxSpeed += 2;
     activated = true;
   }
   // deactivate capacity
@@ -37,7 +37,7 @@ public class Tank_TiTank extends Tank_Super {
     width = gp.tileSize;
     height = gp.tileSize;
     x += gp.tileSize;
-    maxSpeed = 3;
+    maxSpeed -= 2;
     activated = false;
   }
 

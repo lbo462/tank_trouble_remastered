@@ -117,7 +117,7 @@ public class Tank extends MovingEntity {
     g2.transform(at);
     g2.setComposite(originalAlcom);
     g2.drawImage(sprite, x, y, width, height, gp);
-    for(Effect e: effects) e.draw(x, y, gp.tileSize, g2);
+    for(Effect e: effects) e.draw(x, y, width, g2);
     if(dead) g2.drawImage(deadSprite, x-width, y-height, 3*width, 3*height, null);
     if(slowed && !dead) {
       AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);

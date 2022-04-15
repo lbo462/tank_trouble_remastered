@@ -68,10 +68,10 @@ public class ImageManager {
 
       // power ups
       resetCooldown  = new ImageIcon(getClass().getResource("assets/entities/powerup/clock.gif")).getImage();
-      speedUp  = new ImageIcon(getClass().getResource("assets/entities/powerup/clock.gif")).getImage();
+      speedUp  = new ImageIcon(getClass().getResource("assets/entities/powerup/speedup.gif")).getImage();
 
       // effects
-      moreSpeed = new ImageIcon(getClass().getResource("assets/entities/powerup/speedup.gif")).getImage();
+      moreSpeed = new ImageIcon(getClass().getResource("assets/entities/effects/speedboost.gif")).getImage();
 
     }  catch (Exception e) {
       e.printStackTrace();

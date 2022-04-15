@@ -2,7 +2,7 @@
 public class PU_SpeedUp extends PowerUp{
 
     public PU_SpeedUp(GamePanel gPanel, int xCoord, int yCoord) {
-        super(gPanel, xCoord, yCoord, gPanel.im.resetCooldown);
+        super(gPanel, xCoord, yCoord, gPanel.im.speedUp);
     }
 
     @Override
