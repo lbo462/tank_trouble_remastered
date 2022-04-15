@@ -14,6 +14,7 @@ public class Tank extends MovingEntity {
   public int score;
   public int numberOfShoots;
   public ArrayList<Bullet> bullets; // contains active bullets
+  public ArrayList<Effect> effects; // effects of the tank
   public double lastShot; // time of the last shot
   public KeyHandler keyH;
   public Image deadSprite; // image displayed when the tank dies
@@ -55,6 +56,7 @@ public class Tank extends MovingEntity {
     this.dashedAt = System.currentTimeMillis() - 1000;
     this.at = new AffineTransform();
     this.bullets = new ArrayList<Bullet>();
+    this.effects = new ArrayList<Effect>();
   }
 
   public void update() {
@@ -62,6 +64,11 @@ public class Tank extends MovingEntity {
     if(!dead) { // only update if alive
       if(slowed && currentTime-timeSlowed > timeToSlow) slow(false); // verify slow time
       if(dashing && currentTime-dashedAt > 1000 || speed <= maxSpeed) dashing = false; // verify dashing time
+      // update effects
+      for(int i = 0; i < effects.size(); i++) {
+        effects.get(i).update();
+        if(effects.get(i).dead) effects.remove(i); // remove trash
+      }
 
       this.keyPressed(); // verify which keys are pressed
       if(leftPressed || rightPressed) { // ROTATE
@@ -110,6 +117,7 @@ public class Tank extends MovingEntity {
     g2.transform(at);
     g2.setComposite(originalAlcom);
     g2.drawImage(sprite, x, y, width, height, gp);
+    for(Effect e: effects) e.draw(x, y, width, g2);
     if(dead) g2.drawImage(deadSprite, x-width, y-height, 3*width, 3*height, null);
     if(slowed && !dead) {
       AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f);
@@ -143,6 +151,11 @@ public class Tank extends MovingEntity {
         }
       }
     }
+  }
+
+  // add an effect to the tank
+  public void addEffect(Effect e) {
+    effects.add(e);
   }
 
   public void slow(boolean shouldSlow) {

@@ -2,30 +2,28 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 public abstract class PowerUp extends Entity{
-    boolean isAlive;
-    public int identifier;
-    public final int powerUpSize = 10;
 
-    public PowerUp(GamePanel gPanel, int xCoord, int yCoord, Image powerImage){
-        this.gp = gPanel;
-        this.x = xCoord;
-        this.y = yCoord;
+    public boolean isAlive;
+
+    public PowerUp(GamePanel gp, int x, int y, Image powerImage){
+        this.gp = gp;
+        this.x = x;
+        this.y = y;
         this.sprite = powerImage;
         this.isAlive = true;
-        this.width = powerUpSize;
-        this.height = powerUpSize;
+        this.width = gp.tileSize;
+        this.height = gp.tileSize;
     }
 
     abstract void activateEffect(Tank player);
 
     @Override
     void update() {
-        for(Tank player:gp.players){
-            double distance = Math.sqrt((player.x-this.x)^2+(player.y-this.y)^2); //distance (2-norm) between tank and power-up
-            if(distance<5){
-                isAlive = false;
-                activateEffect(player);
-            }
+        for(Tank t: gp.players){
+          double distance = Math.sqrt(Math.pow((t.getX()-this.x-width/2), 2)+Math.pow((t.getY()-this.y-height/2),2)); //distance (2-norm) between tank and power-up
+          if(distance < gp.tileSize){
+              activateEffect(t);
+          }
         }
     }
 

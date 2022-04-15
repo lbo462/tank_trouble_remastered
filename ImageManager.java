@@ -22,6 +22,11 @@ public class ImageManager {
   public Image titank;
   public Image deadTitank;
 
+  public Image resetCooldown;
+  public Image speedUp;
+
+  public Image moreSpeed;
+
   public ImageManager() {
     background = new Image[3];
     try {
@@ -60,6 +65,13 @@ public class ImageManager {
 
       titank = new ImageIcon(getClass().getResource("assets/entities/tank/TiTank.gif")).getImage();
       deadTitank = new ImageIcon(getClass().getResource("assets/entities/tank/titankExplosion.gif")).getImage();
+
+      // power ups
+      resetCooldown  = new ImageIcon(getClass().getResource("assets/entities/powerup/clock.gif")).getImage();
+      speedUp  = new ImageIcon(getClass().getResource("assets/entities/powerup/speedup.gif")).getImage();
+
+      // effects
+      moreSpeed = new ImageIcon(getClass().getResource("assets/entities/effects/speedboost.gif")).getImage();
 
     }  catch (Exception e) {
       e.printStackTrace();
