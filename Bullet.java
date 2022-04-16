@@ -54,7 +54,7 @@ public class Bullet extends MovingEntity {
   }
 
   @Override
-  void collision() {
+  public void collision() {
     UoDcollision = false; LoRCollision = false;
 
     // rotation matrix coeffs

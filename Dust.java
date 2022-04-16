@@ -49,5 +49,5 @@ public class Dust extends MovingEntity {
   }
 
   @Override
-  void collision() {} // no collision
+  public void collision() {} // no collision
 }

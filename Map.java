@@ -142,7 +142,7 @@ public class Map {
     }
 
     // randomly remove a certain amount of walls
-    for(int i = 0; i < 120; i++) {
+   for(int i = 0; i < 120; i++) {
       int xToKill = 1, yToKill = 1;
       while(tilesInt[yToKill][xToKill] != 1) {
         xToKill = (int)(Math.random() * (gp.nbXtiles-2)) + 1; // random x that can't be a wall

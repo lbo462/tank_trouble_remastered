@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 
 public class HoverButton extends JButton implements MouseListener{
 
-    AudioClip click;
+    public AudioClip click;
 
     public HoverButton(){
         super();

@@ -6,9 +6,9 @@ import java.awt.event.KeyEvent;
 
 public class KeyHandler implements KeyListener {
 
-  public boolean upPressed, leftPressed, downPressed, rightPressed, zPressed, qPressed, sPressed, dPressed;
-  public boolean enterPressed, spacePressed, escapePressed;
-  public boolean aPressed,mPressed;
+  public boolean enter, space, escape; // pause and shoot buttons
+  public boolean z, q, s, d, a;  // first player bindings
+  public boolean o, k, l, m, p; // second player bindings
 
   @Override
   public void keyTyped(KeyEvent e) {}
@@ -17,43 +17,43 @@ public class KeyHandler implements KeyListener {
   public void keyPressed(KeyEvent e) {
     switch(e.getKeyCode()) {
       case KeyEvent.VK_Z:
-        zPressed = true;
+        z = true;
         break;
       case KeyEvent.VK_Q:
-        qPressed = true;
+        q = true;
         break;
       case KeyEvent.VK_S:
-        sPressed = true;
+        s = true;
         break;
       case KeyEvent.VK_D:
-        dPressed = true;
-        break;
-      case KeyEvent.VK_UP:
-        upPressed = true;
-        break;
-      case KeyEvent.VK_LEFT:
-        leftPressed = true;
-        break;
-      case KeyEvent.VK_DOWN:
-        downPressed = true;
-        break;
-      case KeyEvent.VK_RIGHT:
-        rightPressed = true;
-        break;
-      case 10: // ENTER
-        enterPressed = true;
-        break;
-      case KeyEvent.VK_SPACE:
-        spacePressed = true;
+        d = true;
         break;
       case KeyEvent.VK_A:
-        aPressed = true;
+        a = true;
+        break;
+      case KeyEvent.VK_O:
+        o = true;
+        break;
+      case KeyEvent.VK_K:
+        k = true;
+        break;
+      case KeyEvent.VK_L:
+        l = true;
         break;
       case KeyEvent.VK_M:
-        mPressed=true;
+        m = true;
+        break;
+      case KeyEvent.VK_P:
+        p = true;
+        break;
+      case 10: // ENTER
+        enter = true;
+        break;
+      case KeyEvent.VK_SPACE:
+        space = true;
         break;
       case KeyEvent.VK_ESCAPE:
-        escapePressed = true;
+        escape = true;
         break;
     }
   }
@@ -62,43 +62,43 @@ public class KeyHandler implements KeyListener {
   public void keyReleased(KeyEvent e) {
     switch(e.getKeyCode()) {
       case KeyEvent.VK_Z:
-        zPressed = false;
+        z = false;
         break;
       case KeyEvent.VK_Q:
-        qPressed = false;
+        q = false;
         break;
       case KeyEvent.VK_S:
-        sPressed = false;
+        s = false;
         break;
       case KeyEvent.VK_D:
-        dPressed = false;
-        break;
-      case KeyEvent.VK_UP:
-        upPressed = false;
-        break;
-      case KeyEvent.VK_LEFT:
-        leftPressed = false;
-        break;
-      case KeyEvent.VK_DOWN:
-        downPressed = false;
-        break;
-      case KeyEvent.VK_RIGHT:
-        rightPressed = false;
-        break;
-      case 10: // ENTER
-        enterPressed = false;
-        break;
-      case KeyEvent.VK_SPACE:
-        spacePressed = false;
+        d = false;
         break;
       case KeyEvent.VK_A:
-        aPressed = false;
+        a = false;
+        break;
+      case KeyEvent.VK_O:
+        o = false;
+        break;
+      case KeyEvent.VK_K:
+        k = false;
+        break;
+      case KeyEvent.VK_L:
+        l = false;
         break;
       case KeyEvent.VK_M:
-        mPressed=false;
+        m = false;
+        break;
+      case KeyEvent.VK_P:
+        p = false;
+        break;
+      case 10: // ENTER
+        enter = false;
+        break;
+      case KeyEvent.VK_SPACE:
+        space = false;
         break;
       case KeyEvent.VK_ESCAPE:
-        escapePressed = false;
+        escape = false;
         break;
     }
   }

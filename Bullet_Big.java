@@ -17,7 +17,7 @@ public class Bullet_Big extends Bullet {
   }
 
   @Override
-  void collision() {
+  public void collision() {
       UoDcollision = false; LoRCollision = false;
 
       // rotation matrix coeffs

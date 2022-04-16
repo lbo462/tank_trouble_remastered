@@ -18,7 +18,7 @@ public abstract class PowerUp extends Entity{
     abstract void activateEffect(Tank player);
 
     @Override
-    void update() {
+    public void update() {
         for(Tank t: gp.players){
           double distance = Math.sqrt(Math.pow((t.getX()-this.x-width/2), 2)+Math.pow((t.getY()-this.y-height/2),2)); //distance (2-norm) between tank and power-up
           if(distance < gp.tileSize){
@@ -28,7 +28,7 @@ public abstract class PowerUp extends Entity{
     }
 
     @Override
-    void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2) {
         g2.drawImage(sprite, x, y, (int)width, (int)height, null);
     }
 

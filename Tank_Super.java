@@ -78,9 +78,9 @@ public class Tank_Super extends Tank{
     public void keyPressed(){
         super.keyPressed();
         if(this.number == 1){
-            this.capacityButtonPressed = keyH.aPressed;
+            this.capacityButtonPressed = keyH.a;
         }else if(this.number == 2){
-            this.capacityButtonPressed = keyH.mPressed;
+            this.capacityButtonPressed = keyH.p;
         }
     }
 }

@@ -85,6 +85,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         case 4:
           players[i] = new Tank_TiTank(i+1, x, y, this);
           break;
+        case 5:
+          players[i] = new Tank_auto(i+1, x, y, im.painTank, im.defaultExplosion, this);
+          break;
       }
     }
 
@@ -137,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         // update tanks
         for(Tank t: players) {
           if(t.dead && currentTime - t.timeDied > 600) { // check if a tank died
-            System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames) + " games left.");
+            System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames)+1 + " games left.");
             resetGame();
             if(numberOfGames > gamesToPlay) goToEndMenu();
             break;
@@ -180,13 +183,13 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           if(dust.get(i).dead) dust.remove(i); // remove dead dust
         }
 
-        if(keyH.escapePressed && currentTime - timePaused > 500) { // check pause
+        if(keyH.escape && currentTime - timePaused > 500) { // check pause
           paused = true;
           s.music.stop();
           timePaused = currentTime;
         }
       } else { // cancel pause
-        if(keyH.escapePressed && currentTime - timePaused > 500) {
+        if(keyH.escape && currentTime - timePaused > 500) {
           paused = false;
           if(musicOn) s.music.loop();
           timePaused = currentTime;
@@ -225,7 +228,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     }
   }
 
-  void goToEndMenu() {
+  public void goToEndMenu() {
     gameOver = true;
     s.music.stop();
     s.end.play();
@@ -325,14 +328,14 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     if(e.getSource() == closePane) closePane.setBackground(Color.RED);
   }
 
-  void returnToMenu () {
+  public void returnToMenu () {
     // Reset JFrame ...
     MenuWindow topFrame = (MenuWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
     topFrame.dispose();
     topFrame = new MenuWindow();
   }
 
-  void drawLogo(Graphics2D g2) {
+  public void drawLogo(Graphics2D g2) {
     // transparency
     g2.setColor(Color.WHITE);
     AlphaComposite alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);

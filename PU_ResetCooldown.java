@@ -6,7 +6,7 @@ public class PU_ResetCooldown extends PowerUp{
     }
 
     @Override
-    void activateEffect(Tank player) {
+    public void activateEffect(Tank player) {
         if(player instanceof Tank_Super){
             Tank_Super superPlayer = (Tank_Super)player;
             if(!superPlayer.capacityActive) {

@@ -7,7 +7,7 @@ public class Tank_Phantom extends Tank_Super{
   public boolean activated; // was the capacity activated
 
   public Tank_Phantom(int number, int x, int y, GamePanel gp){
-      super(number, x, y, gp.im.phantom, gp.im.deadPhantom, gp,3000,1000);
+      super(number, x, y, gp.im.phantom, gp.im.deadPhantom, gp, 3000, 1000);
   }
 
   @Override

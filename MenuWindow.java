@@ -25,41 +25,41 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public int nbGames;//numbers of games to be played
   public Font titleFont = new Font("serif",Font.BOLD,25);//imported font
 
-  JPanel containerGlobal;
+  public JPanel containerGlobal;
   //background image
-  ResizeImageLabel background;
+  public ResizeImageLabel background;
 
   //Tank dictionnary
-  String[] tankNames;
-  ImageIcon[] tankImages;
-  String[] tankDescriptions;
+  public String[] tankNames;
+  public ImageIcon[] tankImages;
+  public String[] tankDescriptions;
 
   //Map dictionnary
-  String[] mapNames;
-  ImageIcon[] mapImages;
-  String[] mapDescriptions;
+  public String[] mapNames;
+  public ImageIcon[] mapImages;
+  public String[] mapDescriptions;
 
   //Buttons to choose tank and map
-  HoverButton[] tankSelection;
-  HoverButton[] mapSelection;
+  public HoverButton[] tankSelection;
+  public HoverButton[] mapSelection;
 
   //Panel displaying pieces of information about the selection
-  PreviewPanel preview;
+  public PreviewPanel preview;
 
   //Index of the display
-  int previewIndex;
+  public int previewIndex;
 
   //JPanel displaying the number of games
-  NumberChoicePanel nbGamesPanel;
+  public NumberChoicePanel nbGamesPanel;
 
   //Button to change step/advance/start
-  JButton nextButton;
+  public JButton nextButton;
 
   //Gif for introduction
-  ResizeImageLabel animation;
+  public ResizeImageLabel animation;
 
   // display number of player choosing and other things
-  JLabel topLabel;
+  public JLabel topLabel;
 
   public GamePanel gamePanel;
 
@@ -88,7 +88,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.setLocationRelativeTo(null);
     this.setVisible(true);
     this.add(containerGlobal);
-    this.logoAnimation();
+    //this.logoAnimation();
 
     ImageIcon backImage = new ImageIcon("assets/menu/tankTroubleMenu.png");
     background = new ResizeImageLabel();
@@ -107,6 +107,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     containerGlobal.add(background,-1);
     this.repaint();
     stateOfGUI = 0;
+    // stateOfGUI = -1;
   }
 
   public void logoAnimation(){
@@ -275,7 +276,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
           newbackground.setBackground(Color.WHITE);
           containerGlobal.add(newbackground);
           containerGlobal.repaint();
-          
+
           this.setPlayerParameters();
           previewIndex = 0; // preview first tank
           break;
@@ -298,6 +299,14 @@ public class MenuWindow  extends JFrame implements MouseListener {
           nbGames = nbGamesPanel.number;
           this.getContentPane().removeAll(); // remove all the element of the menu
           // add game panel
+
+          // uncomment to skip menu
+          /*
+          characters = new int[2];
+          characters[0] = 1;
+          characters[1] = 5;
+          choiceMap = 1;
+          */
           gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters,choiceMap,nbGames);
           gamePanel.setPreferredSize(new Dimension(width, height));
           gamePanel.setBackground(Color.black);

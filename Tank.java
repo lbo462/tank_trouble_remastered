@@ -22,8 +22,7 @@ public class Tank extends MovingEntity {
   public double timeToSlow; // time to stay slowed
   public double timeSlowed; // time slowed started
   public double timeDied; // time at which tank died
-
-  public int bulletAmplifier; //Impacted by the "BiggerBalls" power up
+  public double angularSpeed;
 
   public Tank(int number, int x, int y, Image image, Image deadImage, GamePanel gp) {
     this.gp = gp;
@@ -33,7 +32,6 @@ public class Tank extends MovingEntity {
     this.numberOfShoots = 0;
     this.sprite = image;
     this.deadSprite = deadImage;
-    bulletAmplifier = 1;
 
     reset(x, y); // initialise every variables
   }
@@ -46,6 +44,7 @@ public class Tank extends MovingEntity {
     this.timeToSlow = 5000; // duration of the slow
     this.increaseSpeed = 0.2; // acceleration
     this.speed = 0; // current speed
+    this.angularSpeed = 3;
     this.maxSpeed = 3;
     this.width = gp.tileSize;
     this.height = gp.tileSize;
@@ -75,9 +74,9 @@ public class Tank extends MovingEntity {
       if(leftPressed || rightPressed) { // ROTATE
         prevAngle = this.angle; // angle before the transformation
         if(leftPressed)
-          this.angle += 3;
+          this.angle += angularSpeed;
         if(rightPressed)
-          this.angle -= 3;
+          this.angle -= angularSpeed;
         nextA = prevAngle - this.angle; // angle difference to adjust between then and now
         at.rotate(Math.toRadians(nextA), x+(int)(width/2), y+(int)(height/2)); // do the rotation at the right spot
       }
@@ -94,7 +93,6 @@ public class Tank extends MovingEntity {
         speed *= 0.9;
         if(Math.abs(speed) < 0.1) speed = 0;
       }
-
       nextY += (int)speed;
 
       this.collision(); // check collision with tiles
@@ -175,7 +173,6 @@ public class Tank extends MovingEntity {
 
   public void shoot(){
     Bullet b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp);
-    b.width *= bulletAmplifier;
     bullets.add(b);
     this.numberOfShoots++;
     gp.s.pew.stop();
@@ -198,7 +195,7 @@ public class Tank extends MovingEntity {
   }
 
   @Override
-  void collision() {
+  public void collision() {
     collision = false;
 
     // rotation matrix coeffs
@@ -263,51 +260,17 @@ public class Tank extends MovingEntity {
         }
       }
     }
-
-/*
-    // now check collision with these tiles
-    if(collisionWithTiles && !collision) { // maybe the tank already collided with map boundaries
-      for(int i=x; i<=x+width; i++) {
-        for(int j=(int)nextY; j<=(int)nextY+height; j++) {
-          // next position of the pixels
-          int nx = (int)(m00 * i + m01 * j + m02);
-          int ny = (int)(m10 * j + m11 * i + m12);
-
-          for(Tile currentTile: toCheck) {
-            // check if the hitbox hits the tile somewhere
-            if(currentTile.collision) {
-              // I used the same coeffs that I used for drawing the tile
-              if((currentTile.up
-                && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
-                && ny > currentTile.y+1 && ny < currentTile.y+1 + w/2+1)
-                || (currentTile.down
-                && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
-                && ny > currentTile.y+1+w/2 && ny < currentTile.y+1+w/2 + w/2+1)
-                || (currentTile.right
-                && nx > currentTile.x+1+w/2 && nx < currentTile.x+1+w/2 + w/2+1
-                && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
-                || (currentTile.left
-                && nx > currentTile.x+1 && nx < currentTile.x+1 + w/2+1
-                && ny > currentTile.y+1+3*w/8 && ny < currentTile.y+1+3*w/8 + w/4)
-                )
-                  collision = true;
-            }
-          }
-        }
-      }
-    }*/
   }
 
   // update position checking collision
   public void updatePosition() {
     if(!collision) { // update y only if there's no collision
       y = (int)nextY;
-    } else if(leftPressed || rightPressed) { // if the rotation creates a collsion, invert the rotation
+    } else if(leftPressed || rightPressed) { // if the rotation creates a collision, invert the rotation
       this.angle = prevAngle;
       at.rotate(Math.toRadians(-nextA), x+(int)(width/2), y+(int)(height/2)); // cancel the rotation
     }
   }
-
 
   // verify which keys are pressed depending on the player number
   public void keyPressed() {
@@ -318,17 +281,18 @@ public class Tank extends MovingEntity {
     shotPressed = false;
 
     if(number == 1) {
-      upPressed = keyH.zPressed;
-      downPressed = keyH.sPressed;
-      leftPressed = keyH.qPressed;
-      rightPressed = keyH.dPressed;
-      shotPressed = keyH.spacePressed;
+      upPressed = keyH.z;
+      downPressed = keyH.s;
+      leftPressed = keyH.q;
+      rightPressed = keyH.d;
+      shotPressed = keyH.space;
     } else if(number == 2) {
-      upPressed = keyH.upPressed;
-      downPressed = keyH.downPressed;
-      leftPressed = keyH.leftPressed;
-      rightPressed = keyH.rightPressed;
-      shotPressed = keyH.enterPressed;
+      upPressed = keyH.o;
+      downPressed = keyH.l;
+      leftPressed = keyH.k;
+      rightPressed = keyH.m;
+      shotPressed = keyH.enter;
     }
+
   }
 }

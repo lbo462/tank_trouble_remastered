@@ -3,11 +3,11 @@ import java.awt.*;
 
 public class PreviewPanel extends JPanel{
     public final Color transparent = new Color(0, 0, 0,0);
-    JLabel pName;
-    ResizeImageLabel pImage;
-    JTextArea pDescription;
-    Font titleFont = new Font("ChunkFive-Regular",Font.BOLD,50);//imported font
-    Font textFont = new Font("Gasalt-Thin",Font.PLAIN,20);
+    public JLabel pName;
+    public ResizeImageLabel pImage;
+    public JTextArea pDescription;
+    public Font titleFont = new Font("ChunkFive-Regular",Font.BOLD,50);//imported font
+    public Font textFont = new Font("Gasalt-Thin",Font.PLAIN,20);
 
     public PreviewPanel(int posX,int posY,int shortSide,Color backColor,int titleHeight){
         super();

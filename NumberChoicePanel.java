@@ -6,9 +6,9 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 
 public class NumberChoicePanel extends JPanel implements MouseListener{
-    JLabel display;
-    JButton incrementButton;
-    JButton decrementButton;
+    public JLabel display;
+    public JButton incrementButton;
+    public JButton decrementButton;
     public int number;
 
     public NumberChoicePanel(int posX,int posY,int width,int height,int defaultNumber,Font bFont){

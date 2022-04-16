@@ -22,12 +22,12 @@ public class Effect {
     this.sprite = sprite;
   }
 
-  void update() {
+  public void update() {
     double currentTime = System.currentTimeMillis();
     if(currentTime - bornAt > duration) this.dead = true; // is duration is over, kill effect
   }
 
-  void draw(int x, int y, int size, Graphics2D g2) {
+  public void draw(int x, int y, int size, Graphics2D g2) {
     // nothing to draw by default ...
   }
 

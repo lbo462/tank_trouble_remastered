@@ -6,7 +6,7 @@ public class PU_SpeedUp extends PowerUp{
     }
 
     @Override
-    void activateEffect(Tank player) {
+    public void activateEffect(Tank player) {
         player.addEffect(new Eff_SpeedBoost(player));
         this.isAlive = false;
     }

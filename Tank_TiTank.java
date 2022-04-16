@@ -25,7 +25,7 @@ public class Tank_TiTank extends Tank_Super {
   }
 
   // activate capacity
-  void activate() {
+  public void activate() {
     width = gp.tileSize*3;
     height = gp.tileSize*3;
     x -= gp.tileSize;
@@ -33,7 +33,7 @@ public class Tank_TiTank extends Tank_Super {
     activated = true;
   }
   // deactivate capacity
-  void deactivate() {
+  public void deactivate() {
     width = gp.tileSize;
     height = gp.tileSize;
     x += gp.tileSize;
@@ -43,22 +43,20 @@ public class Tank_TiTank extends Tank_Super {
 
   @Override // eventually shoot big bullets
   public void shoot(){
-    if(shotPressed && System.currentTimeMillis() - lastShot > 100) {
-      this.numberOfShoots++;
-      Bullet b;
-      if(capacityActive) {
-        b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
-        dash(-10); // un peu de recul pour nerf
-        gp.s.grosPew.stop();
-        gp.s.grosPew.play();
-      } else {
-        b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp); // normal bullet
-        gp.s.pew.stop();
-        gp.s.pew.play();
-      }
-      bullets.add(b);
-      lastShot = System.currentTimeMillis();
+    this.numberOfShoots++;
+    Bullet b;
+    if(capacityActive) {
+      b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
+      dash(-10); // un peu de recul pour nerf
+      gp.s.grosPew.stop();
+      gp.s.grosPew.play();
+    } else {
+      b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp); // normal bullet
+      gp.s.pew.stop();
+      gp.s.pew.play();
     }
+    bullets.add(b);
+    lastShot = System.currentTimeMillis();
   }
 
   @Override // remove the wall if there's a collision

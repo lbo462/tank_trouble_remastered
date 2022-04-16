@@ -8,13 +8,13 @@ public class Eff_SpeedBoost extends Effect {
   }
 
   @Override
-  void update() {
+  public void update() {
     super.update();
     if(this.dead) t.maxSpeed -= 1;
   }
 
   @Override
-  void draw(int x, int y, int size, Graphics2D g2) {
+  public void draw(int x, int y, int size, Graphics2D g2) {
     g2.drawImage(this.sprite, x, y-(int)(0.65*size), size, (int)(size*1.65), null);
   }
 }
