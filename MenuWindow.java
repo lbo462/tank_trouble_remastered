@@ -210,7 +210,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
       mapSelection[i] = new HoverButton();
       mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
       mapSelection[i].setIcon(mapImages[i]);
-      setBackground(Color.darkGray);
       mapSelection[i].addMouseListener(this);
       containerGlobal.add(mapSelection[i],0);
       containerGlobal.revalidate();
@@ -248,17 +247,21 @@ public class MenuWindow  extends JFrame implements MouseListener {
       case 2:
         for (int i = 0;i<tankSelection.length;i++){
           if(e.getSource() == tankSelection[i]){//changing the tank displayed when clicking on a button
-            previewIndex = i;
-            preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
-            this.repaint();
+            if(i!=previewIndex){//changing only if the desired tank isn't displayed
+              previewIndex = i;
+              preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
+              this.repaint();
+            }
           }
         }
         break;
       case 3:
         for (int i = 0;i<mapSelection.length;i++){
           if(e.getSource() == mapSelection[i]){//changing the map displayed when clicking on a button
-            choiceMap = i;
-            preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
+            if(i!=previewIndex){//changing only if the desired map isn't displayed
+              choiceMap = i;
+              preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
+            }
           }
         }
         break;
