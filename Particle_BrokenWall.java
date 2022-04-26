@@ -1,21 +1,22 @@
 import java.awt.Image;
 
-public class BrokenWallParticle extends Dust {
-  public BrokenWallParticle(int x, int y, Image sprite) {
+public class Particle_BrokenWall extends Particle {
+  public Particle_BrokenWall(int x, int y, Image sprite) {
     super(x, y, sprite);
 
     this.speed = 2;
+    this.width = 10;
+    this.height = 10;
     at.rotate(Math.toRadians((int)(Math.random()*360)), this.x+5, this.y+5);
+    this.lifeTime = 500 + Math.random() * 600; // more or less random
   }
 
   @Override
   public void update() {
-    double currentTime = System.currentTimeMillis();
-
     /* give it some linear displacement */
     this.x += speed;
     this.y += speed;
 
-    if(currentTime - bornAt > lifeTime) this.dead = true;
+    super.update();
   }
 }

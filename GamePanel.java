@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public Map currentMap; // public because entities need it for collisions
   public Tank[] players;
   public ArrayList<PowerUp> pu;
-  public ArrayList<Dust> dust; // contains dust
+  public ArrayList<Particle> particles; // contains dust
   public JPanel restartPane;
   public JPanel closePane;
   public final Color defaultBlueFrame = new Color(1, 49, 180);
@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.timePaused = System.currentTimeMillis(); // initialise with random stuff
     this.players = new Tank[2];
     this.pu = new ArrayList<PowerUp>();
-    this.dust = new ArrayList<Dust>();
+    this.particles = new ArrayList<Particle>();
     this.frame = 0;
     this.FPS = 60;
     this.gamesToPlay = gamesToPlay;
@@ -87,6 +87,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           break;
         case 5:
           players[i] = new Tank_auto(i+1, x, y, im.painTank, im.defaultExplosion, this);
+          break;
+        case 6:
+          players[i] = new Tank_Jiro(i+1, x, y, this);
           break;
       }
     }
@@ -140,7 +143,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
         // update tanks
         for(Tank t: players) {
           if(t.dead && currentTime - t.timeDied > 600) { // check if a tank died
-            System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames)+1 + " games left.");
+            System.out.println("Player_" + t.number + " exploded. " + (gamesToPlay - numberOfGames+1) + " games left.");
             resetGame();
             if(numberOfGames > gamesToPlay) goToEndMenu();
             break;
@@ -177,10 +180,10 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           if(!pu.get(i).isAlive) pu.remove(i); // remove trash
         }
 
-        // update dust
-        for(int i = 0; i < dust.size(); i++) {
-          dust.get(i).update();
-          if(dust.get(i).dead) dust.remove(i); // remove dead dust
+        // update particles
+        for(int i = 0; i < particles.size(); i++) {
+          particles.get(i).update();
+          if(particles.get(i).dead) particles.remove(i); // remove dead dust
         }
 
         if(keyH.escape && currentTime - timePaused > 500) { // check pause
@@ -209,7 +212,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
       currentMap.drawBackground(g2);
 
       // draw dust
-      for(int i = 0; i < dust.size(); i++) dust.get(i).draw(g2);
+      for(int i = 0; i < particles.size(); i++) particles.get(i).draw(g2);
 
       // draw power ups
       for(int i = 0; i < pu.size(); i++) pu.get(i).draw(g2);
@@ -260,8 +263,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     for(Tank t: players) {
 
       JLabel playerScoreLbl = new JLabel();
-      if(t.numberOfShoots != 0) playerScoreLbl.setText("<html><body>Player_"+t.number+" : "+t.score+" points <br> Accuracy : "+Double.toString(100*t.score/t.numberOfShoots)+"%</body></html>");
-      else playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" points");
+      playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" points");
       playerScoreLbl.setFont(new Font("Serif", Font.BOLD, 25));
       playerScoreLbl.setBackground(Color.WHITE);
       playerScoreLbl.setForeground(Color.BLACK);

@@ -13,6 +13,7 @@ public class ImageManager {
   public Image bullet;
   public Image bulletKitty;
   public Image explodedKitty;
+  public Image fireParticle;
 
   public Image painTank;
   public Image defaultExplosion;
@@ -22,6 +23,8 @@ public class ImageManager {
   public Image deadKitty;
   public Image titank;
   public Image deadTitank;
+  public Image tankjiro;
+  public Image deadTankjiro;
 
   public Image resetCooldown;
   public Image speedUp;
@@ -54,6 +57,7 @@ public class ImageManager {
       bullet = new ImageIcon(getClass().getResource("assets/entities/bullet/bullet.png")).getImage();
       bulletKitty = new ImageIcon(getClass().getResource("assets/entities/bullet/kitty.png")).getImage();
       explodedKitty = new ImageIcon(getClass().getResource("assets/entities/bullet/explodedKitty.gif")).getImage();
+      fireParticle = new ImageIcon(getClass().getResource("assets/entities/bullet/fire.gif")).getImage();
 
       // tanks
       painTank = new ImageIcon(getClass().getResource("assets/entities/tank/defaultTank.gif")).getImage();
@@ -67,6 +71,9 @@ public class ImageManager {
 
       titank = new ImageIcon(getClass().getResource("assets/entities/tank/TiTank.gif")).getImage();
       deadTitank = new ImageIcon(getClass().getResource("assets/entities/tank/titankExplosion.gif")).getImage();
+
+      tankjiro = new ImageIcon(getClass().getResource("assets/entities/tank/Tankjiro.gif")).getImage();
+      deadTankjiro = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
 
       // power ups
       resetCooldown  = new ImageIcon(getClass().getResource("assets/entities/powerup/clock.gif")).getImage();

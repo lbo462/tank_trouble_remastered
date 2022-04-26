@@ -107,7 +107,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     containerGlobal.add(background,-1);
     this.repaint();
     stateOfGUI = 0;
-    // stateOfGUI = -1;
+    //stateOfGUI = -1;
   }
 
   public void logoAnimation(){
@@ -301,12 +301,12 @@ public class MenuWindow  extends JFrame implements MouseListener {
           // add game panel
 
           // uncomment to skip menu
-          /*
+/*
           characters = new int[2];
-          characters[0] = 1;
-          characters[1] = 5;
+          characters[0] = 5;
+          characters[1] = 6;
           choiceMap = 1;
-          */
+*/
           gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters,choiceMap,nbGames);
           gamePanel.setPreferredSize(new Dimension(width, height));
           gamePanel.setBackground(Color.black);

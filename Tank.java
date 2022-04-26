@@ -59,6 +59,16 @@ public class Tank extends MovingEntity {
     this.effects = new ArrayList<Effect>();
   }
 
+  public void kill() {
+    /* play a little boom */
+    gp.s.explosionSound.stop();
+    gp.s.explosionSound.play();
+
+    this.dead = true; // kill player
+    this.timeDied = System.currentTimeMillis(); // record its time of death
+    gp.im.resetExplosions(); // flush images i.e. reset gifs animation
+  }
+
   public void update() {
     double currentTime = System.currentTimeMillis();
     if(!dead) { // only update if alive
@@ -99,7 +109,7 @@ public class Tank extends MovingEntity {
 
       /* add some dust */
       if(Math.abs(speed) > 0 && gp.frame % 20 == 0 && !collision && collisionWithTiles)
-        for(int i = 0; i < 15; i++) gp.dust.add(new Dust(getX(), getY(), gp.im.dust));
+        for(int i = 0; i < 15; i++) gp.particles.add(new Particle_Dust(getX(), getY(), gp.im.dust));
 
       this.updatePosition(); // update as a function of collisions
       if(shotPressed && System.currentTimeMillis() - lastShot > 100) this.shoot();
@@ -186,11 +196,8 @@ public class Tank extends MovingEntity {
     for(int i = 0; i < bullets.size(); i++) {
       bullets.get(i).update();
       if(bullets.get(i).killed && !this.dead && prevScore == score) score++;
-      else if(this.dead) score--;
-      if(bullets.get(i).killed || bullets.get(i).dead) {
-        bullets.remove(i);
-        break;
-      }
+      else if(bullets.get(i).killed && this.dead) score--;
+      if(bullets.get(i).killed || bullets.get(i).dead) bullets.remove(i);
     }
   }
 
