@@ -18,47 +18,47 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public final int buttonHeight = 80;
   public final int previewPanelSide = 330;
 
-  //variable describing the advancement of the GUI
-  public int stateOfGUI;//0:beginning 1:player1's tank 2:player2's tank 3:map
+  // Variables describing the advancement of the GUI
+  public int stateOfGUI;// 0:beginning | 1:player1's tank | 2:player2's tank | 3:map choice
   public int[] characters;//tanks choosen by players
   public int choiceMap;//map choosen by players
   public int nbGames;//numbers of games to be played
   public Font titleFont = new Font("serif",Font.BOLD,25);//imported font
 
   public JPanel containerGlobal;
-  //background image
+  // Background image
   public ResizeImageLabel background;
 
-  //Tank dictionnary
+  // Tank dictionnary
   public String[] tankNames;
   public ImageIcon[] tankImages;
   public String[] tankDescriptions;
 
-  //Map dictionnary
+  // Map dictionnary
   public String[] mapNames;
   public ImageIcon[] mapImages;
   public String[] mapDescriptions;
 
-  //Buttons to choose tank and map
+  // Buttons to choose tank and map
   public HoverButton[] tankSelection;
   public HoverButton[] mapSelection;
 
-  //Panel displaying pieces of information about the selection
+  // Panel displaying pieces of information about the selection
   public PreviewPanel preview;
 
-  //Index of the display
+  // Index of the display
   public int previewIndex;
 
-  //JPanel displaying the number of games
+  // JPanel displaying the number of games
   public NumberChoicePanel nbGamesPanel;
 
   //Button to change step/advance/start
   public JButton nextButton;
 
-  //Gif for introduction
+  // Gif for introduction
   public ResizeImageLabel animation;
 
-  // display number of player choosing and other things
+  // Display player's number choosing among other things
   public JLabel topLabel;
 
   public GamePanel gamePanel;
@@ -159,7 +159,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     tankNames[2] = "Kitty Tank";
     tankImages[2] = new ImageIcon("assets/entities/tank/kittyTank.gif");
-    tankDescriptions[2] = "Cute tank which can shot bullets to slow ennemies. One day cats will rule over the world.";
+    tankDescriptions[2] = "Cute tank which can shoot bullets to slow down ennemies. One day cats will rule over the world.";
 
     tankNames[3] = "TiTank";
     tankImages[3] = new ImageIcon("assets/entities/tank/TiTank.gif");

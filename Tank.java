@@ -36,7 +36,7 @@ public class Tank extends MovingEntity {
     reset(x, y); // initialise every variables
   }
 
-  // reset/initialise every variables
+  // initialize every variable
   public void reset(int x, int y) {
     //this.debug = true;
     this.x = x;
@@ -81,7 +81,7 @@ public class Tank extends MovingEntity {
       }
 
       this.keyPressed(); // verify which keys are pressed
-      if(leftPressed || rightPressed) { // ROTATE
+      if(leftPressed || rightPressed) { // ROTATION
         prevAngle = this.angle; // angle before the transformation
         if(leftPressed)
           this.angle += angularSpeed;
@@ -92,7 +92,7 @@ public class Tank extends MovingEntity {
       }
       /* ***** */
       nextY = y;
-      if((upPressed || downPressed) && !dashing) { // TRANSLATE
+      if((upPressed || downPressed) && !dashing) { // TRANSLATION
         // keyboard inputs
         if(upPressed)
           speed += increaseSpeed;
