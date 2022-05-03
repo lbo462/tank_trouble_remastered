@@ -190,6 +190,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
       mapSelection[i] = new HoverButton();
       mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
       mapSelection[i].setIcon(mapImages[i]);
+      mapSelection[i].setText(mapNames[i]);
+      mapSelection[i].setFont(defaultFont);
+      mapSelection[i].setHorizontalTextPosition(SwingConstants.CENTER);
       mapSelection[i].addMouseListener(this);
       buttonPanel.add(mapSelection[i],0);
       buttonPanel.revalidate();
@@ -249,9 +252,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapImages[0] = new ImageIcon("assets/maps/1/background.gif");
     mapDescriptions[0] = "Randomly generated map";
 
-    mapNames[1] = "Lava map";
+    mapNames[1] = "Another Map";
     mapImages[1] = new ImageIcon("assets/maps/2/background.gif");
-    mapDescriptions[1] = "Map made of lava.";
+    mapDescriptions[1] = "Special map (already genera).";
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){
@@ -281,8 +284,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
         for (int i = 0;i<mapSelection.length;i++){
           if(e.getSource() == mapSelection[i]){//changing the map displayed when clicking on a button
             if(i!=previewIndex){//changing only if the desired map isn't displayed
-              choiceMap = i;
+              previewIndex = i;
               preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
+              this.repaint();
             }
           }
         }
