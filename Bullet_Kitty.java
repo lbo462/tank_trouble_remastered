@@ -30,8 +30,8 @@ public class Bullet_Kitty extends Bullet {
     this.exploded = true;
     this.speed = 0; // stop movement
     // make a splash sound
-    gp.s.splash.stop();
-    gp.s.splash.play();
+    gp.s.splash.setFramePosition(0);
+    gp.s.splash.start();
   }
 
   @Override

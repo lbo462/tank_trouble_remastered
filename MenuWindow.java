@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager.*;
 
+
 public class MenuWindow  extends JFrame implements MouseListener {
   public final Color transparent = new Color(0, 0, 0,0);
   public final Font defaultFont = new Font("Serif", Font.BOLD, 25);
@@ -306,8 +307,8 @@ public class MenuWindow  extends JFrame implements MouseListener {
           // uncomment to skip menu
 /*
           characters = new int[2];
-          characters[0] = 5;
-          characters[1] = 6;
+          characters[0] = 1;
+          characters[1] = 5;
           choiceMap = 1;
 */
           gamePanel = new GamePanel(width, height, nbXtiles, nbYtiles, characters,choiceMap,nbGames);

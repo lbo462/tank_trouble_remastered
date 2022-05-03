@@ -65,6 +65,11 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.keyH = new KeyHandler();
     this.addKeyListener(keyH);
 
+
+    System.out.println("Generating map ...");
+    currentMap = new Map(mapNumber, this); // creates the map
+
+    System.out.println("Spawning players ...");
     // initialise players
     for(int i = 0; i < characters.length; i++) {
       // configure positions
@@ -94,11 +99,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
       }
     }
 
-    System.out.println("Generating map ...");
-    currentMap = new Map(mapNumber, this); // creates the map
-
     // music maestro
-    if(musicOn) s.music.loop();
+    if(musicOn) s.music.loop(99);
   }
 
   // start Thread, start the game
@@ -188,13 +190,13 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
         if(keyH.escape && currentTime - timePaused > 500) { // check pause
           paused = true;
-          s.music.stop();
+          s.music.setFramePosition(0);
           timePaused = currentTime;
         }
       } else { // cancel pause
         if(keyH.escape && currentTime - timePaused > 500) {
           paused = false;
-          if(musicOn) s.music.loop();
+          if(musicOn) s.music.loop(99);
           timePaused = currentTime;
         }
       }
@@ -233,8 +235,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
   public void goToEndMenu() {
     gameOver = true;
-    s.music.stop();
-    s.end.play();
+    s.music.setFramePosition(0);
+    s.end.start();
     // find winner
     int iMaxScore = 0;
     for(int i = 0; i < players.length; i++){

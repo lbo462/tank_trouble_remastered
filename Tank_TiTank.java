@@ -48,12 +48,12 @@ public class Tank_TiTank extends Tank_Super {
     if(capacityActive) {
       b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
       dash(-10); // un peu de recul pour nerf
-      gp.s.grosPew.stop();
-      gp.s.grosPew.play();
+      gp.s.grosPew.setFramePosition(0);
+      gp.s.grosPew.start();
     } else {
       b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp); // normal bullet
-      gp.s.pew.stop();
-      gp.s.pew.play();
+      gp.s.pew.setFramePosition(0);
+      gp.s.pew.start();
     }
     bullets.add(b);
     lastShot = System.currentTimeMillis();

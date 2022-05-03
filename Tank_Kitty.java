@@ -61,7 +61,7 @@ public class Tank_Kitty extends Tank_Super{
     // add one bullets_kitty
     public void shootKittys() {
       bulletsKitty.add(new Bullet_Kitty(getX()-5, getY()-5, this.angle, gp));
-      gp.s.pew.stop();
-      gp.s.pew.play();
+      gp.s.pew.setFramePosition(0);
+      gp.s.pew.start();
     }
 }

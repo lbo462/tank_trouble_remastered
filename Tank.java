@@ -61,8 +61,8 @@ public class Tank extends MovingEntity {
 
   public void kill() {
     /* play a little boom */
-    gp.s.explosionSound.stop();
-    gp.s.explosionSound.play();
+    gp.s.explosionSound.setFramePosition(0);
+    gp.s.explosionSound.start();
 
     this.dead = true; // kill player
     this.timeDied = System.currentTimeMillis(); // record its time of death
@@ -185,8 +185,8 @@ public class Tank extends MovingEntity {
     Bullet b = new Bullet(getX()-5, getY()-5, this.angle, gp.im.bullet, gp);
     bullets.add(b);
     this.numberOfShoots++;
-    gp.s.pew.stop();
-    gp.s.pew.play();
+    gp.s.pew.setFramePosition(0);
+    gp.s.pew.start();
     lastShot = System.currentTimeMillis();
   }
 

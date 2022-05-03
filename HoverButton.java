@@ -1,16 +1,15 @@
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.URL;
+import java.io.File;
+import javax.sound.sampled.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class HoverButton extends JButton implements MouseListener{
 
-    public AudioClip click;
+    public Clip click;
 
     public HoverButton(){
         super();
@@ -18,14 +17,20 @@ public class HoverButton extends JButton implements MouseListener{
         this.setHorizontalAlignment(SwingConstants.CENTER); //Centers text
         setBackground(Color.RED);
         addMouseListener(this);
-        URL url = getClass().getResource("assets/sounds/click.wav");
-        click = Applet.newAudioClip(url);
+        try {
+          String url = "assets/sounds/click.wav";
+          AudioInputStream is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
+          click = AudioSystem.getClip();
+          click.open(is);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-      click.stop();
-      click.play();
+      click.setFramePosition(0);
+      click.start();
      }
 
     @Override
