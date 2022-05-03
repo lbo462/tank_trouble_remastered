@@ -1,8 +1,3 @@
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.AlphaComposite;
-
 public class Particle_Fire extends Particle {
 
   public GamePanel gp;

@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.awt.Graphics2D;
-import java.awt.Color;
-
 
 public class Tank_Jiro extends Tank_Super {
 

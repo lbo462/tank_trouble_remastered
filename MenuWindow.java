@@ -13,7 +13,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public final int tileSize = 33;
   public final int width = nbXtiles * tileSize;
   public final int height = nbYtiles * tileSize;
-  public final int nbTanks = 4;
+  public final int nbTanks = 6;
   public final int nbMaps = 2;
   public final int buttonWidth = 200;
   public final int buttonHeight = 80;
@@ -41,6 +41,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public String[] mapDescriptions;
 
   // Buttons to choose tank and map
+  JPanel buttonPanel;
   public HoverButton[] tankSelection;
   public HoverButton[] mapSelection;
 
@@ -100,7 +101,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     nextButton = new HoverButton();
     nextButton.setText("START");
     nextButton.setFont(defaultFont);
-    nextButton.setBounds((width-buttonWidth)/2,590,buttonWidth,buttonHeight);
+    nextButton.setBounds((width-buttonWidth)/2,690,buttonWidth,buttonHeight);
     nextButton.setBackground(Color.white);
     nextButton.addMouseListener(this);
 
@@ -131,6 +132,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     containerGlobal.setBounds(0,0,width,height);
     containerGlobal.setBackground(transparent);
     containerGlobal.setLayout(null);
+    this.createDictionnaries();
   }
 
   public void setPlayerParameters(){
@@ -145,7 +147,71 @@ public class MenuWindow  extends JFrame implements MouseListener {
     topLabel.setText("Player_1 choose ...");
     containerGlobal.add(topLabel, 0);
 
-    //Filling in the tank arrays:
+    preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,60);
+    previewIndex = 0;
+    preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
+    containerGlobal.add(preview,0);
+
+    buttonPanel = new JPanel();
+    
+    buttonPanel.setBounds(width/2-2*buttonWidth, 500, 4*buttonWidth, (int)(nbTanks/4+1)*buttonHeight);
+    buttonPanel.setLayout(new GridLayout(0,4));
+    tankSelection = new HoverButton[nbTanks];
+    for (int i=0;i<tankSelection.length;i++){
+      tankSelection[i] = new HoverButton();
+      //tankSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
+      buttonPanel.add(tankSelection[i]);
+      tankSelection[i].setIcon(tankImages[i]);
+      tankSelection[i].addMouseListener(this);
+      //containerGlobal.add(tankSelection[i],0);
+    }
+    containerGlobal.add(buttonPanel);
+
+    nextButton.setText("NEXT");
+
+    this.repaint();
+  }
+
+  public void setMapParameters(){
+
+    for(HoverButton button:tankSelection){
+      buttonPanel.remove(button);
+      buttonPanel.revalidate();
+      buttonPanel.repaint();
+    }
+    //As we have less than 4 maps, we only need one line
+    buttonPanel.setSize(4*buttonWidth, buttonHeight);
+
+    previewIndex = 0;
+    preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
+
+    mapSelection = new HoverButton[nbMaps];
+    for (int i=0;i<mapSelection.length;i++){
+      mapSelection[i] = new HoverButton();
+      mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
+      mapSelection[i].setIcon(mapImages[i]);
+      mapSelection[i].addMouseListener(this);
+      buttonPanel.add(mapSelection[i],0);
+      buttonPanel.revalidate();
+      buttonPanel.repaint();
+    }
+  }
+
+  public void setOptionsParameters(){
+    containerGlobal.repaint();
+
+    choiceMap = this.previewIndex;
+    topLabel.setText("Choose number of games : ");
+
+    containerGlobal.remove(preview);
+    containerGlobal.remove(buttonPanel);
+
+    nbGamesPanel = new NumberChoicePanel(width/2-250, height/2-250, 500, 500, 1, defaultFont);
+    containerGlobal.add(nbGamesPanel);
+  }
+
+  public void createDictionnaries(){
+    //Creating tank dictionnaries
     tankNames = new String[nbTanks];
     tankImages = new ImageIcon[nbTanks];
     tankDescriptions = new String[nbTanks];
@@ -160,32 +226,21 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     tankNames[2] = "Kitty Tank";
     tankImages[2] = new ImageIcon("assets/entities/tank/kittyTank.gif");
-    tankDescriptions[2] = "Cute tank which can shoot bullets to slow down ennemies. One day cats will rule over the world.";
+    tankDescriptions[2] = "Cute tank which can shot bullets to slow ennemies. One day cats will rule over the world.";
 
     tankNames[3] = "TiTank";
     tankImages[3] = new ImageIcon("assets/entities/tank/TiTank.gif");
     tankDescriptions[3] = "A tank with the ability to become bigger and break walls. Yes Ricco, \"Kaboom\".";
 
-    preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,60);
-    previewIndex = 0;
-    preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
-    containerGlobal.add(preview,0);
+    tankNames[4] = "Autotank";
+    tankImages[4] = new ImageIcon("assets/entities/tank/defaultTank.gif");
+    tankDescriptions[4] = "Automated version of the tank. One day, the AI will rule over cats.";
 
-    tankSelection = new HoverButton[nbTanks];
-    for (int i=0;i<tankSelection.length;i++){
-      tankSelection[i] = new HoverButton();
-      tankSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
-      tankSelection[i].setIcon(tankImages[i]);
-      tankSelection[i].addMouseListener(this);
-      containerGlobal.add(tankSelection[i],0);
-    }
-
-    nextButton.setText("NEXT");
-
-    this.repaint();
-  }
-
-  public void setMapParameters(){
+    tankNames[5] = "Tankjiro";
+    tankImages[5] = new ImageIcon("assets/entities/tank/Tankjiro.gif");
+    tankDescriptions[5] = "A tank with the ability to throw fire at its enemies. It seems to be a reference to something but I can't get it...";
+    
+    //Creating map Dctionnaries
     mapNames = new String[nbMaps];
     mapImages = new ImageIcon[nbMaps];
     mapDescriptions = new String[nbMaps];
@@ -197,41 +252,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapNames[1] = "Lava map";
     mapImages[1] = new ImageIcon("assets/maps/2/background.gif");
     mapDescriptions[1] = "Map made of lava.";
-
-    for(HoverButton button:tankSelection){
-      containerGlobal.remove(button);
-      containerGlobal.revalidate();
-      containerGlobal.repaint();
-    }
-
-    previewIndex = 0;
-    preview.updatePreviewPanel(mapNames[previewIndex], mapImages[previewIndex], mapDescriptions[previewIndex]);
-
-    mapSelection = new HoverButton[nbMaps];
-    for (int i=0;i<mapSelection.length;i++){
-      mapSelection[i] = new HoverButton();
-      mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
-      mapSelection[i].setIcon(mapImages[i]);
-      mapSelection[i].addMouseListener(this);
-      containerGlobal.add(mapSelection[i],0);
-      containerGlobal.revalidate();
-      containerGlobal.repaint();
-    }
-  }
-
-  public void setOptionsParameters(){
-    containerGlobal.repaint();
-
-    choiceMap = this.previewIndex;
-    topLabel.setText("Choose number of games : ");
-
-    containerGlobal.remove(preview);
-    for (HoverButton button:mapSelection){
-      containerGlobal.remove(button);
-    }
-
-    nbGamesPanel = new NumberChoicePanel(width/2-250, height/2-250, 500, 500, 1, defaultFont);
-    containerGlobal.add(nbGamesPanel);
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){

@@ -1,6 +1,3 @@
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.AlphaComposite;
 import java.awt.Image;
 
 public class Particle_Dust extends Particle {

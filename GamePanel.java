@@ -1,13 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import javax.swing.JPanel;
 import java.awt.AlphaComposite;
-import javax.swing.*;
-import java.awt.Font;
-import java.util.ArrayList;
 import java.awt.event.*;
-
+import java.awt.Font;
+import javax.swing.*;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable, MouseListener {
 
@@ -29,8 +27,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public Tank[] players;
   public ArrayList<PowerUp> pu;
   public ArrayList<Particle> particles; // contains dust
-  public JPanel restartPane;
-  public JPanel closePane;
+  public HoverButton restartButton;
+  public HoverButton closeButton;
   public final Color defaultBlueFrame = new Color(1, 49, 180);
   public final Color hover_orange = new Color(255, 127, 0);
   public final Color selectedRedFrame = new Color(237, 0, 0);
@@ -246,91 +244,80 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     System.out.println("Player_"+winner+" won.");
 
     this.removeAll();
+    this.repaint();
 
-    JPanel globalPane = new JPanel();
-    globalPane.setLayout(null);
-    globalPane.setBounds(0,0,width,height);
-    globalPane.setBackground(Color.WHITE);
+    JPanel endPanel = new JPanel();
+    endPanel.setLayout(null);
+    endPanel.setBounds(0,0,width,height);
+    endPanel.setBackground(Color.WHITE);
+    
+    Font font = new Font("Serif", Font.BOLD, 25);
+    Font bigFont = new Font("Serif", Font.BOLD, 100);
 
     // display winner
-    JLabel winnerLbl = new JLabel("Player_"+winner+" won !");
-    winnerLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    winnerLbl.setBackground(Color.WHITE);
-    winnerLbl.setForeground(Color.RED);
-    winnerLbl.setBounds(30,10,width/2,100);
-    winnerLbl.setOpaque(true);
-    globalPane.add(winnerLbl);
+    JLabel winnerLabel = new JLabel("Player "+winner+" won !");
+    winnerLabel.setFont(bigFont);
+    winnerLabel.setBackground(Color.WHITE);
+    winnerLabel.setForeground(Color.RED);
+    winnerLabel.setBounds(0,30,width,120);
+    winnerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    winnerLabel.setOpaque(true);
+    this.add(winnerLabel);
 
     // display score
-    for(Tank t: players) {
+    JLabel player1ScoreLabel = new JLabel();
+    player1ScoreLabel.setText("Player 1 : "+players[0].score+" points");
+    player1ScoreLabel.setFont(font);
+    player1ScoreLabel.setBackground(Color.WHITE);
+    player1ScoreLabel.setForeground(Color.BLACK);
+    player1ScoreLabel.setBounds(width/4,170,width/2,70);
+    player1ScoreLabel.setOpaque(true);
+    this.add(player1ScoreLabel);
 
-      JLabel playerScoreLbl = new JLabel();
-      playerScoreLbl.setText("Player_"+t.number+" : "+t.score+" points");
-      playerScoreLbl.setFont(new Font("Serif", Font.BOLD, 25));
-      playerScoreLbl.setBackground(Color.WHITE);
-      playerScoreLbl.setForeground(Color.BLACK);
-      playerScoreLbl.setBounds(20,30+80*t.number,width/2,70);
-      playerScoreLbl.setOpaque(true);
-      globalPane.add(playerScoreLbl);
-    }
-
-    // restart button
-    restartPane = new JPanel();
-    restartPane.setLayout(null);
-    restartPane.setBounds((width/2)-160,590,160,90);
-    restartPane.setBackground(Color.RED);
-    restartPane.addMouseListener(this);
-    JLabel restartLbl = new JLabel("Play again");
-    restartLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    restartLbl.setForeground(Color.BLACK);
-    restartLbl.setBounds(10,10,140,70);
-    restartLbl.setBackground(Color.WHITE);
-    restartLbl.setOpaque(true);
-    restartLbl.setHorizontalAlignment(SwingConstants.CENTER);
-    restartPane.add(restartLbl);
-    globalPane.add(restartPane);
+    JLabel player2ScoreLabel = new JLabel();
+    player2ScoreLabel.setText("Player 2 : "+players[1].score+" points");
+    player2ScoreLabel.setFont(font);
+    player2ScoreLabel.setBackground(Color.WHITE);
+    player2ScoreLabel.setForeground(Color.BLACK);
+    player2ScoreLabel.setBounds(width/4,260,width/2,70);
+    player2ScoreLabel.setOpaque(true);
+    this.add(player2ScoreLabel);
+    
+    //Restart button
+    restartButton = new HoverButton();
+    restartButton.setBounds((width/2)-160,590,160,90);
+    restartButton.setBackground(Color.RED);
+    restartButton.setText("Play again");
+    restartButton.setFont(font);
+    restartButton.setHorizontalAlignment(SwingConstants.CENTER);
+    restartButton.addMouseListener(this);
+    endPanel.add(restartButton);
 
     // close button
-    closePane = new JPanel();
-    closePane.setLayout(null);
-    closePane.setBounds((width/2),590,160,90);
-    closePane.setBackground(Color.RED);
-    closePane.addMouseListener(this);
-    JLabel closeLbl = new JLabel("Quit");
-    closeLbl.setFont(new Font("Serif", Font.BOLD, 25));
-    closeLbl.setForeground(Color.BLACK);
-    closeLbl.setBounds(10,10,140,70);
-    closeLbl.setBackground(Color.WHITE);
-    closeLbl.setOpaque(true);
-    closeLbl.setHorizontalAlignment(SwingConstants.CENTER);
-    closePane.add(closeLbl);
-    globalPane.add(closePane);
+    closeButton = new HoverButton();
+    closeButton.setBounds((width/2),590,160,90);
+    closeButton.setBackground(Color.RED);
+    closeButton.setText("Quit");
+    closeButton.setFont(font);
+    closeButton.setHorizontalAlignment(SwingConstants.CENTER);
+    closeButton.addMouseListener(this);
+    endPanel.add(closeButton);
 
-    JLabel background = new JLabel(new ImageIcon("assets/menu/tankTroubleMenu.png"));
-    background.setBounds(0,0,width,height);
-    globalPane.add(background);
-
-    this.add(globalPane);
+    this.add(endPanel);
   }
 
   public void mouseClicked(MouseEvent e){
-    if(e.getSource() == restartPane) returnToMenu(); // go back to main menu
-    if(e.getSource() == closePane) System.exit(0); // end programm
+    if(e.getSource() == restartButton) returnToMenu(); // go back to main menu
+    if(e.getSource() == closeButton) System.exit(0); // end programm
   }
 
   public void mousePressed(MouseEvent e){}
 
   public void mouseReleased(MouseEvent e){}
 
-  public void mouseEntered(MouseEvent e){ //Detecting mouse entering
-    if(e.getSource() == restartPane) restartPane.setBackground(hover_orange);
-    if(e.getSource() == closePane) closePane.setBackground(hover_orange);
-  }
+  public void mouseEntered(MouseEvent e){}
 
-  public void mouseExited(MouseEvent e){
-    if(e.getSource() == restartPane) restartPane.setBackground(Color.RED);
-    if(e.getSource() == closePane) closePane.setBackground(Color.RED);
-  }
+  public void mouseExited(MouseEvent e){}
 
   public void returnToMenu () {
     // Reset JFrame ...
