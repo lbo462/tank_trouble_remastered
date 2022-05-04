@@ -18,32 +18,32 @@ public class Sound {
 
     // load sounds
     try{
-      url = "assets/sounds/mario.wav";
+      url = "assets/sounds/Music.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       music = AudioSystem.getClip();
       music.open(is);
 
-      url = "assets/sounds/gameover.wav";
+      url = "assets/sounds/Gameover.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       end = AudioSystem.getClip();
       end.open(is);
 
-      url = "assets/sounds/pew.wav";
+      url = "assets/sounds/Pew.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       pew = AudioSystem.getClip();
       pew.open(is);
 
-      url = "assets/sounds/gros_piou.wav";
+      url = "assets/sounds/PewTitank.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       grosPew = AudioSystem.getClip();
       grosPew.open(is);
 
-      url = "assets/sounds/ouh_death_sound.wav";
+      url = "assets/sounds/DeathSound.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       explosionSound = AudioSystem.getClip();
       explosionSound.open(is);
 
-      url = "assets/sounds/splash.wav";
+      url = "assets/sounds/SplashTankitty.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
       splash = AudioSystem.getClip();
       splash.open(is);
