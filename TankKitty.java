@@ -3,6 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 // Super funny tank that has a "super" capacity : create slow zone
+
 public class TankKitty extends TankSuper{
 
     public ArrayList<BulletKitty> bulletsKitty = new ArrayList<BulletKitty>();

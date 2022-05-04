@@ -1,7 +1,6 @@
 
-// Hello, this the TITANK
-// I'm a big big tank and I can shot BIG BULLETS
-// super tank that grows big
+// Super funny tank that has a "super" capacity : grow bigger and shot bigger bullets
+
 public class TankTiTank extends TankSuper {
 
   public boolean activated; // true if capacity activated
