@@ -41,7 +41,8 @@ To start the game, double-click on /start.bat
  |_|    \____/|______|_____/|______|_|  \_\     |_____/    \_____\____/|_| \_|  |_|  |______|_| \_|  |_|   
                                                                                                            
                                                                                                            
-
+This folder contains :
+     - All
 
 
 
