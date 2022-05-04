@@ -3,6 +3,8 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager.*;
+import java.io.File;
+import javax.sound.sampled.*;
 
 
 public class MenuWindow  extends JFrame implements MouseListener {
@@ -65,10 +67,23 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public GamePanel gamePanel;
 
+  public Clip menuMusic;
+
   public MenuWindow(){
     System.out.println("Starting menu ...");
     this.setIconImage(new ImageIcon("assets/icon.png").getImage());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    // play music
+    try{
+      AudioInputStream is = AudioSystem.getAudioInputStream(new File("assets/sounds/MusicMenu.wav").getAbsoluteFile());
+      menuMusic = AudioSystem.getClip();
+      menuMusic.open(is);
+      menuMusic.loop(99);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+
     try {
       for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
           if ("Nimbus".equals(info.getName())) {
@@ -146,9 +161,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     topLabel.setBounds(0, 0, 300, 50);
     topLabel.setFont(defaultFont);
     topLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    topLabel.setBackground(Color.BLUE);
+    topLabel.setBackground(new Color(0,191,255));
     topLabel.setOpaque(true);
-    topLabel.setForeground(Color.RED);
+    topLabel.setForeground(new Color(88,60,119));
     topLabel.setText("Player 1 tank choice");
     containerGlobal.add(topLabel, 0);
 
@@ -246,7 +261,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankNames[5] = "Tankjiro";
     tankImages[5] = new ImageIcon("assets/entities/tank/Tankjiro.gif");
     tankDescriptions[5] = "Tank capable of throwing fire at its enemies. Fireproof.";
-    
+
     //Creating map Dctionnaries
     mapNames = new String[nbMaps];
     mapImages = new ImageIcon[nbMaps];
@@ -352,6 +367,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
           this.pack();
           // starts the game's loop
           gamePanel.startGameThread();
+          menuMusic.stop();
           break;
       }
       stateOfGUI++;

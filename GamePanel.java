@@ -197,7 +197,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
       }
       if(musicOn && !musicIntroFinished && !s.intro.isActive()) {
         musicIntroFinished = true;
-        s.mainLoop.start();
+        s.mainLoop.loop(99);
       }
     }
   }
