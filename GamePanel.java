@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   private int gamesToPlay; // number of games to play
   private int numberOfGames; // how much games were played
   private int winner; // number of the winner
+  private boolean musicIntroFinished;
 
   public GamePanel(int width, int height, int nbXtiles, int nbYtiles, int[] characters, int mapNumber, int gamesToPlay) {
     this.width = width;
@@ -98,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     }
 
     // music maestro
-    if(musicOn) s.music.loop(99);
+    if(musicOn) s.intro.start();
   }
 
   // start Thread, start the game
@@ -188,15 +189,17 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
         if(keyH.escape && currentTime - timePaused > 500) { // check pause
           paused = true;
-          s.music.setFramePosition(0);
           timePaused = currentTime;
         }
       } else { // cancel pause
         if(keyH.escape && currentTime - timePaused > 500) {
           paused = false;
-          if(musicOn) s.music.loop(99);
           timePaused = currentTime;
         }
+      }
+      if(musicOn && !musicIntroFinished && !s.intro.isActive()) {
+        musicIntroFinished = true;
+        s.mainLoop.start();
       }
     }
   }
@@ -233,7 +236,8 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
 
   public void goToEndMenu() {
     gameOver = true;
-    s.music.setFramePosition(0);
+    s.intro.stop();
+    s.mainLoop.stop();
     s.end.start();
     // find winner
     int iMaxScore = 0;

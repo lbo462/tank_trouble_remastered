@@ -4,7 +4,9 @@ import javax.sound.sampled.*;
 
 public class Sound {
 
-  public Clip music; // main theme
+  // main theme
+  public Clip intro; // main theme intro
+  public Clip mainLoop; // main loop
   public Clip splash; // splash sound
   public Clip explosionSound; // death sound
   public Clip pew; // pew pew sound
@@ -18,10 +20,15 @@ public class Sound {
 
     // load sounds
     try{
-      url = "assets/sounds/Music.wav";
+      url = "assets/sounds/MusicIntro.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
-      music = AudioSystem.getClip();
-      music.open(is);
+      intro = AudioSystem.getClip();
+      intro.open(is);
+
+      url = "assets/sounds/MusicLoop.wav";
+      is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
+      mainLoop = AudioSystem.getClip();
+      mainLoop.open(is);
 
       url = "assets/sounds/Gameover.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
