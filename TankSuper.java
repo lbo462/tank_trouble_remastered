@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Image;
 
 //This class creates a tank with special (additional) capacities. The class is never called as it is, it is always its daughter that are called.
-
 public class TankSuper extends Tank{
     public boolean capacityActive; // true if the capacity is in use
     public double capacityDuration; // how long does the capacity lasts

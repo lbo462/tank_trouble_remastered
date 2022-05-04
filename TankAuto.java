@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 // for the moment, the tank just orient toward the ennemy and shoots when it is close enough
 public class TankAuto extends Tank {
-
   public ArrayList<PathFindingNode> map = new ArrayList<PathFindingNode>(); // list of nodes forming the map
 
   public Vector cellAimed = new Vector(); // position of the cell we should go

@@ -9,7 +9,6 @@ public class PathFindingNode {
   public PathFindingNode(int id) {
     this.id = id;
   }
-
   public String toString() {
     String str = id + " : ";
     for(int i: neighbours)

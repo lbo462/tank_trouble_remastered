@@ -4,11 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Image;
 
 // Defines what is a wall on the map. This class is used for collisions
-
+ 
 public class Tile {
 
   public GamePanel gp;
-  public int x, y;
+  public int x, y; 
   public int life;
   public Image spriteUoD, spriteLoR;
   public boolean collision;
