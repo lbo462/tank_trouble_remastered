@@ -3,6 +3,8 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager.*;
+import java.io.File;
+import javax.sound.sampled.*;
 
 
 public class MenuWindow  extends JFrame implements MouseListener {
