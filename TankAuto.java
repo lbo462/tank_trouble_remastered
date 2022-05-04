@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+// most basis / stupid IA to automate a bot
+// The goal was to implements a Djikstra or an A* algorythym to rush the ennemy
+// Sadly, it won't come before the next update, stay tuned !
+
+// for the moment, the tank just orient toward the ennemy and shoots when it is close enough
 public class TankAuto extends Tank {
 
   public ArrayList<PathFindingNode> map = new ArrayList<PathFindingNode>(); // list of nodes forming the map
@@ -60,7 +65,7 @@ public class TankAuto extends Tank {
   @Override
   public void collision() {
     super.collision();
-    if(collision) dash(-10);
+    if(collision) dash(-10); // bounce walls
   }
 
   @Override
@@ -71,6 +76,7 @@ public class TankAuto extends Tank {
     rightPressed = false;
     shotPressed = false;
 
+    // focused the cell where the player is
     for(Tank t: gp.players) {
       if(t != this) {
         cellAimed.x = t.getX();

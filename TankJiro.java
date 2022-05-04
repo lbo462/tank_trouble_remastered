@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 
+
+// super tank that throw fire when capacity activated
 public class TankJiro extends TankSuper {
 
   public ArrayList<ParticleFire> fire = new ArrayList<ParticleFire>();

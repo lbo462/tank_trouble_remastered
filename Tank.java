@@ -5,7 +5,9 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Image;
 
-// TANK BOUM BOUM
+
+// defines the default tank, mother of super tank
+// it can also be instanciated as the default tank with no ability but it's powerless
 public class Tank extends MovingEntity {
   public int number;
   public boolean collision; // check collision in update

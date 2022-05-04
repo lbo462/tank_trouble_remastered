@@ -1,3 +1,7 @@
+
+// Hello, this the TITANK
+// I'm a big big tank and I can shot BIG BULLETS
+// super tank that grows big
 public class TankTiTank extends TankSuper {
 
   public boolean activated; // was the capacity activated?
