@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
-
-// used for BFS, defines a node inside the queue
-// not used on this version, not enough time to finish the implementation of Djikstra
+//Used for BFS (Breadth First Search, pathfinding algorythm), defines a node inside the queue
+//not used on this version, not enough time to finish the implementation of Djikstra
 public class PathFindingNode {
   public int id;
   public ArrayList<Integer> neighbours = new ArrayList<Integer>();

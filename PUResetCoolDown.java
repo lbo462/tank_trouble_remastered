@@ -1,5 +1,5 @@
-
 // Power up that reset the cooldown of the capacities of the super tanks
+
 public class PUResetCoolDown extends PowerUp{
 
     public PUResetCoolDown(GamePanel gPanel, int xCoord, int yCoord) {

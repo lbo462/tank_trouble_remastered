@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+//JPanel containing the image of the tank, its name and a small description
 
-// JPanel containing the image of the tank, its name and a small description
 public class PreviewPanel extends JPanel{
     public final Color transparent = new Color(0, 0, 0,0);
     public JLabel pName;

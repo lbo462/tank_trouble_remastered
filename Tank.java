@@ -5,9 +5,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Image;
 
-
-// defines the default tank, mother of super tank
-// it can also be instanciated as the default tank with no ability but it's powerless
+// Defines the default tank, mother of super tank. It can also be instanciated as the default tank with no ability
 public class Tank extends MovingEntity {
   public int number;
   public boolean collision; // check collision in update

@@ -3,9 +3,8 @@ import java.awt.Color;
 import java.awt.BasicStroke;
 import java.awt.Image;
 
+// Defines what is a wall on the map. This class is used for collisions
 
-// defines what is a wall on the map.
-// used for collisions
 public class Tile {
 
   public GamePanel gp;

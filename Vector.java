@@ -1,5 +1,5 @@
 
-// vector type, a simple element with an x and y component
+// Vector type, a simple element with an x and y component
 // very useful
 public class Vector {
   public int x, y;

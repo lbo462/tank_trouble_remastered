@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-// most basis / stupid IA to automate a bot
-// The goal was to implements a Djikstra or an A* algorythym to rush the ennemy
+// This class is a basic AI
+// The goal was to implements a Djikstra or an AI algorythym to rush the ennemy
 // Sadly, it won't come before the next update, stay tuned !
 
 // for the moment, the tank just orient toward the ennemy and shoots when it is close enough
