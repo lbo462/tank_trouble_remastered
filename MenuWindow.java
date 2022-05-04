@@ -109,7 +109,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.add(containerGlobal);
     this.logoAnimation();
 
-    ImageIcon backImage = new ImageIcon("assets/menu/tankTroubleMenu.png");
+    ImageIcon backImage = new ImageIcon("assets/menu/Menu.png");
     background = new ResizeImageLabel();
     background.setBounds(0,0,width,height);
     background.setBackground(Color.white);
@@ -134,11 +134,11 @@ public class MenuWindow  extends JFrame implements MouseListener {
     animation = new ResizeImageLabel();
     animation.setSize(width, height);
     animation.setBackground(Color.orange);
-    animation.updateResizedImageIcon(new ImageIcon("assets/menu/tankTrouble.gif"));
+    animation.updateResizedImageIcon(new ImageIcon("assets/menu/animation.gif"));
     containerGlobal.add(animation);
     containerGlobal.repaint();
     try {
-      Thread.sleep(2500);
+      Thread.sleep(7500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
