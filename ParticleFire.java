@@ -1,3 +1,5 @@
+//Used for the special ability of the TankJiro which consists in shooting with a flame thrower.
+
 public class ParticleFire extends Particle {
 
   public GamePanel gp;

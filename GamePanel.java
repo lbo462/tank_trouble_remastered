@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.*;
 import java.util.ArrayList;
 
+//Really important class as it contains all the panels/entity of the game
+ 
 public class GamePanel extends JPanel implements Runnable, MouseListener {
 
   private boolean musicOn;

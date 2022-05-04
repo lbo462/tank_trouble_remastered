@@ -7,6 +7,8 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+//HoverButton class changes the button’s Border when the pointer is over it or not and plays a sound when it is clicked.
+
 public class HoverButton extends JButton implements MouseListener{
 
     public Clip click;
