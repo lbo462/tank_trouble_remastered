@@ -1,7 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.Image;
-
+ 
 //Class defining the tank's bullet
 
 public class Bullet extends MovingEntity {

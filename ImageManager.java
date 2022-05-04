@@ -11,7 +11,7 @@ public class ImageManager {
 
   public Image UoDfull, UoDcrack1, UoDcrack2, UoDcrack3;
   public Image LoRfull, LoRcrack1, LoRcrack2, LoRcrack3;
-
+ 
   public Image bullet;
   public Image bulletKitty;
   public Image explodedKitty;

@@ -2,7 +2,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 //This class is used when TankKitty uses its a special ability i.e. shoots special bullets
-
+ 
 public class BulletKitty extends Bullet {
 
   public double timeBeforeExplosion;

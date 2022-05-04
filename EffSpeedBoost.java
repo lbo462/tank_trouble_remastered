@@ -1,7 +1,7 @@
 import java.awt.Graphics2D;
 
 // This class is the effect of the power up "speed up" (which correspond to the PUSpeedUp class)
-
+ 
 public class EffSpeedBoost extends Effect {
   public EffSpeedBoost(Tank player) {
     super(player, 10000);

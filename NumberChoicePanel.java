@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
-
+ 
 //Class for the GUI. Used to choose the number of games wanted.
 
 public class NumberChoicePanel extends JPanel implements MouseListener{

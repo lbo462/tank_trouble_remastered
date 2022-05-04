@@ -11,7 +11,7 @@ public class Map {
   public GamePanel gp;
   public Tile[][] tiles;
   public Image background;
-
+ 
   public Map(int number, GamePanel gp) {
     this.gp = gp;
     this.tiles = new Tile[gp.nbYtiles][gp.nbXtiles];

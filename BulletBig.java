@@ -1,5 +1,5 @@
 //This class is used when TankTiTank uses its a special ability and shoots at the same time (bullets are bigger)
-
+ 
 public class BulletBig extends Bullet {
 
   public BulletBig(int x, int y, double direction, GamePanel gp) {

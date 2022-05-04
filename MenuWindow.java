@@ -7,7 +7,7 @@ import java.io.File;
 import javax.sound.sampled.*;
 
 //MenuWindow is the GUI of our game. It is used for the player's tank selection and the map choice
-
+ 
 public class MenuWindow  extends JFrame implements MouseListener {
   public final Color transparent = new Color(0, 0, 0,0);
   public final Font defaultFont = new Font("Serif", Font.BOLD, 25);
