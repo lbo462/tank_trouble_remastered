@@ -154,7 +154,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     containerGlobal.add(preview,0);
 
     buttonPanel = new JPanel();
-    
+
     buttonPanel.setBounds(width/2-2*buttonWidth, 500, 4*buttonWidth, (int)(nbTanks/4+1)*buttonHeight);
     buttonPanel.setLayout(new GridLayout(0,4));
     tankSelection = new HoverButton[nbTanks];
@@ -237,13 +237,13 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankDescriptions[3] = "A tank with the ability to become bigger and break walls. Yes Ricco, \"Kaboom\".";
 
     tankNames[4] = "Autotank";
-    tankImages[4] = new ImageIcon("assets/entities/tank/defaultTank.gif");
+    tankImages[4] = new ImageIcon("assets/entities/tank/autoTank.gif");
     tankDescriptions[4] = "Automated version of the tank. One day, the AI will rule over cats.";
 
     tankNames[5] = "Tankjiro";
     tankImages[5] = new ImageIcon("assets/entities/tank/Tankjiro.gif");
     tankDescriptions[5] = "A tank with the ability to throw fire at its enemies. It seems to be a reference to something but I can't get it...";
-    
+
     //Creating map Dctionnaries
     mapNames = new String[nbMaps];
     mapImages = new ImageIcon[nbMaps];

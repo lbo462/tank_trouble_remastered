@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           players[i] = new Tank_TiTank(i+1, x, y, this);
           break;
         case 5:
-          players[i] = new Tank_auto(i+1, x, y, im.painTank, im.defaultExplosion, this);
+          players[i] = new Tank_auto(i+1, x, y, this);
           break;
         case 6:
           players[i] = new Tank_Jiro(i+1, x, y, this);
@@ -250,7 +250,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     endPanel.setLayout(null);
     endPanel.setBounds(0,0,width,height);
     endPanel.setBackground(Color.WHITE);
-    
+
     Font font = new Font("Serif", Font.BOLD, 25);
     Font bigFont = new Font("Serif", Font.BOLD, 100);
 
@@ -282,7 +282,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     player2ScoreLabel.setBounds(width/4,260,width/2,70);
     player2ScoreLabel.setOpaque(true);
     this.add(player2ScoreLabel);
-    
+
     //Restart button
     restartButton = new HoverButton();
     restartButton.setBounds((width/2)-160,590,160,90);

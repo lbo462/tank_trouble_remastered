@@ -8,8 +8,8 @@ public class Tank_auto extends Tank {
   public Vector cellAimed = new Vector(); // position of the cell we should go
   public ArrayList<Vector> path = new ArrayList<Vector>();; // path to follow to reach player
 
-  public Tank_auto(int number, int x, int y, Image image, Image deadImage, GamePanel gp) {
-    super(number, x, y, image, deadImage, gp);
+  public Tank_auto(int number, int x, int y, GamePanel gp) {
+    super(number, x, y, gp.im.autoTank, gp.im.autoExplosion, gp);
     modelMap(); // model the current map to be used by BFS
   }
 
@@ -72,8 +72,12 @@ public class Tank_auto extends Tank {
     rightPressed = false;
     shotPressed = false;
 
-    cellAimed.x = gp.players[0].getX();
-    cellAimed.y = gp.players[0].getY();
+    for(Tank t: gp.players) {
+      if(t != this) {
+        cellAimed.x = t.getX();
+        cellAimed.y = t.getY();
+      }
+    }
 
     int angleDiff = 0;
     double distance = 0;
