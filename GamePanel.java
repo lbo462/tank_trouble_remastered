@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.nbXtiles = nbXtiles;
     this.nbYtiles = nbYtiles;
     this.tileSize = width / nbXtiles;
-    this.musicOn = false;
+    this.musicOn = true;
     this.paused = false;
     this.gameOver = false;
     this.timePaused = System.currentTimeMillis(); // initialise with random stuff
