@@ -24,11 +24,10 @@ public class Effect {
 
   public void update() {
     double currentTime = System.currentTimeMillis();
-    if(currentTime - bornAt > duration) this.dead = true; // is duration is over, kill effect
+    if(currentTime - bornAt > duration) this.dead = true; // if duration is over, kill effect
   }
-
+  
   public void draw(int x, int y, int size, Graphics2D g2) {
-    // nothing to draw by default ...
   }
 
   public String toString() {

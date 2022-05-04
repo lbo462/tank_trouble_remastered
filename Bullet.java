@@ -5,7 +5,7 @@ import java.awt.Image;
 public class Bullet extends MovingEntity {
 
   public boolean UoDcollision;// Up or Down collisions
-  public boolean LoRCollision;// Left or Right collisions$
+  public boolean LoRCollision;// Left or Right collisions
   public boolean killed; // tells if the bullet killed a player
   public Tile currentTile;
   public Vector currPos, lastPos;
@@ -17,8 +17,8 @@ public class Bullet extends MovingEntity {
     this.sprite = image;
     this.gp = gp;
 
-    this.width = 10;
-    this.height = 10;
+    this.width = 10; // in pixels
+    this.height = 10; // in pixels
     this.speed = 4; // in pixels
     this.lifeTime = 5000; // in ms
 

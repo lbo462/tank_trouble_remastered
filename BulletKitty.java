@@ -36,12 +36,12 @@ public class BulletKitty extends Bullet {
 
   @Override
   public void collisionWithTanks() {
-    if(exploded) { // only check if the bullet exploded. It does nothing otherwise
+    if(exploded) { // only check if the bullet exploded. Does nothing otherwise
       for(Tank t: gp.players) {
         // check if a player is inside a circle of radius r
         for(int r = 0; r < radius+t.width/2; r += 5) {
           for(int a = 0; a < 360; a += 2) {
-            // corresponding pos in cartesian coordinates
+            // corresponding position in cartesian coordinates
             int xCord = (int)(getX() + r * Math.cos(Math.toRadians(a)));
             int yCord = (int)(getY() + r * Math.sin(Math.toRadians(a)));
 

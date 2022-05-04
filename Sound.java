@@ -18,7 +18,7 @@ public class Sound {
     String url;
     AudioInputStream is;
 
-    // load sounds
+    // loading sounds
     try{
       url = "assets/sounds/MusicIntro.wav";
       is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());

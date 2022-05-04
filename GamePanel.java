@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public boolean paused;
   public boolean gameOver;
   public double timePaused; // used to regulate between two press on pause button
-  public boolean tankDead; // is a tank dead ?
+  public boolean tankDead; // true if the tank is dead
   public int frame; // index of the current frame, uselfull for animation
   public int width;
   public int height;
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     this.musicOn = true;
     this.paused = false;
     this.gameOver = false;
-    this.timePaused = System.currentTimeMillis(); // initialise with random stuff
+    this.timePaused = System.currentTimeMillis(); 
     this.players = new Tank[2];
     this.pu = new ArrayList<PowerUp>();
     this.particles = new ArrayList<Particle>();
@@ -97,8 +97,6 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           break;
       }
     }
-
-    // music maestro
     if(musicOn) s.intro.start();
   }
 
@@ -209,7 +207,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public void paintComponent(Graphics g) {
     if(!gameOver) {
       super.paintComponent(g);
-      Graphics2D g2 = (Graphics2D)g; // g2 is our drawing god
+      Graphics2D g2 = (Graphics2D)g;
 
       // draw the background
       currentMap.drawBackground(g2);
@@ -322,7 +320,7 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
   public void mouseExited(MouseEvent e){}
 
   public void returnToMenu () {
-    // Reset JFrame ...
+    // Reset JFrame
     MenuWindow topFrame = (MenuWindow) SwingUtilities.getWindowAncestor(this); // retrieve mother JFrame
     topFrame.dispose();
     topFrame = new MenuWindow();

@@ -187,7 +187,7 @@ public class Tank extends MovingEntity {
     lastShot = System.currentTimeMillis();
   }
 
-  // Removing bullets when they stayed
+  // Removing bullets when they stayed in game for too long or if it touched a player
   public void updateBullets(){
     int prevScore = score;
     for(int i = 0; i < bullets.size(); i++) {
@@ -244,7 +244,7 @@ public class Tank extends MovingEntity {
           for(Tile currentTile: toCheck) {
             // check if the hitbox hits the tile somewhere
             if(currentTile.collision) {
-              // I used the same coeffs that I used for drawing the tile
+              // same coeffs as when drawing the tiles
               if((currentTile.up
                 && nx > currentTile.x+1+3*w/8 && nx < currentTile.x+1+3*w/8 + w/4
                 && ny > currentTile.y+1 && ny < currentTile.y+1 + w/2+1)

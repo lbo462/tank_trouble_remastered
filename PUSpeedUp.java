@@ -1,4 +1,3 @@
-
 public class PUSpeedUp extends PowerUp{
 
     public PUSpeedUp(GamePanel gPanel, int xCoord, int yCoord) {
@@ -10,5 +9,4 @@ public class PUSpeedUp extends PowerUp{
         player.addEffect(new EffSpeedBoost(player));
         this.isAlive = false;
     }
-
 }

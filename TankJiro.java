@@ -19,7 +19,7 @@ public class TankJiro extends TankSuper {
   public void update() {
     super.update();
     if(this.capacityActive && System.currentTimeMillis() - lastShot > 1) {
-      fireThings(); // fire things whenever the capacity is active
+      fireThings(); // starting the capacity
     }
   }
 
@@ -30,7 +30,7 @@ public class TankJiro extends TankSuper {
     super.draw(g2);
   }
 
-  // start fire
+  // starting the capacity
   public void fireThings() {
     fire.add(new ParticleFire(getX(), getY(), angle, gp, this));
   }

@@ -12,6 +12,7 @@ public class Particle extends MovingEntity {
     this.dead = false;
     this.at = new AffineTransform();
     this.bornAt = System.currentTimeMillis();
+    this.lifeTime = 500 + Math.random() * 600; 
   }
 
   @Override

@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.awt.Image;
 
-// Everything that the map concerns is implemented in this class
+// Everything that concerns the map is implemented in this class
 public class Map {
 
   public GamePanel gp;
@@ -20,7 +20,7 @@ public class Map {
     else generateMap();
   }
 
-  // just update tiles
+  // updating tiles
   public void update() {
     for(int i=0; i<tiles.length; i++)
       for(int j=0; j<tiles[i].length; j++) {
@@ -29,7 +29,7 @@ public class Map {
       }
   }
 
-  // This loads an already existing map in assets/maps
+  // loading an existing map in assets/maps
   public void loadMap(int number) {
     int[][] tilesInt = new int[gp.nbYtiles][gp.nbXtiles];
     try {
@@ -39,9 +39,9 @@ public class Map {
 
       // extract data from file
       for(int i = 0; i < gp.nbYtiles; i++) {
-        String line = br.readLine(); // recovers sometings like 0 0 0 0 1 1 1 1 0 0 0 0 ...
+        String line = br.readLine(); 
         for(int j = 0; j < gp.nbXtiles; j++) {
-          String numbers[] = line.split(" "); // split into ["0", "0", "0", "0", "1", "1", ...]
+          String numbers[] = line.split(" "); 
           tilesInt[i][j] = Integer.parseInt(numbers[j]);
         }
       }
@@ -52,7 +52,7 @@ public class Map {
     mapIntToTiles(tilesInt); // transform number to Tiles
   }
 
-  // This method will generate a random labyrinth
+  // This method will generate a random labyrinth, further explanation in the report
   // Then it will randomly erase some of the walls (such that the map is playable enough, otherwise it's too hard to play)
   public void generateMap() {
     // generate everything with int and finally translate to Tiles to save RAM
@@ -74,11 +74,11 @@ public class Map {
         for(int j = 0; j < tilesInt[i].length; j++) tilesInt[i][j] = (j+1) % 2;
     }
 
-    // assign a different number to each empty cell.
+    // assign a different number to each empty cell
     for(int i = 0; i < tilesInt.length; i++) {
       for(int j = 0; j < tilesInt[i].length; j++) {
         if(tilesInt[i][j] == 0)
-          tilesInt[i][j] = j + i * gp.nbXtiles; // magic formula corresponding to 1D-index <3
+          tilesInt[i][j] = j + i * gp.nbXtiles; // formula corresponding to 1D-index
           // with this formula, we're sure that every number is different
       }
     }
@@ -98,7 +98,7 @@ public class Map {
           yToKill = (int)(Math.random()*((gp.nbYtiles-2)/2)) * 2 + 2;
       }
 
-      // DESTROY THE WALL (wall cries in background)
+      // destroy a wall
       // and give the new neighbours the same number so that they can live in harmony
 
       int cell_1, cell_2;
@@ -123,8 +123,8 @@ public class Map {
         }
       }
 
-      // check if this iteration finally ended the process ...
-      // i.e. every free cell has the same number : total harmony
+      // check if this iteration finally ended the process
+      // i.e. every free cell has the same number (called harmony value)
       int harmonyValue = -1;
       finallyFinished = true;
       for(int i = 1; i < tilesInt.length; i++) {
@@ -219,7 +219,6 @@ public class Map {
     }
 
     // draw bush bounds
-
     int ts = gp.tileSize;
     for(int i = 0; i <= gp.height; i += ts) { // horizontal draw
       for(int j = 0; j <= gp.width; j += gp.width)

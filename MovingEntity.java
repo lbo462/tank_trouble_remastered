@@ -12,7 +12,7 @@ public abstract class MovingEntity extends Entity{
     public double lifeTime; // how much it should last
     public double dashedAt;
     public boolean dashing;
-    public boolean dead; // is it dead
+    public boolean dead; // true if dead
     public AffineTransform at; // matrice of rotation
 
     // perform a dash
