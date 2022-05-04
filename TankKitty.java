@@ -3,18 +3,18 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 // Super funny tank that has a "super" capacity : create slow zone
-public class Tank_Kitty extends Tank_Super{
+public class TankKitty extends TankSuper{
 
-    public ArrayList<Bullet_Kitty> bulletsKitty = new ArrayList<Bullet_Kitty>();
+    public ArrayList<BulletKitty> bulletsKitty = new ArrayList<BulletKitty>();
 
-    public Tank_Kitty(int number, int x, int y, GamePanel gp){
+    public TankKitty(int number, int x, int y, GamePanel gp){
       super(number, x, y, gp.im.kitty, gp.im.deadKitty, gp, 100, 1);
     }
 
     @Override
     public void reset(int x, int y) {
       super.reset(x, y);
-      this.bulletsKitty = new ArrayList<Bullet_Kitty>(); // empty bullets_kitty
+      this.bulletsKitty = new ArrayList<BulletKitty>(); // empty bullets_kitty
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Tank_Kitty extends Tank_Super{
 
       /* update bullets_kitty */
       for(int i = bulletsKitty.size()-1; i >= 0; i--) {
-        Bullet_Kitty current = bulletsKitty.get(i);
+        BulletKitty current = bulletsKitty.get(i);
         current.update();
         if(current.dead || (bulletsKitty.size() > 5 && !current.exploded)){
           bulletsKitty.remove(i);
@@ -60,7 +60,7 @@ public class Tank_Kitty extends Tank_Super{
 
     // add one bullets_kitty
     public void shootKittys() {
-      bulletsKitty.add(new Bullet_Kitty(getX()-5, getY()-5, this.angle, gp));
+      bulletsKitty.add(new BulletKitty(getX()-5, getY()-5, this.angle, gp));
       gp.s.pew.setFramePosition(0);
       gp.s.pew.start();
     }

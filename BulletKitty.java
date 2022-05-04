@@ -1,14 +1,14 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-public class Bullet_Kitty extends Bullet {
+public class BulletKitty extends Bullet {
 
   public double timeBeforeExplosion;
   public boolean exploded;
   public int radius; // radius of explosion
   public Image explodedSprite;
 
-  public Bullet_Kitty(int x, int y, double direction, GamePanel gp) {
+  public BulletKitty(int x, int y, double direction, GamePanel gp) {
     super(x, y, direction, gp.im.bulletKitty, gp);
     this.explodedSprite = gp.im.explodedKitty;
 

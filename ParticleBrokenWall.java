@@ -1,7 +1,7 @@
 import java.awt.Image;
 
-public class Particle_BrokenWall extends Particle {
-  public Particle_BrokenWall(int x, int y, Image sprite) {
+public class ParticleBrokenWall extends Particle {
+  public ParticleBrokenWall(int x, int y, Image sprite) {
     super(x, y, sprite);
 
     this.speed = 2;

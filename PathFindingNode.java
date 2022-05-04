@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class PathFinding_Node {
+public class PathFindingNode {
   public int id;
   public ArrayList<Integer> neighbours = new ArrayList<Integer>();
 
-  public PathFinding_Node(int id) {
+  public PathFindingNode(int id) {
     this.id = id;
   }
 

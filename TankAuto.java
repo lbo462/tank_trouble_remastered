@@ -1,14 +1,14 @@
 import java.awt.Image;
 import java.util.ArrayList;
 
-public class Tank_auto extends Tank {
+public class TankAuto extends Tank {
 
-  public ArrayList<PathFinding_Node> map = new ArrayList<PathFinding_Node>(); // list of nodes forming the map
+  public ArrayList<PathFindingNode> map = new ArrayList<PathFindingNode>(); // list of nodes forming the map
 
   public Vector cellAimed = new Vector(); // position of the cell we should go
   public ArrayList<Vector> path = new ArrayList<Vector>();; // path to follow to reach player
 
-  public Tank_auto(int number, int x, int y, GamePanel gp) {
+  public TankAuto(int number, int x, int y, GamePanel gp) {
     super(number, x, y, gp.im.autoTank, gp.im.autoExplosion, gp);
     modelMap(); // model the current map to be used by BFS
   }
@@ -28,7 +28,7 @@ public class Tank_auto extends Tank {
         if(currentTile.collision) continue;
 
         // create a new node with an unique id
-        PathFinding_Node node = new PathFinding_Node(c + r * C);  // again the magic formula to idenify a cell by a number
+        PathFindingNode node = new PathFindingNode(c + r * C);  // again the magic formula to idenify a cell by a number
 
         // define possible dirrections
         // used https://youtu.be/KiCBXu4P-2Y?t=365

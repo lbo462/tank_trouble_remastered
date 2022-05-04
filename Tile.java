@@ -82,6 +82,6 @@ public class Tile {
     this.right = false;
     this.left = false;
     this.collision = false;
-    for(int i = 0; i < 5; i++) gp.particles.add(new Particle_BrokenWall(x+gp.tileSize/2, y+gp.tileSize/2, gp.im.dustWall));
+    for(int i = 0; i < 5; i++) gp.particles.add(new ParticleBrokenWall(x+gp.tileSize/2, y+gp.tileSize/2, gp.im.dustWall));
   }
 }

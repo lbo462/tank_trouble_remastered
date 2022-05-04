@@ -1,8 +1,8 @@
-public class Tank_TiTank extends Tank_Super {
+public class TankTiTank extends TankSuper {
 
   public boolean activated; // was the capacity activated?
 
-  public Tank_TiTank(int number, int x, int y, GamePanel gp){
+  public TankTiTank(int number, int x, int y, GamePanel gp){
       super(number, x, y, gp.im.titank, gp.im.deadTitank, gp, 2500, 10000);
       this.activated = false;
   }
@@ -46,7 +46,7 @@ public class Tank_TiTank extends Tank_Super {
     this.numberOfShoots++;
     Bullet b;
     if(capacityActive) {
-      b = new Bullet_Big(getX()-10, getY()-10, this.angle, gp); // create big bullet
+      b = new BulletBig(getX()-10, getY()-10, this.angle, gp); // create big bullet
       dash(-10); // un peu de recul pour nerf
       gp.s.grosPew.setFramePosition(0);
       gp.s.grosPew.start();

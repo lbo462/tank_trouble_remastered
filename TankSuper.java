@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.awt.Image;
 
 // This class creates a tank with special (additional) capacities
-public class Tank_Super extends Tank{
+public class TankSuper extends Tank{
     public boolean capacityActive; // true if the capacity is in use
     public double capacityDuration; // how long does the capacity lasts
     public double capacityCooldown; // how long it takes to reuse the ability
@@ -16,7 +16,7 @@ public class Tank_Super extends Tank{
     double pourcentage = 1; // corresponding pourcentage wrt cooldown
 
 
-    public Tank_Super(int number, int x, int y, Image image, Image deadImage, GamePanel gp, double duration, double cooldown) {
+    public TankSuper(int number, int x, int y, Image image, Image deadImage, GamePanel gp, double duration, double cooldown) {
         super(number, x, y, image, deadImage, gp);
         this.capacityDuration = duration;
         this.capacityCooldown = cooldown;

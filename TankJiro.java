@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 
-public class Tank_Jiro extends Tank_Super {
+public class TankJiro extends TankSuper {
 
-  public ArrayList<Particle_Fire> fire = new ArrayList<Particle_Fire>();
+  public ArrayList<ParticleFire> fire = new ArrayList<ParticleFire>();
 
-  public Tank_Jiro(int number, int x, int y, GamePanel gp) {
+  public TankJiro(int number, int x, int y, GamePanel gp) {
     super(number, x, y, gp.im.tankjiro, gp.im.deadTankjiro, gp, 5000, 10000);
   }
 
   @Override
   public void reset(int x, int y) {
     super.reset(x, y);
-    this.fire = new ArrayList<Particle_Fire>(); // empty fire
+    this.fire = new ArrayList<ParticleFire>(); // empty fire
   }
 
   @Override
@@ -32,7 +32,7 @@ public class Tank_Jiro extends Tank_Super {
 
   // start fire
   public void fireThings() {
-    fire.add(new Particle_Fire(getX(), getY(), angle, gp, this));
+    fire.add(new ParticleFire(getX(), getY(), angle, gp, this));
   }
 
   @Override

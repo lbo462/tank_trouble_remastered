@@ -1,11 +1,11 @@
-public class Particle_Fire extends Particle {
+public class ParticleFire extends Particle {
 
   public GamePanel gp;
   public Tank owner; // fire owner can't be killed by it
   public int radius; // radius of the particle
   public boolean killed;
 
-  public Particle_Fire(int x, int y, double direction, GamePanel gp, Tank owner) {
+  public ParticleFire(int x, int y, double direction, GamePanel gp, Tank owner) {
     super(x, y, gp.im.fireParticle);
 
     this.gp = gp;

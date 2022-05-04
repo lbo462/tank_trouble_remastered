@@ -1,7 +1,7 @@
 
-public class Bullet_Big extends Bullet {
+public class BulletBig extends Bullet {
 
-  public Bullet_Big(int x, int y, double direction, GamePanel gp) {
+  public BulletBig(int x, int y, double direction, GamePanel gp) {
     super(x, y, direction, gp.im.bullet, gp);
     // make the bullet 2 times bigger
     this.width *= 2;
@@ -13,7 +13,7 @@ public class Bullet_Big extends Bullet {
   @Override
   public void update() {
     super.update();
-    gp.particles.add(new Particle_Dust(getX()+5, getY()+5, gp.im.dust)); // just add some dust
+    gp.particles.add(new ParticleDust(getX()+5, getY()+5, gp.im.dust)); // just add some dust
   }
 
   @Override

@@ -80,19 +80,19 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           players[i] = new Tank(i+1, x, y, im.painTank, im.defaultExplosion, this);
           break;
         case 2:
-          players[i] = new Tank_Phantom(i+1, x, y, this);
+          players[i] = new TankPhantom(i+1, x, y, this);
           break;
         case 3:
-          players[i] = new Tank_Kitty(i+1, x, y, this);
+          players[i] = new TankKitty(i+1, x, y, this);
           break;
         case 4:
-          players[i] = new Tank_TiTank(i+1, x, y, this);
+          players[i] = new TankTiTank(i+1, x, y, this);
           break;
         case 5:
-          players[i] = new Tank_auto(i+1, x, y, this);
+          players[i] = new TankAuto(i+1, x, y, this);
           break;
         case 6:
-          players[i] = new Tank_Jiro(i+1, x, y, this);
+          players[i] = new TankJiro(i+1, x, y, this);
           break;
       }
     }
@@ -169,9 +169,9 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
           }
 
           if(rand < ratio)
-            pu.add(new PU_ResetCooldown(this, xOnGrid*tileSize, yOnGrid*tileSize));
+            pu.add(new PUResetCoolDown(this, xOnGrid*tileSize, yOnGrid*tileSize));
           else
-            pu.add(new PU_SpeedUp(this, xOnGrid*tileSize, yOnGrid*tileSize));
+            pu.add(new PUSpeedUp(this, xOnGrid*tileSize, yOnGrid*tileSize));
         }
 
         // update power ups

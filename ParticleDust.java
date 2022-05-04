@@ -1,8 +1,8 @@
 import java.awt.Image;
 
-public class Particle_Dust extends Particle {
+public class ParticleDust extends Particle {
 
-  public Particle_Dust(int x, int y, Image image) {
+  public ParticleDust(int x, int y, Image image) {
 
     super(x, y, image);
 

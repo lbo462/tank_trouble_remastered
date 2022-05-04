@@ -1,7 +1,7 @@
 import java.awt.Graphics2D;
 
-public class Eff_SpeedBoost extends Effect {
-  public Eff_SpeedBoost(Tank player) {
+public class EffSpeedBoost extends Effect {
+  public EffSpeedBoost(Tank player) {
     super(player, 10000);
     super.setSprite(im.moreSpeed);
     t.maxSpeed += 1;

@@ -109,7 +109,7 @@ public class Tank extends MovingEntity {
 
       /* add some dust */
       if(Math.abs(speed) > 0 && gp.frame % 20 == 0 && !collision && collisionWithTiles)
-        for(int i = 0; i < 15; i++) gp.particles.add(new Particle_Dust(getX(), getY(), gp.im.dust));
+        for(int i = 0; i < 15; i++) gp.particles.add(new ParticleDust(getX(), getY(), gp.im.dust));
 
       this.updatePosition(); // update as a function of collisions
       if(shotPressed && System.currentTimeMillis() - lastShot > 100) this.shoot();

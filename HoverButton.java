@@ -18,7 +18,7 @@ public class HoverButton extends JButton implements MouseListener{
         setBackground(new Color(0,191,255));
         addMouseListener(this);
         try {
-          String url = "assets/sounds/click.wav";
+          String url = "assets/sounds/Click.wav";
           AudioInputStream is = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
           click = AudioSystem.getClip();
           click.open(is);
