@@ -24,7 +24,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public int[] characters;//tanks choosen by players
   public int choiceMap;//map choosen by players
   public int nbGames;//numbers of games to be played
-  public Font titleFont = new Font("serif",Font.BOLD,25);//imported font
+  public Font titleFont = new Font("serif",Font.BOLD,25); //imported font
 
   public JPanel containerGlobal;
   // Background image
@@ -84,7 +84,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
         f.printStackTrace();
       }
     }
-    this.setTitle("Tank Trouble");
+    this.setTitle("Tank Trouble Remastered");
     this.setSize(width, height);
     this.setResizable(false);
     this.setGlobalParameters();
@@ -143,9 +143,11 @@ public class MenuWindow  extends JFrame implements MouseListener {
     characters[1] = 0;
 
     topLabel = new JLabel();
-    topLabel.setBounds(20, 150, width, 50);
+    topLabel.setBounds(0, 0, 300, 50);
     topLabel.setFont(defaultFont);
+    topLabel.setHorizontalAlignment(SwingConstants.CENTER);
     topLabel.setBackground(Color.BLUE);
+    topLabel.setOpaque(true);
     topLabel.setForeground(Color.RED);
     topLabel.setText("Player 1 tank choice");
     containerGlobal.add(topLabel, 0);
@@ -204,10 +206,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public void setOptionsParameters(){
     containerGlobal.repaint();
-    topLabel.setText("Game settings");
+    topLabel.setText("Number of games");
 
     choiceMap = this.previewIndex;
-    topLabel.setText("Choose number of games : ");
 
     containerGlobal.remove(preview);
     containerGlobal.remove(buttonPanel);
@@ -224,28 +225,28 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
     tankNames[0] = "Default Tank";
     tankImages[0] = new ImageIcon("assets/entities/tank/defaultTank.gif");
-    tankDescriptions[0] = "Original tank with no capacity. Vintage = for the connaisseur.";
+    tankDescriptions[0] = "Original tank with no special ability. Vintage.";
 
-    tankNames[1] = "Phantom Tank";
+    tankNames[1] = "Phantom";
     tankImages[1] = new ImageIcon("assets/entities/tank/phantom.gif");
-    tankDescriptions[1] = "Tank with the ability to cross walls. When you want to go fufu.";
+    tankDescriptions[1] = "Tank capable of crossing walls. Furtive.";
 
-    tankNames[2] = "Kitty Tank";
+    tankNames[2] = "Tankitty";
     tankImages[2] = new ImageIcon("assets/entities/tank/kittyTank.gif");
-    tankDescriptions[2] = "Cute tank which can shot bullets to slow ennemies. One day cats will rule over the world.";
+    tankDescriptions[2] = "Tank capable of slowing down ennemies. Cute.";
 
     tankNames[3] = "TiTank";
     tankImages[3] = new ImageIcon("assets/entities/tank/TiTank.gif");
-    tankDescriptions[3] = "A tank with the ability to become bigger and break walls. Yes Ricco, \"Kaboom\".";
+    tankDescriptions[3] = "Tank capable of becoming bigger and breaking walls. Huge.";
 
     tankNames[4] = "Autotank";
     tankImages[4] = new ImageIcon("assets/entities/tank/autoTank.gif");
-    tankDescriptions[4] = "Automated version of the tank. One day, the AI will rule over cats.";
+    tankDescriptions[4] = "Default tank, but automated (at least we tried). Smart.";
 
     tankNames[5] = "Tankjiro";
     tankImages[5] = new ImageIcon("assets/entities/tank/Tankjiro.gif");
-    tankDescriptions[5] = "A tank with the ability to throw fire at its enemies. It seems to be a reference to something but I can't get it...";
-
+    tankDescriptions[5] = "Tank capable of throwing fire at its enemies. Fireproof.";
+    
     //Creating map Dctionnaries
     mapNames = new String[nbMaps];
     mapImages = new ImageIcon[nbMaps];

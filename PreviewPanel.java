@@ -6,8 +6,8 @@ public class PreviewPanel extends JPanel{
     public JLabel pName;
     public ResizeImageLabel pImage;
     public JTextArea pDescription;
-    public Font titleFont = new Font("ChunkFive-Regular",Font.BOLD,50);//imported font
-    public Font textFont = new Font("Gasalt-Thin",Font.PLAIN,20);
+    public Font titleFont = new Font("dialog",Font.BOLD,50); //Choose font 
+    public Font textFont = new Font("monospaced",Font.PLAIN,20);
 
     public PreviewPanel(int posX,int posY,int shortSide,Color backColor,int titleHeight){
         super();
