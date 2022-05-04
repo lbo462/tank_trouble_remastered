@@ -20,7 +20,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public final int previewPanelSide = 330;
 
   // Variables describing the advancement of the GUI
-  public int stateOfGUI;// 0:beginning | 1:player1's tank | 2:player2's tank | 3:map choice
+  public int stateOfGUI;// 0:beginning | 1:player1's tank | 2:player2's tank | 3:map choice | 4:options choice
   public int[] characters;//tanks choosen by players
   public int choiceMap;//map choosen by players
   public int nbGames;//numbers of games to be played
@@ -81,6 +81,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       }catch(Exception f){
         System.out.println("problem with look and feel");
+        f.printStackTrace();
       }
     }
     this.setTitle("Tank Trouble");
@@ -90,7 +91,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     this.setLocationRelativeTo(null);
     this.setVisible(true);
     this.add(containerGlobal);
-    //this.logoAnimation();
+    this.logoAnimation();
 
     ImageIcon backImage = new ImageIcon("assets/menu/tankTroubleMenu.png");
     background = new ResizeImageLabel();
@@ -144,8 +145,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     topLabel = new JLabel();
     topLabel.setBounds(20, 150, width, 50);
     topLabel.setFont(defaultFont);
+    topLabel.setBackground(Color.BLUE);
     topLabel.setForeground(Color.RED);
-    topLabel.setText("Player_1 choose ...");
+    topLabel.setText("Player 1 tank choice");
     containerGlobal.add(topLabel, 0);
 
     preview = new PreviewPanel(width/2-previewPanelSide,50,previewPanelSide,transparent,60);
@@ -160,11 +162,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankSelection = new HoverButton[nbTanks];
     for (int i=0;i<tankSelection.length;i++){
       tankSelection[i] = new HoverButton();
-      //tankSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
       buttonPanel.add(tankSelection[i]);
       tankSelection[i].setIcon(tankImages[i]);
       tankSelection[i].addMouseListener(this);
-      //containerGlobal.add(tankSelection[i],0);
     }
     containerGlobal.add(buttonPanel);
 
@@ -174,6 +174,8 @@ public class MenuWindow  extends JFrame implements MouseListener {
   }
 
   public void setMapParameters(){
+
+    topLabel.setText("Map choice");
 
     for(HoverButton button:tankSelection){
       buttonPanel.remove(button);
@@ -189,7 +191,6 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapSelection = new HoverButton[nbMaps];
     for (int i=0;i<mapSelection.length;i++){
       mapSelection[i] = new HoverButton();
-      mapSelection[i].setBounds(width/2-(2-i)*buttonWidth,500,buttonWidth,buttonHeight);
       mapSelection[i].setIcon(mapImages[i]);
       mapSelection[i].setText(mapNames[i]);
       mapSelection[i].setFont(defaultFont);
@@ -203,6 +204,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public void setOptionsParameters(){
     containerGlobal.repaint();
+    topLabel.setText("Game settings");
 
     choiceMap = this.previewIndex;
     topLabel.setText("Choose number of games : ");
@@ -312,7 +314,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
         case 1: // first tank chosen
           characters[0] = this.previewIndex+1; // register choice
           previewIndex = 0; // reset preview
-          topLabel.setText("Player_2's turn :");
+          topLabel.setText("Player 2 tank choice");
           preview.updatePreviewPanel(tankNames[previewIndex], tankImages[previewIndex], tankDescriptions[previewIndex]);
           preview.repaint();
           break;
