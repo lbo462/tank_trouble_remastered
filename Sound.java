@@ -2,6 +2,7 @@ import java.io.File;
 import javax.sound.sampled.*;
 
 
+// loads and stores every sound file used during the game
 public class Sound {
 
   // main theme

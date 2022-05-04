@@ -1,12 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
+
+// JPanel containing the image of the tank, its name and a small description
 public class PreviewPanel extends JPanel{
     public final Color transparent = new Color(0, 0, 0,0);
     public JLabel pName;
     public ResizeImageLabel pImage;
     public JTextArea pDescription;
-    public Font titleFont = new Font("dialog",Font.BOLD,50); //Choose font 
+    public Font titleFont = new Font("dialog",Font.BOLD,50); //Choose font
     public Font textFont = new Font("monospaced",Font.PLAIN,20);
 
     public PreviewPanel(int posX,int posY,int shortSide,Color backColor,int titleHeight){
