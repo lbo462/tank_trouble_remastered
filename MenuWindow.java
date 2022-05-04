@@ -272,13 +272,13 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapImages[0] = new ImageIcon("assets/maps/background.gif");
     mapDescriptions[0] = "Randomly generated map";
 
-    mapNames[1] = "Custom 1";
+    mapNames[1] = "Custom";
     mapImages[1] = new ImageIcon("assets/maps/1/background.gif");
-    mapDescriptions[1] = "Just a map ...";
+    mapDescriptions[1] = "Just a map";
 
-    mapNames[2] = "Full of wall";
+    mapNames[2] = "Full of walls";
     mapImages[2] = new ImageIcon("assets/maps/2/background.gif");
-    mapDescriptions[2] = "Map only made of a whole lot of walls. Very fun to play to play with the TITANK";
+    mapDescriptions[2] = "Very fun to play with the TITANK";
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){
