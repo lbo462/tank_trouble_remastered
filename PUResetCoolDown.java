@@ -1,4 +1,3 @@
-
 public class PUResetCoolDown extends PowerUp{
 
     public PUResetCoolDown(GamePanel gPanel, int xCoord, int yCoord) {
