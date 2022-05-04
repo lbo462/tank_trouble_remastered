@@ -14,7 +14,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public final int width = nbXtiles * tileSize;
   public final int height = nbYtiles * tileSize;
   public final int nbTanks = 6;
-  public final int nbMaps = 2;
+  public final int nbMaps = 3;
   public final int buttonWidth = 200;
   public final int buttonHeight = 80;
   public final int previewPanelSide = 330;
@@ -158,7 +158,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     containerGlobal.add(preview,0);
 
     buttonPanel = new JPanel();
-    
+
     buttonPanel.setBounds(width/2-2*buttonWidth, 500, 4*buttonWidth, (int)(nbTanks/4+1)*buttonHeight);
     buttonPanel.setLayout(new GridLayout(0,4));
     tankSelection = new HoverButton[nbTanks];
@@ -240,7 +240,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankDescriptions[3] = "Tank capable of becoming bigger and breaking walls. Huge.";
 
     tankNames[4] = "Autotank";
-    tankImages[4] = new ImageIcon("assets/entities/tank/defaultTank.gif");
+    tankImages[4] = new ImageIcon("assets/entities/tank/autoTank.gif");
     tankDescriptions[4] = "Default tank, but automated (at least we tried). Smart.";
 
     tankNames[5] = "Tankjiro";
@@ -253,12 +253,16 @@ public class MenuWindow  extends JFrame implements MouseListener {
     mapDescriptions = new String[nbMaps];
 
     mapNames[0] = "Random";
-    mapImages[0] = new ImageIcon("assets/maps/1/background.gif");
+    mapImages[0] = new ImageIcon("assets/maps/background.gif");
     mapDescriptions[0] = "Randomly generated map";
 
-    mapNames[1] = "Another Map";
-    mapImages[1] = new ImageIcon("assets/maps/2/background.gif");
-    mapDescriptions[1] = "Special map (already genera).";
+    mapNames[1] = "Custom map 1";
+    mapImages[1] = new ImageIcon("assets/maps/1/background.gif");
+    mapDescriptions[1] = "custom map 1";
+
+    mapNames[2] = "Custom map 2";
+    mapImages[2] = new ImageIcon("assets/maps/2/background.gif");
+    mapDescriptions[2] = "custom map 2";
   }
 
   public void updateAndResizeImageIcon(JComponent c,ImageIcon img){

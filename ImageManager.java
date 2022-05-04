@@ -23,6 +23,8 @@ public class ImageManager {
   public Image deadKitty;
   public Image titank;
   public Image deadTitank;
+  public Image autoTank;
+  public Image autoExplosion;
   public Image tankjiro;
   public Image deadTankjiro;
 
@@ -71,6 +73,9 @@ public class ImageManager {
 
       titank = new ImageIcon(getClass().getResource("assets/entities/tank/TiTank.gif")).getImage();
       deadTitank = new ImageIcon(getClass().getResource("assets/entities/tank/titankExplosion.gif")).getImage();
+
+      autoTank = new ImageIcon(getClass().getResource("assets/entities/tank/autoTank.gif")).getImage();
+      autoExplosion = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
 
       tankjiro = new ImageIcon(getClass().getResource("assets/entities/tank/Tankjiro.gif")).getImage();
       deadTankjiro = new ImageIcon(getClass().getResource("assets/entities/tank/defaultExplosion.gif")).getImage();
