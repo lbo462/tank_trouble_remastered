@@ -42,7 +42,10 @@ To start the game, double-click on /start.bat
                                                                                                            
                                                                                                            
 This folder contains :
-     - All
+     - A start.bat file used to automatically compile and launch the game (folder root)
+     - The classes coded for this project (folder root)
+     - A folder "assets" containing images, sounds, musics and maps
+     - A folder "Report" containing our report and the schemes used in it
 
 
 
@@ -55,7 +58,7 @@ This folder contains :
  |_|\_\______|  |_|     |____/_____|_| \_|_____/_____|_| \_|\_____|_____/ 
 
 
-Player_1 : Move with ZQSD, shoot with SPACE and activate capacity with A
+First player : Move with ZQSD, shoot with SPACE and activate capacity with A
 
      Action  |  Key
 --------------------------
@@ -65,7 +68,7 @@ Player_1 : Move with ZQSD, shoot with SPACE and activate capacity with A
        Right |  D
     Special  |  A
     
-Player_2 : Move with OKLM, shoot with ENTER and activate capacity with P
+Second player : Move with OKLM, shoot with ENTER and activate capacity with P
 
      Action  |  Key
 --------------------------
