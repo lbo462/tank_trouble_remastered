@@ -161,9 +161,9 @@ public class MenuWindow  extends JFrame implements MouseListener {
     topLabel.setBounds(0, 0, 300, 50);
     topLabel.setFont(defaultFont);
     topLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    topLabel.setBackground(Color.BLUE);
+    topLabel.setBackground(new Color(0,191,255));
     topLabel.setOpaque(true);
-    topLabel.setForeground(Color.RED);
+    topLabel.setForeground(new Color(88,60,119));
     topLabel.setText("Player 1 tank choice");
     containerGlobal.add(topLabel, 0);
 
