@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-
 //JPanel containing the image of the tank, its name and a small description
 
 public class PreviewPanel extends JPanel{

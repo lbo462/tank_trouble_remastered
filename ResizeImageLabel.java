@@ -3,7 +3,6 @@ import javax.swing.JLabel;
 import java.awt.Image;
 
 //Automatically resize the label with the size of the image
-
 public class ResizeImageLabel extends JLabel{
 
     public void updateResizedImageIcon(ImageIcon img){

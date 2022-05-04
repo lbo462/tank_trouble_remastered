@@ -4,7 +4,6 @@ import javax.sound.sampled.*;
 // Loads and stores every sound file used for the program
 
 public class Sound {
-
   // main theme
   public Clip intro; // main theme intro
   public Clip mainLoop; // main loop

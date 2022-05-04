@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
 
 // Super funny tank that has a "super" capacity : go through walls for a short period of time (when "A" is pressed)
-
 public class TankPhantom extends TankSuper{
 
   public boolean activated; // true if capacity activated
