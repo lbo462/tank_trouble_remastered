@@ -146,9 +146,6 @@ public class Tank extends MovingEntity {
       double m00 = at.getScaleX(), m01 = at.getShearX(), m02 = at.getTranslateX();
       double m10 = at.getScaleY(), m11 = at.getShearY(), m12 = at.getTranslateY();
 
-      ArrayList<Tile> toCheck = new ArrayList<Tile>(); // tiles with which we should check collision
-      int w = gp.tileSize-1; // true size of a tile
-
       for(int r=0; r<width/2; r++) {
         for(int a=0; a<=360; a++) {
           int i = x+width/2 + (int)(r * Math.cos(Math.toRadians(a)));
