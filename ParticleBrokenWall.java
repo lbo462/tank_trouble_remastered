@@ -1,5 +1,7 @@
 import java.awt.Image;
 
+//Class used when a wall breaks. When a wall break it separates into multiple pieces in order to add a little bit of explosion effect.
+
 public class ParticleBrokenWall extends Particle {
   public ParticleBrokenWall(int x, int y, Image sprite) {
     super(x, y, sprite);
@@ -8,7 +10,6 @@ public class ParticleBrokenWall extends Particle {
     this.width = 10;
     this.height = 10;
     at.rotate(Math.toRadians((int)(Math.random()*360)), this.x+5, this.y+5);
-    this.lifeTime = 500 + Math.random() * 600; // more or less random
   }
 
   @Override

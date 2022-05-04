@@ -1,5 +1,7 @@
 import java.awt.geom.AffineTransform;
 
+//MovingEntity defines all the common attributes of the moving entities of the game. The class is never called as it is, it is always its daughter that are called.
+
 public abstract class MovingEntity extends Entity{
     public double nextX, nextY; // next position
     public double nextA; // next angle
@@ -12,7 +14,7 @@ public abstract class MovingEntity extends Entity{
     public double lifeTime; // how much it should last
     public double dashedAt;
     public boolean dashing;
-    public boolean dead; // is it dead
+    public boolean dead; // true if dead
     public AffineTransform at; // matrice of rotation
 
     // perform a dash

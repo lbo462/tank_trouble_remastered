@@ -1,5 +1,7 @@
 import java.awt.Image;
 
+//Class used when a tank moves, as if there was dirt/dust when a player drives.
+
 public class ParticleDust extends Particle {
 
   public ParticleDust(int x, int y, Image image) {
@@ -11,7 +13,7 @@ public class ParticleDust extends Particle {
     this.y = y + (int)(Math.random()*5)-2;
     this.width = 10;
     this.height = 10;
-    this.lifeTime = 500 + Math.random() * 600; // more or less random
+    this.lifeTime = 500 + Math.random() * 600;
   }
 
   @Override

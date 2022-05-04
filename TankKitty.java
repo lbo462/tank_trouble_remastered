@@ -14,7 +14,7 @@ public class TankKitty extends TankSuper{
     @Override
     public void reset(int x, int y) {
       super.reset(x, y);
-      this.bulletsKitty = new ArrayList<BulletKitty>(); // empty bullets_kitty
+      this.bulletsKitty = new ArrayList<BulletKitty>(); // empty bulletsKitty
     }
 
     @Override
@@ -28,10 +28,10 @@ public class TankKitty extends TankSuper{
 
     @Override
     public void draw(Graphics2D g2) {
-      /* draw the bullets_kitty */
+      /* draw the BulletsKitty */
       for(int i = 0; i < bulletsKitty.size(); i++) bulletsKitty.get(i).draw(g2);
 
-      // draw number of bullets_kitty remaining
+      // draw number of BulletsKitty remaining
       g2.setColor(Color.PINK);
       int rectWidth = gp.tileSize / 5;
       for(int i = 0; i < 5-bulletsKitty.size(); i ++) {
@@ -48,7 +48,7 @@ public class TankKitty extends TankSuper{
     public void updateBullets(){
       super.updateBullets();
 
-      /* update bullets_kitty */
+      /* update BulletsKitty */
       for(int i = bulletsKitty.size()-1; i >= 0; i--) {
         BulletKitty current = bulletsKitty.get(i);
         current.update();
@@ -58,7 +58,7 @@ public class TankKitty extends TankSuper{
       }
     }
 
-    // add one bullets_kitty
+    // add one BulletsKitty
     public void shootKittys() {
       bulletsKitty.add(new BulletKitty(getX()-5, getY()-5, this.angle, gp));
       gp.s.pew.setFramePosition(0);

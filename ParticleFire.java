@@ -1,7 +1,9 @@
+//Used for the special ability of the TankJiro which consists in shooting with a flame thrower.
+
 public class ParticleFire extends Particle {
 
   public GamePanel gp;
-  public Tank owner; // fire owner can't be killed by it
+  public Tank owner; // fire owner can't be killed by its own capacity
   public int radius; // radius of the particle
   public boolean killed;
 
@@ -16,7 +18,7 @@ public class ParticleFire extends Particle {
     this.width = 2*radius;
     this.height = 2*radius;
     at.rotate(Math.toRadians((int)(-direction)), this.x+5, this.y+5);
-    this.lifeTime = 500 + Math.random() * 600; // more or less random
+    this.lifeTime = 500 + Math.random() * 600; 
   }
 
   @Override
@@ -34,7 +36,7 @@ public class ParticleFire extends Particle {
       if(t.number != owner.number) {
         for(int r = 0; r < radius + t.width/2; r += 5) {
           for(int a = 0; a < 360; a += 2) {
-            // corresponding pos in cartesian coordinates
+            // corresponding positions in cartesian coordinates
             int xCord = (int)(getX() + r * Math.cos(Math.toRadians(a)));
             int yCord = (int)(getY() + r * Math.sin(Math.toRadians(a)));
 

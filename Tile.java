@@ -35,7 +35,7 @@ public class Tile {
   }
 
   public void update() {
-    // progressively destroy the wall
+    // progressively destroying the wall
     if(life > 5 && life <= 8)  {
       this.spriteUoD = gp.im.UoDcrack1;
       this.spriteLoR = gp.im.LoRcrack1;

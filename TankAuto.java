@@ -35,11 +35,10 @@ public class TankAuto extends Tank {
         PathFindingNode node = new PathFindingNode(c + r * C);  // again the magic formula to idenify a cell by a number
 
         // define possible dirrections
-        // used https://youtu.be/KiCBXu4P-2Y?t=365
         int[] dr = new int[] {1, -1, 0, 0}; // row direction
         int[] dc = new int[] {0, 0, 1, -1}; // collum direction
 
-        // check every dir. and add neighbours to the node
+        // check every direction and add neighbours to the node
         for(int i = 0; i < 4; i++) {
           // position of the neighboor
           int rr = r + dr[i];
@@ -53,7 +52,7 @@ public class TankAuto extends Tank {
           if(gp.currentMap.tiles[rr][cc].collision) continue;
 
           // add the neighboor to the list of reachable nodes by the current node
-          node.neighbours.add(cc + rr * C); // id the the neighboor
+          node.neighbours.add(cc + rr * C); // id of the neighboor
         }
 
         // finnally add the node and its neighbours
@@ -96,8 +95,8 @@ public class TankAuto extends Tank {
 
     // COMPUTE ANGLE TO ROTATE
     if(deltaY == 0) deltaY = 1; // do not divide by zero trick
-    double angleGoal = Math.toDegrees(Math.atan(deltaX / deltaY)); // angle the tank should be oriented to
-    if(Math.abs(angleGoal) < 90 && deltaY < 0) angleGoal += 180; // Leo, you have a scheme on yçur phone
+    double angleGoal = Math.toDegrees(Math.atan(deltaX / deltaY)); // orient the tanking
+    if(Math.abs(angleGoal) < 90 && deltaY < 0) angleGoal += 180;
     angleDiff = (int)(this.angle - angleGoal);
     if(Math.abs(angleDiff) > 3) {
       if(Math.abs(angleDiff) > 360 - 12) {
@@ -113,7 +112,7 @@ public class TankAuto extends Tank {
       }
       this.angle %= 360;
     }
-    if(Math.abs(angleDiff) <=  60 || Math.abs(angleDiff) >= 300) upPressed = true; // always move forward, never give up
+    if(Math.abs(angleDiff) <=  60 || Math.abs(angleDiff) >= 300) upPressed = true; // always move forward
   }
 
 
