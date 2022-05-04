@@ -65,10 +65,23 @@ public class MenuWindow  extends JFrame implements MouseListener {
 
   public GamePanel gamePanel;
 
+  public Clip menuMusic;
+
   public MenuWindow(){
     System.out.println("Starting menu ...");
     this.setIconImage(new ImageIcon("assets/icon.png").getImage());
     setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+    // play music
+    try{
+      AudioInputStream is = AudioSystem.getAudioInputStream(new File("assets/sounds/MusicMenu.wav").getAbsoluteFile());
+      menuMusic = AudioSystem.getClip();
+      menuMusic.open(is);
+      menuMusic.loop(99);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+
     try {
       for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
           if ("Nimbus".equals(info.getName())) {
@@ -246,7 +259,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     tankNames[5] = "Tankjiro";
     tankImages[5] = new ImageIcon("assets/entities/tank/Tankjiro.gif");
     tankDescriptions[5] = "Tank capable of throwing fire at its enemies. Fireproof.";
-    
+
     //Creating map Dctionnaries
     mapNames = new String[nbMaps];
     mapImages = new ImageIcon[nbMaps];
@@ -352,6 +365,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
           this.pack();
           // starts the game's loop
           gamePanel.startGameThread();
+          menuMusic.stop();
           break;
       }
       stateOfGUI++;
