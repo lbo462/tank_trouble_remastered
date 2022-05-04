@@ -286,7 +286,6 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     //Restart button
     restartButton = new HoverButton();
     restartButton.setBounds((width/2)-160,590,160,90);
-    restartButton.setBackground(Color.RED);
     restartButton.setText("Play again");
     restartButton.setFont(font);
     restartButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -296,7 +295,6 @@ public class GamePanel extends JPanel implements Runnable, MouseListener {
     // close button
     closeButton = new HoverButton();
     closeButton.setBounds((width/2),590,160,90);
-    closeButton.setBackground(Color.RED);
     closeButton.setText("Quit");
     closeButton.setFont(font);
     closeButton.setHorizontalAlignment(SwingConstants.CENTER);

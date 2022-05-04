@@ -55,7 +55,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
   public NumberChoicePanel nbGamesPanel;
 
   //Button to change step/advance/start
-  public JButton nextButton;
+  public HoverButton nextButton;
 
   // Gif for introduction
   public ResizeImageLabel animation;
@@ -101,6 +101,7 @@ public class MenuWindow  extends JFrame implements MouseListener {
     nextButton = new HoverButton();
     nextButton.setText("START");
     nextButton.setFont(defaultFont);
+    nextButton.setBackground(Color.WHITE);
     nextButton.setBounds((width-buttonWidth)/2,690,buttonWidth,buttonHeight);
     nextButton.setBackground(Color.white);
     nextButton.addMouseListener(this);

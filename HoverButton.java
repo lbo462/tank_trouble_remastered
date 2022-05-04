@@ -15,7 +15,7 @@ public class HoverButton extends JButton implements MouseListener{
         super();
         this.setBorder(BorderFactory.createLoweredBevelBorder());
         this.setHorizontalAlignment(SwingConstants.CENTER); //Centers text
-        setBackground(Color.RED);
+        setBackground(new Color(0,191,255));
         addMouseListener(this);
         try {
           String url = "assets/sounds/click.wav";
