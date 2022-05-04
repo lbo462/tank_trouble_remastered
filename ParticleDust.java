@@ -1,5 +1,7 @@
 import java.awt.Image;
 
+//Class used when a tank moves, as if there was dirt/dust when a player drives.
+
 public class ParticleDust extends Particle {
 
   public ParticleDust(int x, int y, Image image) {

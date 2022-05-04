@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+
+
 public class PathFindingNode {
   public int id;
   public ArrayList<Integer> neighbours = new ArrayList<Integer>();

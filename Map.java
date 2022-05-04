@@ -4,7 +4,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.awt.Image;
 
-// Everything that concerns the map is implemented in this class
+// Another really important class as well. It has two fonctionality: create a random labyrinth (further explanation in the report) and and convert this labyrinth into an actual game map.
+
 public class Map {
 
   public GamePanel gp;

@@ -1,6 +1,8 @@
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
+//Class that contains all the images of the game, not the menu
+
 public class ImageManager {
 
   public Image[] background;

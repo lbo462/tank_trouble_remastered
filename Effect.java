@@ -1,5 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
+ 
+//Class that corresponds to the effect of the power ups that randomnly spawn on the game map 
 
 public class Effect {
 

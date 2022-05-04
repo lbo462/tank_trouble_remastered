@@ -1,6 +1,8 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
 
+//PowerUp class is the mother class of the reset cool down and speed up power up. The class is never called as it is, it is always its daughter that are called.
+
 public abstract class PowerUp extends Entity{
 
     public boolean isAlive;
